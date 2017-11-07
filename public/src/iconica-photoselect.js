@@ -32,7 +32,6 @@ export class IconicaPhotoSelect extends GestureEventListeners(PolymerElement) {
         // draw the video on the canvas and take random frames..
         if (this._isEmpty(this.video)) return;
         this.$.video.src = this.video;
-        this.$.video.play(); 
         this.counter = 0 ;
         this.interval = setInterval(() => {
             var canvasses = [this.$.canvas1, this.$.canvas2, this.$.canvas3];
