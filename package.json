@@ -1,0 +1,20 @@
+{
+  "name": "testbadge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "flat": true,
+  "dependencies": {
+    "@polymer/iron-pages": "next",
+    "@polymer/paper-button": "next",
+    "@polymer/polymer": "next",
+    "lit-html": "^0.7.1",
+    "webcomponents.js": "^0.7.24"
+  },
+  "devDependencies": {
+    "rollup-plugin-node-resolve": "^3.0.0"
+  },
+  "resolutions": {
+    "resolve": "1.1.7"
+  }
+}
