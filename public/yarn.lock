@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@iconica/iconicaelements@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@iconica/iconicaelements/-/iconicaelements-1.0.6.tgz#3e32f129cf2cee5956af49b7c692657ec843d481"
+  dependencies:
+    "@polymer/paper-button" next
+    "@polymer/paper-progress" next
+    "@polymer/polymer" next
+
 "@polymer/app-layout@next":
   version "3.0.0-pre.1"
   resolved "https://registry.yarnpkg.com/@polymer/app-layout/-/app-layout-3.0.0-pre.1.tgz#612df4d04fd76d36350547aba65920a4a9050f85"
@@ -217,7 +225,7 @@
     "@polymer/paper-styles" "^3.0.0-pre.1"
     "@polymer/polymer" "^3.0.0-pre.1"
 
-"@polymer/polymer@^3.0.0-pre.1":
+"@polymer/polymer@^3.0.0-pre.1", "@polymer/polymer@next":
   version "3.0.0-pre.1"
   resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.0.0-pre.1.tgz#9fc26b5259aad9265f324ced02de715991d2eabe"
   dependencies:

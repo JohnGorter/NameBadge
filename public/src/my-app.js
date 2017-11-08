@@ -9,7 +9,7 @@ import '/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js
 import '/node_modules/@polymer/app-layout/app-header/app-header.js'
 import '/node_modules/@polymer/paper-progress/paper-progress.js'
 import '/node_modules/@polymer/iron-pages/iron-pages.js'
-
+import './iconica-registration.js'
 
 var template = `
        <style>
