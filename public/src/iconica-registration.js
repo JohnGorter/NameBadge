@@ -27,14 +27,15 @@ const template = `
     #wizard[step="1"] { bottom:0vh;height:60vh;background-color:#0082c9;}
     #wizard[step="2"] { bottom:0vh;height:35vh;background-color:#0082c9;}
     #wizard[step="3"] { bottom:0vh;height:100vh;background-color:#0082c9;}
-    #wizard[step="4"] { bottom:0vh;height:65vh;background-color:#0082c9;}
+    #wizard[step="4"] { bottom:0vh;height:75vh;background-color:#0082c9;}
+    #wizard.toolbar { bottom:65px;}
     </style>
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
         <div step4>
-            <ico-photoselect id="photoselect" video="{{video}}" thumb="{{thumb}}"></ico-photoselect>
+            <ico-photoselect id="photoselect" video="{{video}}" thumbs="{{thumbs}}" selectedthumb="{{thumb}}"></ico-photoselect>
         </div>
         <div step3 on-close="_stopRecording" on-open="_startRecording">
-            <ico-videorecorder id="recorder" video={{video}} on-recording-complete="_completeRecording"></ico-videorecorder>
+            <ico-videorecorder id="recorder" video={{video}} thumbs="{{thumbs}}" on-recording-complete="_completeRecording"></ico-videorecorder>
         </div>
         <div step2>
             <div id="profile"></div>
@@ -66,7 +67,7 @@ export class IcoRegistration extends PolymerElement {
         nextstep:{ type:String, value:"Start registratie", notify:true}
     }}
 
-    start() { import('./iconica-wizard.js');  }
+    start() { if (this._hasToolbar()) { this.$.wizard.classList.add("toolbar")}; import('./iconica-wizard.js');  }
     _stopRecording(e) { this.$.recorder.stop(); }
     _startRecording(e) { 
         this.nextstep = "Opslaan"; 
@@ -80,10 +81,13 @@ export class IcoRegistration extends PolymerElement {
     _onStep(step){
         if(step.detail.value == 2) this.nextstep = "Start opname";
         if (step.detail.value == 3) import ("./iconica-videorecorder.js").then(() => this.$.recorder.init(true));
-        if (step.detail.value == 4) import ("./iconica-photoselect.js");
+        if (step.detail.value == 4) import ("./iconica-photoselect.js").then(() => this.$.photoselect.selectPhoto());
     }
     _completeRegistration(){
         console.log("completed registration", { u:this.username, c:this.company, v:this.video, t:this.thumb});
+    }
+    _hasToolbar(){
+        return window.outerHeight < (screen.height-24);
     }
 }
 

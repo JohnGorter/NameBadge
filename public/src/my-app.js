@@ -18,7 +18,7 @@ var template = `
         .main { display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;font-family: 'Roboto', sans-serif;color:var(--main-color, white); background-color:var(--main-bg-color, #101654); width:100vw; height:92vh;}
         .textplace { font-size:42px;padding-top:35vh;padding-left:20px;padding-bottom:15px;min-width:100vw;transition:padding-top 0.1s ease-in-out;}
         .textplace.step1 { font-size:42px;padding-top:22vh;padding-left:20px;min-width:100vw;}
-        .textplace.step4 { font-size:42px;padding-top:17vh;padding-left:20px;min-width:100vw;}
+        .textplace.step4 { font-size:42px;padding-top:5vh;padding-left:20px;min-width:100vw;}
         #title { font-size:24px;}
         #title.larger { font-size:36px;}
         #details { font-size:12px;margin-top:5px;}
@@ -85,6 +85,9 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
         import('./iconica-registration.js').then(() => {
             this.$.registration.start();
         });
+    }
+    _hasToolbar(){
+        return window.outerHeight < (screen.height-24);
     }
 }
 

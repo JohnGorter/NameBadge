@@ -15,6 +15,7 @@ var template = `
         <span id="counter">{{counter}}</span>
         <video id="video" hidden></video>
         <video id="preview" autoplay playsinline muted></video>
+        <canvas id="canvas" hidden></canvas>
     </div>
 `;
 
@@ -24,7 +25,8 @@ export class IconicaVideoRecorder extends PolymerElement {
         return {
             video: { type:Object, notify:true },
             counter: { type:Number, value:3},
-            duration: { type:String, value:''}
+            duration: { type:String, value:''},
+            thumbs: { type:Array, value:[], notify:true}
         };
     }
 
@@ -79,10 +81,16 @@ export class IconicaVideoRecorder extends PolymerElement {
         this.playing = true;
         this.completed = false;
         var mediaRecorder = new MediaStreamRecorder(this.stream);
+        this.$.canvas.width = this.$.preview.videoWidth;
+        this.$.canvas.height = this.$.preview.videoHeight;
         mediaRecorder.stream = this.stream;
         this.interval = setInterval(()=>{
             var seconds = Date.now() - this.starttime;
             this.duration = "00:0" + Math.round(seconds / 1000);
+            if (this.thumbs.length < 3){
+                this.$.canvas.getContext("2d").drawImage(this.$.preview, 0, 0);
+                this.thumbs.push(this.$.canvas.toDataURL("image/png"));
+            }
             this.$.progressbar.value = timer--;
         }, 1000);
 
@@ -91,7 +99,7 @@ export class IconicaVideoRecorder extends PolymerElement {
                 clearInterval(this.interval);
                 this.video = window.URL.createObjectURL(blob);
                 this.$.video.src = this.video;
-                this.$.video.controls = true;
+                //this.$.video.controls = true;
                 this.$.video.hidden = false;
                 this.$.preview.hidden = true;
                 mediaRecorder.stop(); 
