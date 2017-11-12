@@ -5,6 +5,11 @@ import '/node_modules/@polymer/paper-input/paper-input.js'
 const template = `
     <style>
     :host { font-family: 'Roboto'; } 
+      :root {
+    --paper-input-container-underline: { display: none;}
+    --paper-input-container-underline-focus: { display: none;}
+    --paper-input-container-underline-disabled: {display: none;}
+  }
     .done { opacity:0.5}
     div { color:white}
     div[step0] { width:100vw;height:25vh}
@@ -12,14 +17,14 @@ const template = `
     div[step3] { width:100vw;height:78vh}
     div[step4] { width:100vw;height:55vh}
     #pitchtext { margin-left:20px; height:10vh;}
-    .large { font-size:24px;}
+    .large { font-size:4vw;}
     p { margin:8px;}
     #profile { background-image:url('/images/profile.jpg');background-size:100% 100%;width:100%;height:80vh;margin-bottom:20px;}
     paper-input[disabled] { margin-bottom:40px;}
     paper-input[focused] { border:2px solid #71d1a4;}
     paper-input { margin-bottom:65px;margin-left:20px;width:50vw;background-color:white;border-radius:5px;padding-left:5px;padding-right:5px;min-width:50vw;}
     paper-icon-button { border-radius:20px;margin-left:20px;margin-right:20px;background-color:none;color:white;border:0px solid black;}
-    paper-button { border-radius:20px; padding:15px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#71d1a4;color:white;border:0px solid black;}
+    paper-button { border-radius:20px; padding:15px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#43BC84;color:white;border:0px solid black;}
     #spacer { flex:1;}
     paper-button[disabled] { opacity:0.5}
     #toolbar { width:100vw;display:flex;justify-content:flex-end;align-items:center; }
@@ -49,11 +54,11 @@ const template = `
             </div>
         </div>
         <div step0>
-            <paper-input value="{{username}}" label="voornaam + achternaam"></paper-input>
+            <paper-input value="{{username}}" label="Voornaam + Achternaam" always-float-label placeholder="Je naam"></paper-input>
         </div>
         <div step1>
             <paper-input value="{{username}}" class="done" disabled label="voornaam + achternaam"></paper-input>
-            <paper-input value="{{company}}" label="bedrijfsnaam"></paper-input>
+            <paper-input value="{{company}}"  label="Omdat we het nog wel een beetje zakelijk moeten houden" always-float-label placeholder="Je bedrijfsnaam"></paper-input>
         </div>
         <div id="toolbar" slot="toolbar">
             <paper-icon-button id="previous" icon="arrow-back" previouspage>prev</paper-icon-button>
