@@ -6,6 +6,7 @@ const template = `
     <style>
     :host { font-family: 'Roboto'; } 
       :root {
+          --paper-input-container:{padding:12px 0;}
     --paper-input-container-underline: { display: none;}
     --paper-input-container-underline-focus: { display: none;}
     --paper-input-container-underline-disabled: {display: none;}
@@ -13,25 +14,25 @@ const template = `
     .done { opacity:0.5}
     div { color:white}
     div[step0] { width:100vw;height:25vh}
-    div[step1] { width:100vw;height:35vh}
-    div[step3] { width:100vw;height:78vh}
-    div[step4] { width:100vw;height:55vh}
+    div[step1] { width:100vw;height:46vh}
+    div[step3] { width:100vw;height:82.5vh}
+    div[step4] { width:100vw;height:50vh}
     #pitchtext { margin-left:20px; height:10vh;}
-    .large { font-size:4vw;}
-    p { margin:8px;}
+    .large { font-size:5vw; font-weight: 600;}
+    p {font-size: 16px; margin:8px;}
     #profile { background-image:url('/images/profile.jpg');background-size:100% 100%;width:100%;height:80vh;margin-bottom:20px;}
-    paper-input[disabled] { margin-bottom:40px;}
-    paper-input[focused] { border:2px solid #71d1a4;}
-    paper-input { margin-bottom:65px;margin-left:20px;width:50vw;background-color:white;border-radius:5px;padding-left:5px;padding-right:5px;min-width:50vw;}
+    paper-input[disabled] {margin-bottom:140px;}
+    paper-input[focused] {border:3px solid #71d1a4;}
+    paper-input { margin-bottom:165px;margin:auto; margin-left: 7%;width:45vw;background-color:white;border-radius:5px;padding-left:5px;padding-right:5px;min-width: 315px;}
     paper-icon-button { border-radius:20px;margin-left:20px;margin-right:20px;background-color:none;color:white;border:0px solid black;}
-    paper-button { border-radius:20px; padding:15px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#43BC84;color:white;border:0px solid black;}
+    paper-button { border-radius:20px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#43BC84;color:white;border:0px solid black; height:70px; width: 200px;}
     #spacer { flex:1;}
     paper-button[disabled] { opacity:0.5}
     #toolbar { width:100vw;display:flex;justify-content:flex-end;align-items:center; }
-    #toolbar paper-button { margin:20px;padding-left:20px;padding-right:20px;}
+    #toolbar paper-button {margin-bottom: 30px; margin-top: 30px;padding-left:20px;padding-right:20px;}
     #wizard { position:absolute;display:flex;bottom:-50vh;height:50vh;flex-wrap:wrap;align-items:flex-end;width:100vw;background-color:none;transition:bottom 0.2s ease-in-out, height 0.2s ease-in-out}
-    #wizard[step="0"] { bottom:1vh;height:50vh;background-color:#0082c9;}
-    #wizard[step="1"] { bottom:1vh;height:60vh;background-color:#0082c9;}
+    #wizard[step="0"] { bottom:1vh;height:55vh;background-color:#0082c9;}
+    #wizard[step="1"] { bottom:1vh;height:72vh;background-color:#0082c9;}
     #wizard[step="2"] { bottom:1vh;height:35vh;background-color:#0082c9;}
     #wizard[step="3"] { bottom:1vh;height:100vh;background-color:#000000;}
     #wizard[step="4"] { bottom:1vh;height:70vh;background-color:#0082c9;}

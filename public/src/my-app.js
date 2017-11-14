@@ -15,19 +15,19 @@ var template = `
        <style>
         :host { font-family: 'Roboto'; } 
         app-toolbar { background-color:var(--main-toolbar-bg-color, #101654);color:var(--main-color, white);}
-        .main { display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;font-family: 'Roboto', sans-serif;color:var(--main-color, white); background-color:var(--main-bg-color, #101654); width:100vw; height:92vh;}
-        .textplace { font-size:42px;padding-top:33vh;padding-left:20px;padding-bottom:15px;min-width:100vw;transition:padding-top 0.1s ease-in-out;}
-        .textplace.step1 { font-size:42px;padding-top:18vh;padding-left:20px;min-width:100vw;}
-        .textplace.step4 { font-size:42px;padding-top:5vh;padding-left:20px;min-width:100vw;}
-        #title { font-size:10vw;}
-        #title.larger { font-size:10vw;}
-        #details { font-size:3.8vw;margin-top:5px;}
+        .main { display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;font-family: 'Roboto', sans-serif;color:var(--main-color, white); background-color:var(--main-bg-color, #101654); width:100vw; height:95vh;}
+        .textplace { font-size:42px;padding-top:26vh;padding-left:20px;padding-bottom:15px;min-width:100vw;transition:padding-top 0.1s ease-in-out;}
+        .textplace.step1 { font-size:42px;padding-top:7vh;padding-left:20px;min-width:100vw;}
+        .textplace.step4 { font-size:42px;padding-top:13vh;padding-left:20px;min-width:100vw;}
+        #title {font-size:7vw; font-weight: 500}
+        #title.larger { font-size:10vw; font-weight: 500;}
+        #details { font-size:2.8vw;margin-top:5px;}
         .small { font-size:14px}
         .hidden { opacity:0;}
        </style>
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
-               <app-toolbar><img height="30" src="/images/smartbadgeicon.png"></app-toolbar>
+               <app-toolbar><img height="52" src="/images/smartbadgeicon.png"></app-toolbar>
            </app-header>
            <div class="main" on-tap="nextPage">   
                 <div class="textplace" id="textplace">
