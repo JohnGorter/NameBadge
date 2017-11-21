@@ -4,6 +4,9 @@
     <title>WebRTC Video Recording using MediaStreamRecorder</title>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
     <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -26,6 +29,9 @@
 <body>
          <my-app></my-app>
         <script type="module" src="/src/my-app.js"></script>
+        <script nomodule>
+            
+        </script>
        
         
         <script>
@@ -48,8 +54,6 @@
     }
 }
             document.addEventListener("click", () =>{
-                console.log('click');
-               
             //   DoFullScreen();
             }, false);
         </script>

@@ -5,6 +5,7 @@
   "license": "MIT",
   "flat": true,
   "dependencies": {
+    "@iconica/iconicaelements": "^1.0.24",
     "@polymer/iron-pages": "next",
     "@polymer/paper-button": "next",
     "@polymer/polymer": "next",
