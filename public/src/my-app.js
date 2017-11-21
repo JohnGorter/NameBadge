@@ -48,7 +48,7 @@ var template = `
                     <div id="details">{{_getStepDetails(step)}}</div>
                 </div>
             </div>
-            <ico-presentation items="{{items}}"></ico-presentation>
+            <ico-presentation id="presentation" items="{{items}}"></ico-presentation>
             <ico-registration id="registration" username="{{username}}" step="{{step}}" on-registration-complete="_saveRegistration"></ico-registration>
        </app-header-layout>
 
@@ -98,7 +98,7 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
 
     nextPage(){
         this.$.auth.signInAnonymously();
-        this.$.grid.hidden = !this.$.grid.hidden;
+        this.$.presentation.hidden = !this.$.presentation.hidden;
         import('./iconica-registration.js').then(() => {
             this.$.registration.start();
         });
