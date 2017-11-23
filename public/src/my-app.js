@@ -19,7 +19,7 @@ import '/node_modules/@iconica/iconicaelements/ico-query.js'
 import '/node_modules/@iconica/iconicaelements/ico-document.js'
 import '/node_modules/@iconica/iconicaelements/ico-storage-item.js'
 
-import './iconica-registration.js'
+import './iconica-presentation.js'
 
 var template = `
        <style>
@@ -36,7 +36,8 @@ var template = `
         .hidden { opacity:0;}
 
         
-        ico-registration { z-Index:20 }
+        ico-registration { z-Index:20;}
+        ico-presentation { z-index:10;width:100vw;height:90vh;top:10vh;position:absolute;background-color:#0082c9;overflow:scroll;}
        </style>
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
