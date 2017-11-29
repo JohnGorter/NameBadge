@@ -1,10 +1,8 @@
 // @ts-check 
-
 import '/node_modules/@polymer/polymer/polymer.js'
 import { GestureEventListeners } from '../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js'
 import { Element } from '../node_modules/@polymer/polymer/polymer-element.js'
 import '/node_modules/@polymer/iron-pages/iron-pages.js'
-
 import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 
 const htmlTemplate = `
