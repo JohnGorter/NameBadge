@@ -1,13 +1,16 @@
 {
   "dependencies": {
-    "@iconica/iconicaelements": "^1.0.25",
-    "@polymer/app-layout": "next",
+    "@iconica/iconicaelements": "^1.0.26",
+    "@polymer/app-layout": "^3.0.0-pre.1",
     "@polymer/iron-icons": "next",
     "@polymer/iron-pages": "next",
     "@polymer/paper-button": "next",
     "@polymer/paper-icon-button": "next",
     "@polymer/paper-input": "next",
     "@polymer/paper-progress": "next",
-    "@polymer/paper-toolbar": "next"
+    "@polymer/paper-toolbar": "next",
+    "@polymer/polymer": "next",
+    "lit-html": "^0.7.1",
+    "webcomponents.js": "^0.7.24"
   }
 }
