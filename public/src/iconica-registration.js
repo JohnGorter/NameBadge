@@ -47,7 +47,7 @@ const template = `
                 <img height="100%" width="100%" src="{_{item}_}" />
             </ico-grid>
         </div>
-
+ 
         <div step2  on-close="_stopRecording" on-open="_startRecording">
             <div style="width:100vw;height:75%">
                 <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="1" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>

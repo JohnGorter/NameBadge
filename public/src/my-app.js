@@ -34,10 +34,13 @@ var template = `
         #details { font-size:2.8vw;margin-top:5px;}
         .small { font-size:14px}
         .hidden { opacity:0;}
-        
+        #panel { position:absolute;background-color:red;height:30vh;width:100vw;top:0vh;z-index:100;display:none;}
         ico-registration { z-Index:20;}
         ico-presentation { z-index:10;width:100vw;height:90vh;top:10vh;position:absolute;background-color:#0082c9;overflow:scroll;}
        </style>
+
+       <div id="panel"></div>
+
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
                <app-toolbar><div style="flex:1"><img height="52" src="/images/smartbadgeicon.png"></div><paper-icon-button icon="lock" on-tap="nextPage"></paper-icon-button></app-toolbar>
