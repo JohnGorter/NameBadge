@@ -58,7 +58,8 @@ var template = `
        <ico-app api-key="AIzaSyAIrU1xKfGnsX2Pa40idv-9uGLnomiMyp4"  auth-domain="rep-app-dcb15.firebaseapp.com" database-URL="https://rep-app-dcb15.firebaseio.com" project-id="rep-app-dcb15" storage-bucket="rep-app-dcb15.appspot.com" messaging-sender-id="991032175500"></ico-app>
        <ico-query path="registrations" data="{{items}}"></ico-query>
        <ico-document id="doc" path="registrations"></ico-document>
-       <ico-storage-item id="item" ref="videos/{{filename}}" data="{{video}}" on-fileuploaded="_videouploaded" url="{{url}}"></ico-storage-item>
+       <ico-storage-item id="item" ref="videos/{{filename}}" data="{{video}}" on-fileuploaded="_videouploaded" url="{{videourl}}"></ico-storage-item>
+       <ico-storage-item id="item" ref="thumbs/{{filename}}" data="{{thumb}}" on-fileuploaded="_thumbuploaded" url="{{thumburl}}"></ico-storage-item>
        <ico-auth id="auth" user="{{user}}"></ico-auth>
 
 `;
@@ -111,12 +112,17 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
         return window.outerHeight < (screen.height-24);
     }
 
+    _thumbuploaded(e){
+         this.registrationdata.thumburl = this.thumburl;
+    }
+
     _videouploaded(e){
-        // REMOVE THE VIDEO FROM THE OBJECT, IT WAS SAVED TO STORAGE
+        // REMOVE THE BINARIES FROM THE OBJECT, IT WAS SAVED TO STORAGE
         delete this.registrationdata.video;
         delete this.registrationdata.thumbs;
+        delete this.registrationdata.thumb;
         // INSERT THE URL TO THE VIDEO FROM STORAGE INTO THE REGISTRATIONDATA
-        this.registrationdata.videourl = this.url;
+        this.registrationdata.videourl = this.videourl;
         this.$.doc.docid = this.registrationdata.username;
         this.$.doc.data = this.registrationdata;
     }
@@ -125,7 +131,10 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
         // EXTRACT THE VIDEO BLOB AND SAVE IT IN STORAGE
         this.registrationdata = e.detail;
         this.filename = e.detail.username;
-        this.video = this.registrationdata.video;
+        fetch(this.registrationdata.thumb).then(res => res.blob()).then(blob => {this.thumb = blob;
+            console.log(this.thumb);
+            this.video = this.registrationdata.video;
+        });
     }
 
     _selectVideo(){
