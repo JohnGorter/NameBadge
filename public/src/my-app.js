@@ -28,13 +28,12 @@ var template = `
         .main { display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;font-family: 'Roboto', sans-serif;color:var(--main-color, white); background-color:var(--main-bg-color, #101654); width:100vw; height:95vh;}
         .textplace { font-size:42px;padding-top:26vh;padding-left:20px;padding-bottom:15px;min-width:100vw;transition:padding-top 0.1s ease-in-out;}
         .textplace.step1 { font-size:42px;padding-top:7vh;padding-left:20px;min-width:100vw;}
-        .textplace.step3 { font-size:42px;padding-top:29vh;padding-left:20px;min-width:100vw;}
+        .textplace.step3 { font-size:42px;padding-top:20vh;padding-left:20px;min-width:100vw;}
         #title {font-size:7vw; font-weight: 500}
         #title.larger { font-size:10vw; font-weight: 500;}
         #details { font-size:2.8vw;margin-top:5px;}
         .small { font-size:14px}
         .hidden { opacity:0;}
-
         
         ico-registration { z-Index:20;}
         ico-presentation { z-index:10;width:100vw;height:90vh;top:10vh;position:absolute;background-color:#0082c9;overflow:scroll;}

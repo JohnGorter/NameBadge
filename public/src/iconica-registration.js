@@ -16,7 +16,7 @@ const template = `
     .done { opacity:0.5}
     div { color:white;background-color:#0082c9;}
     div[step0] { width:100vw;height:25vh}
-    div[step1] { width:100vw;height:46vh}
+    div[step1] { width:100vw;height:45vh}
     div[step2] { width:100vw;height:80vh}
     div[step3] { width:100vw;height:40vh}
     #pitchtext { margin-left:20px; height:10vh;}
@@ -25,7 +25,7 @@ const template = `
     #psrofile { background-image:url('/images/profile.jpg');background-size:100% 100%;width:100%;height:80vh;margin-bottom:20px;}
     paper-input[disabled] {margin-bottom:140px;}
     paper-input[focused] {border:3px solid #71d1a4;}
-    paper-input { margin-bottom:165px;margin:auto; margin-left: 7%;width:45vw;background-color:white;border-radius:5px;padding-left:5px;padding-right:5px;min-width: 315px;}
+    paper-input { margin-bottom:165px;margin:auto;width:50vw;background-color:white;border-radius:5px;padding-left:5px;padding-right:5px;min-width: 315px;}
     paper-icon-button { border-radius:20px;margin-left:20px;margin-right:20px;background-color:none;color:white;border:0px solid black;}
     paper-button { border-radius:20px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#43BC84;color:white;border:0px solid black; height:70px; width: 200px;}
     #spacer { flex:1;}
@@ -37,8 +37,9 @@ const template = `
     #wizard[step="1"] { bottom:1vh;height:72vh;background-color:#0082c9;}
     #wizard[step="2"] { bottom:1vh;height:85vh;background-color:#0082c9;}
     #wizard[step="3"] { bottom:1vh;height:55vh;background-color:#0082c9;}
-    
     #wizard.toolbar { bottom:65px;}
+            .item-c { background:red;}
+
     </style>
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
         <div step3>
