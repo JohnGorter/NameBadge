@@ -23,10 +23,15 @@
             position: absolute;
             height:100%;
             margin:0px;
+            overscroll-behavior-y: none;
             }
     </style>
 </head>
 <body>
+    <script>
+        console.time("startup"); 
+        window.setTimeout(() => { console.timeEnd("startup"); }, 1000); 
+    </script>
          <my-app></my-app>
         <script type="module" src="/src/my-app.js"></script>
         <script nomodule>
