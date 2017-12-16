@@ -6,19 +6,7 @@ import '/node_modules/@polymer/iron-pages/iron-pages.js'
 import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 
 const htmlTemplate = `
-    <style>
-    #grid { overflow:scroll }
-    paper-icon-button { border-radius:20px;margin-left:20px;margin-right:20px;background-color:none;color:white;border:0px solid black;}
-        paper-button { border-radius:20px; padding-left:25px; padding-right:25px; text-transform: capitalize;margin-right:20px;background-color:#43BC84;color:white;border:0px solid black; height:70px; width: 200px;}
-    #videopanel { position:absolute;display:flex;flex-direction:column;justify-content:space-around;height:90vh; width:100vw;top:0vh;background-color:black;}
-    #details { transition:bottom 0.45s ease-in-out;position:relative;bottom:-30vh;height:30vh;background-color:#0082c9;display:flex;align-items:center;justify-content:center;}
-    #details.shown {  position:relative;bottom:0vh;height:30vh;background-color:#0082c9;display:flex;align-items:center;justify-content:center;}
-    .info_details { width:50vw;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-    .info_username { color:white;font-size:5vw;}
-    .info_company { color:white;font-size:16px;margin-top:12px;}
-    .back_panel { position:absolute;left:20px;}
-    video { height:80%;width:100%}
-    </style>
+    <style is="custom-style" include="shared-style"> </style>
    
     <iron-pages id="pages" selected="1">
         <div id="videopanel">
