@@ -22,24 +22,8 @@ import '/node_modules/@iconica/iconicaelements/ico-storage-item.js'
 import './iconica-presentation.js'
 
 var template = `
-       <style>
-        :host { font-family: 'Roboto'; } 
-        app-toolbar { background-color:var(--main-toolbar-bg-color, #101654);color:var(--main-color, white);}
-        .main { display:flex;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;font-family: 'Roboto', sans-serif;color:var(--main-color, white); background-color:var(--main-bg-color, #101654); width:100vw; height:95vh;}
-        .textplace { font-size:42px;padding-top:26vh;padding-left:20px;padding-bottom:15px;min-width:100vw;transition:padding-top 0.1s ease-in-out;}
-        .textplace.step1 { font-size:42px;padding-top:7vh;padding-left:20px;min-width:100vw;}
-        .textplace.step3 { font-size:42px;padding-top:20vh;padding-left:20px;min-width:100vw;}
-        #title {font-size:7vw; font-weight: 500}
-        #title.larger { font-size:10vw; font-weight: 500;}
-        #details { font-size:2.8vw;margin-top:5px;}
-        .small { font-size:14px}
-        .hidden { opacity:0;}
-        #panel { position:absolute;background-color:red;height:30vh;width:100vw;top:0vh;z-index:100;display:none;}
-        ico-registration { z-Index:20;}
-        ico-presentation { z-index:10;width:100vw;height:90vh;top:10vh;position:absolute;background-color:#0082c9;overflow:scroll;}
-       </style>
+       <style is="custom-style" include="shared-style"></style>
 
-       <div id="panel"></div>
 
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
