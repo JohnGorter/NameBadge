@@ -6,6 +6,8 @@ import '/node_modules/@polymer/paper-input/paper-input.js'
 
 const template = `
         <style is="custom-style" include="shared-style">
+
+
         </style>
 
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
@@ -14,16 +16,19 @@ const template = `
                 <img height="100%" width="100%" src="{_{item}_}" />
             </ico-grid>
         </div>
- 
-        <div step2  on-close="_stopRecording" on-open="_startRecording">
-            <div style="width:100vw;height:75%">
-                <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="1" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
+
+        <div step2 on-close="_stopRecording" on-open="_startRecording">
+            <div> 
+             <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="3" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
             </div>
-            <div id="pitchtext">
-                <p class="large">Persoonlijke pitch van 7 seconden</p>
-                <p>Stel jezelf voor aan andere bezoekers van [evenement]</p>
+            <div id="details shown">
+                <div class="registration-back_panel">
+                                 <div><p class="large">Persoonlijke pitch van 7 seconden</p></div>
+                <div><p>Stel jezelf voor aan andere bezoekers van [evenement]</p></div>
+                </div>
             </div>
         </div>
+
         <div step0>
             <paper-input value="{{registrationdata.username}}" label="Voornaam + Achternaam" always-float-label placeholder="Je naam"></paper-input>
         </div>

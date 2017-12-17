@@ -18,8 +18,6 @@
         --paper-input-container-underline: { display: none;}
         --paper-input-container-underline-focus: { display: none;}
         --paper-input-container-underline-disabled: {display: none;}
-                --iron-icon-width: 80px;
-        --iron-icon-height: 80px;
 
         --custom-paper-input: {
           margin-bottom:165px;
@@ -43,8 +41,12 @@
           width: 200px;
         }
 
-}
+        --branche-logo: {
+          height: 45px;
+          padding-top:5px;
+        }
 
+}
       
       /* start my-app */
 
@@ -52,6 +54,14 @@
           background-color:var(--dark-primary-color);
           color:var(--text-primary-color);
           }
+
+        #progressbar{
+         top: 20px;
+      }
+        
+        .logo img{
+          @apply --branche-logo;
+        }
 
         .main { 
           width:100vw; 
@@ -77,7 +87,7 @@
           }
 
         .textplace.step3 { 
-          padding-top:20vh;
+          padding-top:27vh;
           padding-left:4vw;
           min-width:100vw;
           }
@@ -107,7 +117,6 @@
 
         #panel { 
           position:absolute;
-          background-color:red;
           height:30vh;
           width:100vw;
           top:0vh;
@@ -118,8 +127,8 @@
         ico-presentation { 
           z-index:10;
           width:100vw;
-          height:90vh;
-          top:10vh;
+          height:94vh;
+          top:6vh;
           position:absolute;
           background-color:var(--light-primary-color);
           overflow:scroll;
@@ -261,14 +270,12 @@
             height:90vh; 
             width:100vw;
             top:0vh;
-            background-color:black;
             }
 
           #details { 
             transition:bottom 0.45s ease-in-out;
             position:relative;
-            bottom:-30vh;
-            height:30vh;
+            bottom:-60vh;
             background-color:var(--light-primary-color);
             display:flex;
             align-items:center;
@@ -277,7 +284,7 @@
 
           #details.shown {  
             position:relative;
-            bottom:0vh;
+            bottom:-35vh;
             height:30vh;
             background-color:var(--light-primary-color);
             display:flex;
@@ -309,10 +316,16 @@
             position:absolute;
             left:20px;
           }
-          video {
-            height:80%;
-            width:100%;
-            }
+
+          .registration-back_panel {
+            position:absolute;
+            width:100vw;
+            height:20vh;
+            padding:20px;
+            bottom: 0;
+          }
+
+
           /* end ico presentation */
 
     </style>

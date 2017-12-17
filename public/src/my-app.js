@@ -27,7 +27,7 @@ var template = `
 
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
-               <app-toolbar><div style="flex:1"><img height="52" src="/images/smartbadgeicon.png"></div><paper-icon-button icon="lock" on-tap="nextPage"></paper-icon-button></app-toolbar>
+               <app-toolbar><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div><paper-icon-button icon="view-list" on-tap="nextPage"></paper-icon-button></app-toolbar>
            </app-header>
            <div class="main">   
                 <div class="textplace" id="textplace">
