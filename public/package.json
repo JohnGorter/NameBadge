@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@iconica/iconicaelements": "^1.0.30",
+    "@iconica/iconicaelements": "^1.0.31",
     "@polymer/app-layout": "^3.0.0-pre.1",
     "@polymer/iron-icons": "next",
     "@polymer/iron-pages": "next",
