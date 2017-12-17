@@ -17,6 +17,51 @@ const htmlTemplate = `
     left: 50%;
     transform: translate(-50%,-50%);
     }
+
+    #details { 
+        transition:bottom 0.45s ease-in-out;
+        position:relative;
+        bottom:0vh;
+        background-color:var(--light-primary-color);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+        bottom:-85vh;
+        height:30vh;
+        } 
+
+       #details.shown {  
+        position:relative;
+        bottom:-35vh;
+        height:30vh;
+        }
+
+
+      .info_details { 
+        width:50vw;
+        height:200px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        }
+
+      .info_username { 
+        color:var(--text-primary-color);
+        font-size:5vw;
+      }
+
+      .info_company { 
+        color:var(--text-primary-color);
+        font-size:16px;
+        margin-top:12px;
+        }
+
+      .back_panel {
+        position:absolute;
+        left:20px;
+      } 
     </style>
    
     <iron-pages id="pages" selected="1">

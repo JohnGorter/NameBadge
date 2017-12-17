@@ -272,25 +272,27 @@
             top:0vh;
             }
 
-          #details { 
+          /* #details { 
             transition:bottom 0.45s ease-in-out;
             position:relative;
-            bottom:-60vh;
+            bottom:0vh;
             background-color:var(--light-primary-color);
             display:flex;
             align-items:center;
             justify-content:center;
-            }
+            } */
 
-          #details.shown {  
+          /* #details.shown {  
             position:relative;
             bottom:-35vh;
             height:30vh;
-            background-color:var(--light-primary-color);
-            display:flex;
-            align-items:center;
-            justify-content:center;
             }
+
+          #details.hidden {  
+            position:relative;
+            bottom:-85vh;
+            height:30vh;
+            } */
 
           .info_details { 
             width:50vw;
@@ -312,19 +314,27 @@
             margin-top:12px;
             }
 
-          .back_panel {
+          /* .back_panel {
             position:absolute;
             left:20px;
-          }
+          }  */
 
           .registration-back_panel {
+            transition: bottom 0.45s ease-in-out;
             position:absolute;
             width:100vw;
-            height:20vh;
+            height:35vh;
+            bottom:0vh;
             padding:20px;
-            bottom: 0;
           }
 
+          .registration-back_panel.hidden {
+            position:absolute;
+            width:100vw;
+            height:35vh;
+            padding:20px;
+            bottom: -35vh;
+          }
 
           /* end ico presentation */
 
