@@ -6,7 +6,18 @@ import '/node_modules/@polymer/iron-pages/iron-pages.js'
 import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 
 const htmlTemplate = `
-    <style is="custom-style" include="shared-style"> </style>
+    <style is="custom-style" include="shared-style"> 
+    video { 
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    }
+    </style>
    
     <iron-pages id="pages" selected="1">
         <div id="videopanel">
@@ -23,7 +34,7 @@ const htmlTemplate = `
             </div>
         </div>
         <ico-grid id="grid" grid items="{{items}}" on-item-selected="_selectVideo">
-            <div><img style="width:98vw;" src="{_{item.thumburl}_}" /></div>
+            <div><img style="width:50vw;" src="{_{item.thumburl}_}" /></div>
         </ico-grid>
     </iron-pages>
 `;
