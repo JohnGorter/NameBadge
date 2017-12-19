@@ -16,7 +16,7 @@ const template = `
         </div>
 
         <div step2 on-close="_stopRecording" on-open="_startRecording">
-             <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="0" recordingtime="0.5" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
+             <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="0" recordingtime="1" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
             <div id="details" class="shown">
                 <div id="backpanel" class="registration-back_panel">
                    <div><p class="large">Persoonlijke pitch van 7 seconden</p></div>
