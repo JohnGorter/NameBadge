@@ -21,10 +21,9 @@ import '/node_modules/@iconica/iconicaelements/ico-storage-item.js'
 
 import './iconica-presentation.js'
 
+
 var template = `
-       <style is="custom-style" include="shared-style"></style>
-
-
+       <style is="custom-style" include="app-styles"></style>
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
                <app-toolbar><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div><paper-icon-button icon="view-list" on-tap="nextPage"></paper-icon-button></app-toolbar>
@@ -102,9 +101,17 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
 
     _thumbuploaded(e){
          this.registrationdata.thumburl = this.thumburl;
+         if (this.registrationdata.videourl)
+             this._completeregistration();
     }
 
     _videouploaded(e){
+        this.registrationdata.videourl = this.videourl;
+        if (this.registrationdata.thumburl)
+            this._completeregistration();
+    }
+
+    _completeregistration(){
         // REMOVE THE BINARIES FROM THE OBJECT, IT WAS SAVED TO STORAGE
         delete this.registrationdata.video;
         delete this.registrationdata.thumbs;
@@ -113,7 +120,6 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
         this.registrationdata.videourl = this.videourl;
         this.$.doc.docid = this.registrationdata.username;
         this.$.doc.data = this.registrationdata;
-        
     }
 
     _saveRegistration(e){
@@ -124,11 +130,12 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
         fetch(this.registrationdata.thumb).then(res => res.blob()).then(blob => {this.thumb = blob;
             console.log(this.thumb);
             this.video = this.registrationdata.video;
+        }).catch((error) => {
+            console.log("error fetching thumb ", error)
         });
     }
 
     _selectVideo(){
-        console.log("video selected");
     }
 
 

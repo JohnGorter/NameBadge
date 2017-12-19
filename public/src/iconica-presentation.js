@@ -6,7 +6,7 @@ import '/node_modules/@polymer/iron-pages/iron-pages.js'
 import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 
 const htmlTemplate = `
-    <style is="custom-style" include="shared-style"> 
+    <style is="custom-style" include="app-styles"> 
     video { 
     min-width: 100vw;
     min-height: 100vh;

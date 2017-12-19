@@ -5,7 +5,7 @@ import { Element as PolymerElement } from '../node_modules/@polymer/polymer/poly
 import '/node_modules/@polymer/paper-input/paper-input.js'
 
 const template = `
-        <style is="custom-style" include="shared-style">
+        <style is="custom-style" include="app-styles">
         </style>
 
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
