@@ -19,8 +19,8 @@ const template = `
              <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="0" recordingtime="0.5" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
             <div id="details" class="shown">
                 <div id="backpanel" class="registration-back_panel">
-                   <div><p class="large">Persoonlijke pitch van 7 seconden</p></div>
-                  <div><p>Stel jezelf voor aan andere bezoekers van [evenement]</p></div>
+                   <div><p class="large">Deel je foto met de rest!</p></div>
+                  <div><p>Stel jezelf voor aan andere bezoekers van <br>Startup Delta Summit</p></div>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ const template = `
         </div>
         <div step1>
             <paper-input value="{{registrationdata.username}}" class="done" disabled label="voornaam + achternaam"></paper-input>
-            <paper-input value="{{registrationdata.company}}"  label="Omdat we het nog wel een beetje zakelijk moeten houden" always-float-label placeholder="Je bedrijfsnaam"></paper-input>
+            <paper-input value="{{registrationdata.company}}"  label="Voor het leggen van goede verbindingen" always-float-label placeholder="Je bedrijfsnaam"></paper-input>
         </div>
         <div id="toolbar" slot="toolbar">
             <paper-icon-button id="previous" icon="arrow-back" previouspage>prev</paper-icon-button>
@@ -60,9 +60,9 @@ export class IcoRegistration extends PolymerElement {
     _stopRecording(e) { this.$.recorder.stop(); }
     _startRecording(e) { 
         this.$.next.hidden = true;
-        this.$.command.innerText = "Record"; 
+        this.$.command.innerText = "Maak foto!"; 
         this.$.command.hidden = false;
-        this.$.command.style.backgroundColor = "red";
+        this.$.command.style.backgroundColor = "#43BC84";
     }
     _record() {
         this.$.wizard.hidetoolbar = true;
