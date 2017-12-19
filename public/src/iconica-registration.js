@@ -6,6 +6,16 @@ import '/node_modules/@polymer/paper-input/paper-input.js'
 
 const template = `
         <style is="custom-style" include="shared-style">
+            video { 
+    min-width: 100vw;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    }
         </style>
 
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
@@ -19,8 +29,8 @@ const template = `
              <ico-recorder id="recorder" videoblob="{{registrationdata.video}}" counter="0" recordingtime="0.5" thumbs="{{registrationdata.thumbs}}" on-recording-complete="_completeRecording"></ico-recorder>
             <div id="details" class="shown">
                 <div id="backpanel" class="registration-back_panel">
-                   <div><p class="large">Persoonlijke pitch van 7 seconden</p></div>
-                  <div><p>Stel jezelf voor aan andere bezoekers van [evenement]</p></div>
+                   <div><p class="large">Strike a pose!</p></div>
+                  <div><p>Toon jezelf aan de rest van de bezoekers</p></div>
                 </div>
             </div>
         </div>
@@ -30,7 +40,7 @@ const template = `
         </div>
         <div step1>
             <paper-input value="{{registrationdata.username}}" class="done" disabled label="voornaam + achternaam"></paper-input>
-            <paper-input value="{{registrationdata.company}}"  label="Omdat we het nog wel een beetje zakelijk moeten houden" always-float-label placeholder="Je bedrijfsnaam"></paper-input>
+            <paper-input value="{{registrationdata.company}}"  label="Voor het leggen van verbindingen erg handig om te weten" always-float-label placeholder="Je bedrijfsnaam"></paper-input>
         </div>
         <div id="toolbar" slot="toolbar">
             <paper-icon-button id="previous" icon="arrow-back" previouspage>prev</paper-icon-button>
@@ -60,9 +70,9 @@ export class IcoRegistration extends PolymerElement {
     _stopRecording(e) { this.$.recorder.stop(); }
     _startRecording(e) { 
         this.$.next.hidden = true;
-        this.$.command.innerText = "Record"; 
+        this.$.command.innerText = "Maak foto"; 
         this.$.command.hidden = false;
-        this.$.command.style.backgroundColor = "red";
+        this.$.command.style.backgroundColor = "#43BC84";
     }
     _record() {
         this.$.wizard.hidetoolbar = true;
