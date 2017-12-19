@@ -79,7 +79,7 @@ const htmlTemplate = `
             </div>
         </div>
         <ico-grid id="grid" grid items="{{items}}" on-item-selected="_selectVideo">
-            <div><img style="width:50vw;" src="{_{item.thumburl}_}" /></div>
+            <div><img style="width:30vw;" src="{_{item.thumburl}_}" /></div>
         </ico-grid>
     </iron-pages>
 `;
