@@ -59,8 +59,8 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
     connectedCallback(){
         super.connectedCallback();
         window.performance.mark('mark_fully_loaded');
-        this.titles = ["Get on board!","Hallo {{registration.username}}!", "","Kies de foto voor op je badge"];
-        this.details = ["","Wij willen je [badge] graag voorzien van je bedrijfsnaam", "", "Wij hebben speciaal voor jou een selectie foto's gemaakt"];
+        this.titles = ["Create your badge!","Hallo {{registration.username}}!", "","Kies de foto voor op je badge"];
+        this.details = ["","Wij willen je SmartBadge graag voorzien van je bedrijfsnaam", "", "Wij hebben speciaal voor jou een selectie foto's gemaakt"];
         this.title = this.titles[0];
         this.detail = this.details[0];
         import('./iconica-presentation.js');
