@@ -26,7 +26,10 @@ var template = `
        <style is="custom-style" include="app-styles"></style>
        <app-header-layout>
             <app-header slot="header" fixed condenses effects="waterfall">
-               <app-toolbar><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div><paper-icon-button icon="view-list" on-tap="nextPage"></paper-icon-button></app-toolbar>
+               <app-toolbar><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
+                <paper-icon-button icon="view-list" on-tap="nextPage"></paper-icon-button>
+                <paper-icon-button icon="settings-overscan" on-tap="scan"></paper-icon-button>
+               </app-toolbar>
            </app-header>
            <div class="main">   
                 <div class="textplace" id="textplace">
@@ -34,7 +37,10 @@ var template = `
                     <div id="details">{{_getStepDetails(step)}}</div>
                 </div>
             </div>
-            <ico-presentation id="presentation"  items="{{items}}"></ico-presentation>
+            <ico-scanner id="scanner" hidden>scanner
+                <div id="scanwindow"></div>
+            </ico-scanner>
+            <ico-presentation id="presentation" items="{{items}}"></ico-presentation>
             <ico-registration id="registration" registrationdata="{{registration}}" username="{{username}}" step="{{step}}" on-registration-complete="_saveRegistration"></ico-registration>
        </app-header-layout>
 
@@ -58,7 +64,7 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
 
     connectedCallback(){
         super.connectedCallback();
-        window.performance.mark('mark_fully_loaded');
+       
         this.titles = ["Get on board!","Hallo {{registration.username}}!", "","Kies de foto voor op je badge"];
         this.details = ["","Wij willen je [badge] graag voorzien van je bedrijfsnaam", "", "Wij hebben speciaal voor jou een selectie foto's gemaakt"];
         this.title = this.titles[0];
@@ -86,8 +92,38 @@ export class MyApp extends GestureEventListeners(PolymerElement) {
             return (step >= 0)? this.details[step] : "";
         return "";
     }
+    scan(){
+        this.$.presentation.hidden = true;
+        this.$.registration.hidden = true;
+       // import('./iconica-scanner.js').then(() => {
+         //   this.$.scanner.start();
+            this.$.scanner.hidden = false;
+       // });
+
+       Quagga.init({
+        inputStream : {
+          name : "Live",
+          type : "LiveStream",
+          target: this.$.scanwindow    // Or '#yourElement' (optional)
+        },
+        decoder : {
+          readers : ["code_128_reader"]
+        }
+      }, function(err) {
+          if (err) {
+              console.log(err);
+              return
+          }
+          console.log("Initialization finished. Ready to start");
+          Quagga.start();
+      });
+      Quagga.onDetected((data) =>{
+          console.log("data", data);
+      });
+    }
 
     nextPage(){
+        this.$.scanner.hidden = true;
         this.$.auth.signInAnonymously();
         this.$.presentation.hidden = !this.$.presentation.hidden;
         import('./iconica-registration.js').then(() => {

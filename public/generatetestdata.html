@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+</head>
+<body>
+        <script src="https://www.google.com/cloudprint/client/cpgadget.js">
+        </script>
+        <script>
+          window.onload = function() {
+            var gadget = new cloudprint.Gadget();
+            gadget.setPrintButton(
+                cloudprint.Gadget.createDefaultPrintButton("print_button_container")); // div id to contain the button
+            gadget.setPrintDocument("[document mimetype]", "[document title]", "[document content]", "[encoding] (optional)");
+          }
+        </script>
+    <test-app></test-app>
+    <script type="module">
+    import './node_modules/@polymer/polymer/polymer.js'
+    import './node_modules/@polymer/paper-button/paper-button.js'
+    import { Element } from './node_modules/@polymer/polymer/polymer-element.js'
+
+    let htmlTemplate = `<h1>test data generator</h1><paper-button on-tap="generateData">generate test data</paper-button>`;
+    export class testApp extends Element {
+        static get template() { return htmlTemplate; }
+
+        generateData(){
+            let datas = []; 
+            for (let i = 0; i < 13500; i++){
+                let name = faker.name.findName();
+                let comp = faker.company.companyName();
+                let data = {company:comp, thumburl:faker.image.avatar(), username:name, videourl:''};
+                datas.push(data); 
+                console.log("saved new entry");
+            }
+            window.localStorage["registrations"] = JSON.stringify(datas);
+        }
+    }
+    customElements.define('test-app', testApp); 
+
+    </script>
+</body>
+</html>

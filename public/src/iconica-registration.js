@@ -9,6 +9,11 @@ const template = `
         </style>
 
     <ico-wizard id="wizard" progressbar progressbar-style="small" showfinish step="{{step}}" on-step-changed="_onStep" on-complete="_completeRegistration">
+        <div step4 on-open="_generateBarcode">
+           badge barcode
+           <svg id="barcode"></svg>   
+           <paper-button on-tap="_printbadge">Print badge</paper-button> 
+        </div>
         <div step3>
             <ico-grid flex id="photoselect" items="{{registrationdata.thumbs}}" selected-object="{{registrationdata.thumb}}">
                 <img height="100%" width="100%" src="{_{item}_}" />
@@ -92,6 +97,13 @@ export class IcoRegistration extends PolymerElement {
     _completeRegistration(){
         this.dispatchEvent(new CustomEvent("registration-complete", { detail: this.registrationdata }));
         this.reset();
+    }
+    _printbadge(){
+        print();
+    }
+
+    _generateBarcode(){
+        JsBarcode(this.$.barcode, this.registrationdata.username, {displayValue: false});
     }
 
     _hasToolbar(){

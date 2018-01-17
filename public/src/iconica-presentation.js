@@ -3,7 +3,6 @@ import '/node_modules/@polymer/polymer/polymer.js'
 import { GestureEventListeners } from '../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js'
 import { Element } from '../node_modules/@polymer/polymer/polymer-element.js'
 import '/node_modules/@polymer/iron-pages/iron-pages.js'
-import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 
 const htmlTemplate = `
     <style is="custom-style" include="app-styles"> 
@@ -17,6 +16,9 @@ const htmlTemplate = `
     left: 50%;
     transform: translate(-50%,-50%);
     }
+
+        #grid { display:flex;flex-flow:wrap; }
+        #grid > div { margin:10px;} 
 
     #details { 
         transition:bottom 0.45s ease-in-out;
@@ -78,9 +80,10 @@ const htmlTemplate = `
                 </div>
             </div>
         </div>
-        <ico-grid id="grid" grid items="{{items}}" on-item-selected="_selectVideo">
-            <div><img style="width:30vw;" src="{_{item.thumburl}_}" /></div>
-        </ico-grid>
+        <div id="grid">
+        <template is="dom-repeat" id="grid" items="{{items}}" on-dom-change="logchange" initial-count="20">
+            <div><img style="width:30vw;" src="{{item.thumburl}}" /></div>
+        </div>
     </iron-pages>
 `;
 
@@ -93,11 +96,13 @@ export class IcoPresentation extends GestureEventListeners(Element) {
         }
     }
 
+    logchange(){ console.log("dom changed!");}
     connectedCallback(){
         // document.addEventListener("click", () => {
         //     if (this.$.pages.selected == 0 && !this.$.video.paused)
         //         this.$.video.pause();
         // });
+        performance.mark("component");
     }
     detached() {
         console.log("detached!");
