@@ -1,13 +1,17 @@
 {
   "dependencies": {
-    "@iconica/iconicaelements": "^1.0.31",
+    "@iconica/iconicaelements": "^1.0.35",
     "@polymer/app-layout": "^3.0.0-pre.1",
     "@polymer/iron-icons": "next",
     "@polymer/iron-pages": "next",
     "@polymer/paper-button": "next",
+    "@polymer/paper-card": "next",
+    "@polymer/paper-dialog": "next",
+    "@polymer/paper-fab": "next",
     "@polymer/paper-icon-button": "next",
     "@polymer/paper-input": "next",
     "@polymer/paper-progress": "next",
+    "@polymer/paper-tabs": "next",
     "@polymer/paper-toolbar": "next",
     "@polymer/polymer": "next",
     "lit-html": "^0.7.1",

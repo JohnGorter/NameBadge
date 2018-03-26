@@ -6,36 +6,72 @@
     <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.8.0/dist/JsBarcode.all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-    <link rel="import" href="app-styles.html">
 
+    <script type="text/javascript" src="/instascan/grid.js"></script>
+    <script type="text/javascript" src="/instascan/version.js"></script>
+    <script type="text/javascript" src="/instascan/detector.js"></script>
+    <script type="text/javascript" src="/instascan/formatinf.js"></script>
+    <script type="text/javascript" src="/instascan/errorlevel.js"></script>
+    <script type="text/javascript" src="/instascan/bitmat.js"></script>
+    <script type="text/javascript" src="/instascan/datablock.js"></script>
+    <script type="text/javascript" src="/instascan/bmparser.js"></script>
+    <script type="text/javascript" src="/instascan/datamask.js"></script>
+    <script type="text/javascript" src="/instascan/rsdecoder.js"></script>
+    <script type="text/javascript" src="/instascan/gf256poly.js"></script>
+    <script type="text/javascript" src="/instascan/gf256.js"></script>
+    <script type="text/javascript" src="/instascan/decoder.js"></script>
+    <script type="text/javascript" src="/instascan/qrcode.js"></script>
+    <script type="text/javascript" src="/instascan/findpat.js"></script>
+    <script type="text/javascript" src="/instascan/alignpat.js"></script>
+    <script type="text/javascript" src="/instascan/databr.js"></script>
+
+    <script src="/qrcode.js"></script>
+    
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="manifest" href="/manifest.json">
     <style>
+        * { box-sizing: border-box; overscroll-behavior: none; }
         html{
             margin:0;
             padding:0;
-            overflow: hidden;
+            width:100%;
+            overflow:auto;
+            height:100%;
             }
         body{
             position: absolute;
+            width:100%;
+            overflow:auto;
             height:100%;
             margin:0px;
             overscroll-behavior-y: none;
+            background-color: #040356;
             }
     </style>
 </head>
 <body>
-        <my-app></my-app>
-        <script type="module" src="/src/my-app.js"></script>
+        <badge-app></badge-app>
+        <div id="install_tip" style="position:absolute;left:10px;top:10px;background-color:red;color:white;">
+            This app could be installed!! Click here to install the app
+        </div>
+        <script type="module" src="/src/badge-app.js"></script>
         <script nomodule></script>
        
-        
+        <script>
+            window.addEventListener('john', () => { console.log('en dit dan!!!')});
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log("Thank you for installing our app!");
+            } else {
+                console.log("not installed");
+                document.querySelector("#install_tip").hidden = true;
+            }
+        </script>
         <script>
             function DoFullScreen() {
 

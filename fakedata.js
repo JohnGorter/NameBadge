@@ -40,11 +40,28 @@ firebase.initializeApp(config);
 loadModule(['http://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js'])
     .then(function () {
     console.log('modules loaded');
-    for (var i = 0; i < 4000; i++) {
+    var datatosave = '[';
+    for (var i = 0; i < 10; i++) {
         var name = faker.name.findName();
         var comp = faker.company.companyName();
-        var data = { company: comp, thumburl: faker.image.avatar(), username: name, videourl: '' };
-        firebase.firestore().collection("registrations").add(data).then(function () { return console.log("data saved"); }).catch(function () { return console.log("data not saved!"); });
+        var data = { 
+            company: comp, 
+            email:faker.internet.email(),
+            mobile:faker.phone.phoneNumber(),
+            thumburl: faker.image.avatar(),
+            username: name, 
+            videourl: '',
+            description: 'blablabla',
+            sector:'IT',
+            businessmodel:'Business 2 business',
+            incentive:'My goal is to',
+            participating:"- one - two  - three"
+        };
+        datatosave += JSON.stringify(data) + ",";
+        //firebase.firestore().collection("registrations").add(data).then(function () { return console.log("data saved"); }).catch(function () { return console.log("data not saved!"); });
         console.log("saved new entry");
     }
+    datatosave += "]";
+
+    console.log(datatosave);
 });
