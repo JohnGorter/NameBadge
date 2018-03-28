@@ -12,13 +12,11 @@ const htmlTemplate = `
       --primary-background-color: #096BA6;
       --paper-input-bg:           #fff;
       --disabled-color:           #727173;
-
+      --general-background:       #f1f1f1;
       --tint-color: #08A195;
       --second-tint-color: #0DC4D7;
       --main-text-color:var(--text-secondary-color);
       font-family: 'Roboto', sans-serif;
-
-      
 
       --custom-paper-input: {
         margin-bottom:165px;
@@ -28,7 +26,7 @@ const htmlTemplate = `
         border-radius:5px;
         padding-left:5px;
         padding-right:5px;
-        min-width: 315px;
+        min-width: 300px;
       }
       --primary-button: {
         border-radius:20px; 
@@ -41,12 +39,11 @@ const htmlTemplate = `
         height:50px; 
         width: 200px;
       }
-
       --branche-logo: {
-        height: 45px;
+        height: 40px;
         padding-top:5px;
+        margin-left: 10px;
       }
-
 }
     
     /* start my-app */
@@ -68,7 +65,7 @@ const htmlTemplate = `
         width:100vw; 
         height:95vh;
         color:var(--text-primary-color); 
-        background-color:var(--dark-primary-color); 
+        background-color:var(--general-background); 
         display:flex;
         flex-wrap:wrap;
         align-content:flex-start;
@@ -129,7 +126,7 @@ const htmlTemplate = `
         z-index:10;
         width:100vw;
         height:94vh;
-        top:6vh;
+        top:10vh;
         position:absolute;
         background-color:var(--text-primary-color);
         overflow:scroll;

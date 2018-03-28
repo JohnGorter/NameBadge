@@ -5,25 +5,25 @@ import { GestureEventListeners } from '/node_modules/@polymer/polymer/lib/mixins
 const htmlTemplate = `
    <style>
    :host { position:absolute;background-color:#454545;z-index:50;top:0px;width:100vw;height:100vh;display:flex;justify-content:center;}
-   .container { width:80vw;background-color:white;height:100vh;display:flex;flex-flow:row;justify-content:center;}
-   .pagecontainer { font-family:roboto;font-style:bold;display:flex;flex-flow:column;align-items:center;text-align:center;color:#343434;height:90vh;background-color:white;padding-left:50px;padding-right:50px;}
+   .container { width:80vw;background-color:white;height:101vh;display:flex;flex-flow:row;justify-content:center;}
+   .pagecontainer { font-family:roboto;display:flex;flex-flow:column;align-items:center;text-align:center;color:#343434;height:90vh;background-color:white;padding-left:15vw;padding-right:15vw;}
    .pagecontainer h1 { font-size:24px;}
    .pagecontainer p { font-size:14px;line-height:2;}
    .pagecontainer img { padding-top:50px;}
-   div[step0] .pagecontainer { background-color:white;}
+   div[step0] .pagecontainer { background-color:#f1f1f1;}
    div[step0] h1,div[step0] p { color:#343434;}
-   div[step1] .pagecontainer { background-color:#2196F3;}
+   div[step1] .pagecontainer { background-color:#096BA6;}
    div[step1] h1,div[step1] p { color:white;}
-   div[step2] .pagecontainer { background-color:#1de9b6;}
+   div[step2] .pagecontainer { background-color:#43BC84;}
    div[step2] h1,div[step2] p { color:white;}
-   div[step3] .pagecontainer { background-color:white;}
+   div[step3] .pagecontainer { background-color:#f1f1f1;}
    div[step3] h1,div[step3] p { color:#343434;}
-   .skip { align-self:flex-end}
-   ico-wizard.page0 { width:80vw;background-color:white;}
-   ico-wizard.page1 { width:80vw;background-color:#2196F3;}
-   ico-wizard.page2 { width:80vw;background-color:#1de9b6;}
-   ico-wizard.page3 { width:80vw;background-color:white;}
-   paper-fab { position:fixed;right:80px;bottom:80px;background-color:#454545;opacity:0.7;}
+   .skip {position: fixed;right: 25px;}
+   ico-wizard.page0 { width:100vw;background-color:#f1f1f1}
+   ico-wizard.page1 { width:100vw;background-color:#096BA6;}
+   ico-wizard.page2 { width:100vw;background-color:#43BC84;}
+   ico-wizard.page3 { width:100vw;background-color:#f1f1f1;}
+   paper-fab { position:fixed;right:20px;bottom:60px;background-color:#454545;opacity:0.7;}
    
    </style>
    <div class="container">
@@ -58,7 +58,7 @@ const htmlTemplate = `
         <div step3>
             <div class="pagecontainer">
                 <p class="skip">overslaan</p>
-                <h1 style="margin-top:50px">Personaliseer je app!</h1>
+                <h1 style="margin-top: 30vh;">Personaliseer je app!</h1>
                 <p>Door je emailadres van registratie bij Gribbio in te voeren, kunnen wij je persoonlijke agenda inladen.</p>
                 <paper-input label="username">
                     <iron-icon icon="mail" slot="prefix"></iron-icon>

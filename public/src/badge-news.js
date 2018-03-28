@@ -4,18 +4,17 @@ import { Element as PolymerElement} from '/node_modules/@polymer/polymer/polymer
 const html = String.raw;
 const htmlTemplate = html`
 <style>
-.container { overflow:scroll; top:64px;height:100vh;width:100vw;margin-top:0px;position:absolute;background-color:var(--tint-color);}
-.newsitem  {     display: flex;
+.container { overflow:scroll; top:64px;height:100vh;width:100vw;margin-top:0px;position:absolute;background-color:var(--general-background);}
+.newsitem  { display: flex;
     flex-flow: column;
-    font-size:40px
-    font-family: sans-serif;
     margin: 10px;
     justify-content:center;
     align-items:center;
     color:var(--tint-color);
-    border: 1px solid black;
     background-color: white;
-    height: 100px;}
+    height: 100px;
+    box-shadow: var(--paper-material-elevation-1_-_box-shadow);
+}
 .quote {font-style: italic;} 
 .source { color:#9a9a9a;align-self: flex-end;margin-right: 20px;margin-top:15px;font-size:12px;}
 </style>

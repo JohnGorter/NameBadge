@@ -8,13 +8,11 @@ var template = `
         .hide { display:none;height:0px;}
         app-toolbar { transition: all 0.5s ease;top:0px;}
         app-toolbar.hidden  { top:-64px;}
-        #tabs { transition: height 0.5s ease;position:fixed;bottom:0px;width:100vw;height:40px;--paper-tabs-selection-bar-color: #040356; background-color:#040356;}
+        #tabs { transition: height 0.5s ease;position:fixed;bottom:0px;width:100vw;--paper-tabs-selection-bar-color: #040356; background-color:#040356;}
         #tabs.hidden { position:fixed;bottom:-40px;width:100vw;height:40px;}
         iron-icon { --iron-icon-fill-color:white}
         paper-dialog iron-icon { --iron-icon-fill-color:black}
-
         a { text-decoration:none;color:black;}
-     
        </style>
        <custom-style>
             <style is="custom-style" include="paper-material-styles"></style>
@@ -95,10 +93,10 @@ var template = `
        <badge-mailrequest id="mailrequest"></badge-mailrequest> -->
 
        <paper-tabs id="tabs" selected="{{selpage}}">
-            <paper-tab><iron-icon icon="image:center-focus-weak" ></iron-icon></paper-tab>
+            <paper-tab><iron-icon icon="image:center-focus-weak"></iron-icon></paper-tab>
             <paper-tab><iron-icon icon="image:grid-on" ></iron-icon></paper-tab>
-            <paper-tab><iron-icon icon="schedule" ></iron-icon></paper-tab>
-            <paper-tab><iron-icon icon="announcement" ></iron-icon></paper-tab>
+            <paper-tab><iron-icon icon="icons:view-agenda" ></iron-icon></paper-tab>
+            <paper-tab><iron-icon icon="icons:timeline" ></iron-icon></paper-tab>
        </paper-tabs>
 
        <ico-app api-key="AIzaSyD22SNSB6S5EVQqbT1XYQ2Xn0iMQGOk-iA"  auth-domain="woe-dag.firebaseapp.com" database-U-R-L="https://woe-dag.firebaseio.com" project-id="woe-dag" storage-bucket="woe-dag.appspot.com" messaging-sender-id="576477840466"></ico-app>

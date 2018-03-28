@@ -13,7 +13,7 @@ const htmlTemplate = html`
         .card .circle { background-color:white;border-radius:50%;border:2px solid Navy;width:20px;height:20px;position:absolute;top:50px;left:-14px;}
         .card .reserved { background-color:var(--tint-color); }
         .time .timedetail { line-height:50px;font-size:20px;width:100%; margin-left:50px;height:50px; }
-        .card { position:relative;left:22px;display:flex;width:92vw;background-color:white;}
+        .card { position:relative;margin:auto;margin-bottom:10px;display:flex;width: 92vw;background-color:white;}
         div.markedold {border: 4px solid var(--second-tint-color); border-radius: 7px; }
         .hidden { display:none;}
         .details { display:flex;flex-flow:column;height:120px;width:100%;color:var(--main-text-color);}

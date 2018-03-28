@@ -8,7 +8,7 @@ const htmlTemplate = html`
     </custom-style>
     <style>
         :host { width:100vw;background-color:#efefef;top:70px;position:absolute;}
-        .container { overflow:scroll;height:80vh;top: -10px;position: relative;}
+        .container { overflow:scroll;height:80vh;position: relative;}
         .time { height:50px;position:relative;}
         .line { background-color:#040356;width:2px;position:absolute;left:20px; }
         .noline { background-color:transparant;width:2px;position:absolute;left:20px; }
@@ -17,7 +17,7 @@ const htmlTemplate = html`
         .time .onlyMe { background-color:var(--tint-color);}
         .time .timedetail { color:#040356;display:flex;line-height:50px; margin-left:50px;width:87vw;position:relative;left:-20px;}
         .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:-10px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
-        .toolbartabs { top:-10px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
+        .toolbartabs {top: -3px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
     </style>
     <paper-tabs selected="{{selected}}" class="toolbartabs paper-material" elevation="1">
         <paper-tab>Alle Sessies</paper-tab>

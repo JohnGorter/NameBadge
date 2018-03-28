@@ -9,10 +9,8 @@ const htmlTemplate = `
         <style is="custom-style" include="paper-material-styles"></style>
     </custom-style>
     <style is="custom-style" include="app-styles"> 
-        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:35px;height: 76vh;align-items: flex-start;
-            align-content: flex-start;}
-        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:35px;height: 76vh;align-items: flex-start;
-            align-content: flex-start;}
+        #grid {background:--var(--general-background);display:flex;flex-flow:wrap;margin:auto;height: 80vh;justify-content:flex-start;}
+        #grid_lastvisited {background:--var(--general-background);display:flex;flex-flow:wrap;margin:auto;height: 80vh;justify-content:flex-start;}
 
     #details { 
         transition:bottom 0.45s ease-in-out;
@@ -61,14 +59,14 @@ const htmlTemplate = `
 
       .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 75%; font-family: roboto; color: #444; text-shadow: 3px 6px 5px #666;}
       .hidden { display:none;}
-      .card { border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6}
-      .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:28px;text-shadow:3px 3px 3px #000}
-      .toolbartabs { top:20px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
+      .card { border-radius:3px;height:45vw; width:45vw;    margin: 2.5vw;background-color:#096BA6}
+      .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:28px;text-shadow:1px 1px 1px #000}
+      .toolbartabs {--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
       .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:20px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
     </style>
     <paper-dialog id="dialog" style="margin:10px;top:56px;" on-iron-overlay-closed="close">
         <div style="position:relative;margin:0px;padding:0px;width:95vw;height:447px;
-        background:url([[_getPhoto(selectedItem.Photo)]]);background-size:100% 100%;">
+        background:url([[_getPhoto(selectedItem.Photo)]]);background-size:100%;object-fit: cover;">
         <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:15px;bottom:100px;color:white;font-size:42px;">[[selectedItem.username]]
         </div>
         <div style="position:relative;padding:15px;background-color: white; margin-top:-80px; height:100px;">
@@ -143,13 +141,13 @@ export class BadgePresentation extends GestureEventListeners(Element) {
 
     _getPhoto(img) {
         if (img && img != "n/a") 
-            return `background:url(${img}) no-repeat;background-size:100% 100%;`;
+            return `background:url(${img});background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
         else
-            return `background:url(/images/nophoto.jpg) no-repeat;background-size:100% 100%;`;
+            return `background:url(/images/nophoto.jpg);background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
         
     }
     _getBackgroundStyle(img){
-        if (img && img != "n/a") return `background:url(${img}) no-repeat;background-size:100% 100%;`;
+        if (img && img != "n/a") return `background:url(${img});background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
         return "background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]; 
     }
     _clearFilter(){
