@@ -48,6 +48,10 @@ const htmlTemplate = `
     
     /* start my-app */
 
+    .primary-button{
+      background-color:var(--dark-primary-color);
+    }
+
       app-toolbar { 
         background-color:var(--dark-primary-color);
         color:var(--text-primary-color);
@@ -125,7 +129,7 @@ const htmlTemplate = `
       badge-presentation { 
         z-index:10;
         width:100vw;
-        height:94vh;
+        height:90vh;
         top:10vh;
         position:absolute;
         background-color:var(--text-primary-color);

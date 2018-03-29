@@ -44,10 +44,10 @@ var template = `
        </app-header-layout>
 
        <paper-dialog id="nomatchDialog" style="background-color: white;" modal>
-            <h2>Sorry</h2>
-            <div style="margin-bottom:50px;">Het scannen heeft geen resultaten opgeleverd.</div>
+            <h2>Jammer,</h2>
+            <div style="margin-bottom:50px;">We hebben deze scan niet kunnen linken aan de persoon. Misschien kun je het nog eens proberen</div>
             <div class="buttons" style="position:relative;border-top:1px solid #d8d5d5;background-color: white;">
-                <span style="user-select: none;margin:10px;color:var(--tint-color)" dialog-dismiss>Sluiten</span>
+                <span style="user-select: none;margin:10px;color:var(--tint-color)" dialog-dismiss>Probeer het nog eens</span>
             </div>
        </paper-dialog>
 

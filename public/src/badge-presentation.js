@@ -11,7 +11,6 @@ const htmlTemplate = `
     <style is="custom-style" include="app-styles"> 
         #grid {background:--var(--general-background);display:flex;flex-flow:wrap;margin:auto;height: 80vh;justify-content:flex-start;}
         #grid_lastvisited {background:--var(--general-background);display:flex;flex-flow:wrap;margin:auto;height: 80vh;justify-content:flex-start;}
-
     #details { 
         transition:bottom 0.45s ease-in-out;
         position:relative;
@@ -30,7 +29,6 @@ const htmlTemplate = `
         bottom:-35vh;
         height:30vh;
         }
-
 
       .info_details { 
         width:50vw;
