@@ -8,7 +8,7 @@ const htmlTemplate = `
    .container { width:80vw;background-color:white;height:100vh;display:flex;flex-flow:row;justify-content:center;}
    .pagecontainer { font-family:roboto;font-style:bold;display:flex;flex-flow:column;align-items:center;text-align:center;color:#343434;height:90vh;background-color:white;padding-left:50px;padding-right:50px;}
    .pagecontainer h1 { font-size:24px;}
-   .pagecontainer p { font-size:14px;line-height:2;}
+   .pagecontainer p { font-size:10px;line-height:1.5;}
    .pagecontainer img { padding-top:50px;}
    div[step0] .pagecontainer { background-color:white;}
    div[step0] h1,div[step0] p { color:#343434;}
@@ -23,15 +23,15 @@ const htmlTemplate = `
    ico-wizard.page1 { width:80vw;background-color:#2196F3;}
    ico-wizard.page2 { width:80vw;background-color:#1de9b6;}
    ico-wizard.page3 { width:80vw;background-color:white;}
-   paper-fab { position:fixed;right:80px;bottom:80px;background-color:#454545;opacity:0.7;}
+   paper-fab { position:fixed;right:37px;bottom:20px;background-color:#454545;opacity:0.7;}
    
    </style>
    <div class="container">
     <ico-wizard id="wizard" progressballs class="page0">
         <div step0 on-close="animateToLeft">
             <div class="pagecontainer">
-                <p class="skip">overslaan</p>
-                <img width="250" height="250" src="/images/zeshoek.svg"></img>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
                 <h1>Digitaal het evenement beleven</h1>
                 <p>Met de Smartbadge app wordt het netwerken net even wat effectiever en leuker.</p>
                 <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
@@ -39,8 +39,8 @@ const htmlTemplate = `
         </div>
         <div step1>
             <div class="pagecontainer">
-                <p class="skip">overslaan</p>
-                <img width="250" height="250" src="/images/zeshoek.svg"></img>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
                 <h1>On- en offline beschikbaarheid</h1>
                 <p>Slechte internet verbinding op het evenement?</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
@@ -48,22 +48,19 @@ const htmlTemplate = `
         </div>
         <div step2>
             <div class="pagecontainer">
-                <p class="skip">overslaan</p>
-                <img width="250" height="250" src="/images/zeshoek.svg"></img>
-                <h1>Sla je leukste connecties op!</h1>
-                <p>Heb je iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens gemakkelijk opslaan door de badge te scannen of simpel op het label knopje te drukken.</p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
+                <h1>Sla connecties op!</h1>
+                <p>Heb je iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens opslaan door de badge te scannen.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step3>
             <div class="pagecontainer">
-                <p class="skip">overslaan</p>
+                <p on-tap="_finish" class="skip" style="right:15%;position: absolute; ">overslaan</p>
                 <h1 style="margin-top:50px">Personaliseer je app!</h1>
-                <p>Door je emailadres van registratie bij Gribbio in te voeren, kunnen wij je persoonlijke agenda inladen.</p>
-                <paper-input label="username">
-                    <iron-icon icon="mail" slot="prefix"></iron-icon>
-                    <div slot="suffix">@email.com</div>
-                </paper-input>
+                <p>Door je eigen badge te scannen, kunnen wij je persoonlijke agenda inladen.</p>
+                <badge-scanner id="scanner" on-badge-scanned="badgescanned"></badge-scanner>
             <paper-fab label="Start" style="padding:0px;" on-tap="_finish"></paper-fab>
             </div>
         </div>

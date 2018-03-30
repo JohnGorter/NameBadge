@@ -7,11 +7,13 @@ export class BadgeScanner extends PolymerElement {
     static get template() { return html`
         <style>
             .scanner {
-                font-size:16px;
-                background-color:var(--tint-color);position:absolute;top:0px;display:flex;flex-flow:column;height:100vh;width:100%;align-items:center;justify-content:center;
+    padding: 20px;
+    border: 1px dashed black;
+                font-size:12px;
+                top:0px;display:flex;flex-flow:columnalign-items:center;justify-content:center;
             }
         </style>
-        <input type="file" accept="image/*" id="scaninput" on-change="_scanImage">
+        <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
         <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="80" style="opacity:0.4;margin-bottom:25px;"></img><p>Klik hier om een badge te scannen</p></div>
     `; }
 
