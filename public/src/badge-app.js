@@ -12,7 +12,7 @@ var template = `
         #tabs.hidden { position:fixed;bottom:-40px;width:100vw;height:40px;}
         iron-icon { --iron-icon-fill-color:white}
         paper-dialog iron-icon { --iron-icon-fill-color:black}
-
+        .scannercontainer { height:100vh;position:absolute;top:0px;width:100vw;display:flex;align-items:center;justify-content:center;background-color:var(--tint-color);}
         a { text-decoration:none;color:black;}
      
        </style>
@@ -36,7 +36,7 @@ var template = `
             </div> -->
             <button style="position:absolute;top:300px;"  on-tap="hideTabs">hide tabs</button>
             <iron-pages selected="{{selpage}}">
-                <badge-scanner id="scanner" on-badge-scanned="badgescanned"></badge-scanner>
+                <div class="scannercontainer"><badge-scanner id="scanner" on-badge-scanned="badgescanned" style="flex:1"></badge-scanner></div>
                 <badge-presentation id="presentation" emailaddress="{{emailaddress}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" on-more-info="moreinfo"></badge-presentation>
                 <badge-schedule on-show-details="_showDetails" id="schedule" schedule="[[schedule]]" only-me="[[onlyMe]]" agenda="{{_getAgenda(items, emailaddress)}}" filter="{{sessiefilter}}"></badge-schedule>
                 <badge-news items="[[newsitems]]"></badge-news>

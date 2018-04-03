@@ -6,11 +6,12 @@ const html = String.raw;
 export class BadgeScanner extends PolymerElement {
     static get template() { return html`
         <style>
+        :host { flex:1 }
             .scanner {
     padding: 20px;
     border: 1px dashed black;
                 font-size:12px;
-                top:0px;display:flex;flex-flow:columnalign-items:center;justify-content:center;
+                top:0px;display:flex;flex-flow:column;align-items:center;justify-content:center;
             }
         </style>
         <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
