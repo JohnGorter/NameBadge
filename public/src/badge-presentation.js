@@ -63,8 +63,13 @@ const htmlTemplate = `
       .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:20px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
     </style>
     <paper-dialog id="dialog" style="margin:10px;top:56px;" on-iron-overlay-closed="close">
+<<<<<<< HEAD
         <div style="position:relative;margin:0px;padding:0px;width:95vw;height:447px;
         background:url([[_getPhoto(selectedItem.Photo)]]);background-size:100%;object-fit: cover;">
+=======
+        <div style$="[[_getPhoto(selectedItem.Photo)]]" 
+        background:url([[_getPhoto(selectedItem.Photo)]]);background-size:100% 100%;">
+>>>>>>> 8289884281da12ead25cac923d34a28b5986113c
         <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:15px;bottom:100px;color:white;font-size:42px;">[[selectedItem.username]]
         </div>
         <div style="position:relative;padding:15px;background-color: white; margin-top:-80px; height:100px;">
@@ -139,10 +144,9 @@ export class BadgePresentation extends GestureEventListeners(Element) {
 
     _getPhoto(img) {
         if (img && img != "n/a") 
-            return `background:url(${img});background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
+            return `position:relative;margin:0px;padding:0px;width:95vw;height:447px;background:url(${img}) no-repeat;background-size:100% 100%;`;
         else
-            return `background:url(/images/nophoto.jpg);background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
-        
+            return `position:relative;margin:0px;padding:0px;width:95vw;height:447px;background:url(/images/nophoto.jpg) no-repeat;background-size:100% 100%;`;  
     }
     _getBackgroundStyle(img){
         if (img && img != "n/a") return `background:url(${img});background-size:cover;background-repeat:no-repeat;overflow:hidden;`;
@@ -154,7 +158,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
     }
     _filter(f){
         return (i)=> {
-            return this.filter == "" || i.firstname.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.lastname.toLowerCase().indexOf(this.filter.toLowerCase()) != -1;
+            return this.filter == "" || i.FirstName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.LastName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1;
         }
     }
 
@@ -171,7 +175,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
     _result(items, filter){
         var result = [];
         for (var i of this.items) {
-            if (this.filter == "" || i.firstname.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.lastname.toLowerCase().indexOf(this.filter.toLowerCase()) != -1) {
+            if (this.filter == "" || i.FirstName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.LastName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1) {
                 result.push(i); 
             }
         }

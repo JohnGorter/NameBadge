@@ -5,15 +5,12 @@ const html = String.raw;
 
 export class BadgeScanner extends PolymerElement {
     static get template() { return html`
-        <style is="custom-style" include="app-styles">
-            .scanner {
-                font-size:16px;
-                background-color:var(--general-background);position:absolute;top:0px;display:flex;flex-flow:column;height:100vh;width:100%;align-items:center;justify-content:center;
+        <style>
+            .scanner { width:70vw;height:50vh;padding: 20px; border: 1px dashed black; font-size:12px; top:0px;display:flex;flex-flow:column;align-items:center; justify-content:center;font-size:20px;text-shadow:5px 5px 5px #000;color:white;
             }
         </style>
-        
-        <input type="file" accept="image/*" id="scaninput" on-change="_scanImage">
-        <div class="scanner" on-tap="_scan"><div><h2>Wil je een connectie leggen?</h2></div><img src="/images/kaartje-sb.svg" height="180" style="margin-top: 10px;"></img><paper-button raised class="primary-button">Scan badge</paper-button></div>
+        <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
+        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="80" style="opacity:0.4;margin-bottom:25px;"></img><p>Klik hier om een badge te scannen</p></div>
     `; }
 
     connectedCallback(){

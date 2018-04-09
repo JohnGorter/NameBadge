@@ -17,7 +17,7 @@ const htmlTemplate = html`
         .time .onlyMe { background-color:var(--tint-color);}
         .time .timedetail { color:#040356;display:flex;line-height:50px; margin-left:50px;width:87vw;position:relative;left:-20px;}
         .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:-10px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
-        .toolbartabs {top: -3px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
+        .toolbartabs { top:-10px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
     </style>
     <paper-tabs selected="{{selected}}" class="toolbartabs paper-material" elevation="1">
         <paper-tab>Alle Sessies</paper-tab>
@@ -32,27 +32,29 @@ const htmlTemplate = html`
         <div>
             <div class="container">
                 <div class="noline"></div>
-                <template id="list" is="dom-repeat" items="{{schedule}}" as="hour" initial-count="5" >
-                    <div class="time"><div class="line"></div>
-                    <!-- <div class$="{{_getCircleClass(hour.collapsed, onlyMe)}}"> </div> -->
-                    <div on-tap="_expand" class="timedetail">
-                            <div>{{hour.hour}}</div>
-                            <template is="dom-if" if="{{hour.collapsed}}">
-                                <div style="font-size:10px;flex:1;text-align:right;padding-right:30px;margin-top:2px;">  {{_getSubItems(index)}} verborgen sessies tussen {{hour.hour}}</div>
+                <template id="list" is="dom-repeat" items="{{schedule}}" as="hour" initial-count="5">
+                    <template is="dom-if" if="{{_hasHourItems(index)}}">
+                        <div class="time"><div class="line"></div>
+                        <!-- <div class$="{{_getCircleClass(hour.collapsed, onlyMe)}}"> </div> -->
+                        <div on-tap="_expand" class="timedetail">
+                                <div>{{hour.hour}}</div>
+                                <template is="dom-if" if="{{hour.collapsed}}">
+                                    <div style="font-size:10px;flex:1;text-align:right;padding-right:30px;margin-top:2px;">  {{_getSubItems(index)}} verborgen sessies tussen {{hour.hour}}</div>
+                                </template>
+                        </div></div>
+                        <template is="dom-if" if="{{!hour.collapsed}}">
+                            <template is="dom-repeat" items="{{hour.items}}" initial-count="5" >
+                                <badge-scheduleitem 
+                                    on-show-details="_showDetails" 
+                                    on-mark-event="_markEvent"
+                                    item="{{item}}" 
+                                    nocircle
+                                    reserved="{{_isReserved(item)}}"
+                                    marked="[[_isMarked(item)]]"
+                                    hour="{{hour.hour}}"
+                                    filter="{{filter}}">
+                                </badge-scheduleitem>
                             </template>
-                    </div></div>
-                    <template is="dom-if" if="{{!hour.collapsed}}">
-                        <template is="dom-repeat" items="{{hour.items}}" initial-count="5" >
-                            <badge-scheduleitem 
-                                on-show-details="_showDetails" 
-                                on-mark-event="_markEvent"
-                                item="{{item}}" 
-                                nocircle
-                                reserved="{{_isReserved(item)}}"
-                                marked="[[_isMarked(item)]]"
-                                hour="{{hour.hour}}"
-                                filter="{{filter}}">
-                            </badge-scheduleitem>
                         </template>
                     </template>
                  </template> 
@@ -61,7 +63,7 @@ const htmlTemplate = html`
         <div>
             <div class="container">
                 <div class="noline"></div>
-                <template id="list" is="dom-repeat" items="{{schedule}}" as="hour" initial-count="5" >
+                <template id="mylist" is="dom-repeat" mutable-data items="{{schedule}}" as="hour" initial-count="5" >
                     <div class="time"><div class="line"></div>
                     <!-- <div class$="{{_getCircleClass(hour.collapsed, onlyMe)}}"> </div> -->
                     <div on-tap="_expand" class="timedetail">
@@ -71,7 +73,7 @@ const htmlTemplate = html`
                             </template>
                     </div></div>
                     <template is="dom-if" if="{{!hour.collapsed}}">
-                        <template is="dom-repeat" items="{{hour.items}}" initial-count="5" >
+                        <template is="dom-repeat" items="{{hour.items}}" initial-count="5" on-dom-change="_schedulerendered" >
                             <badge-scheduleitem 
                                 on-mark-event="_markEvent"
                                 item="{{item}}" 
@@ -93,13 +95,24 @@ const htmlTemplate = html`
 export class BadgeSchedule extends PolymerElement {
     static get template() {return htmlTemplate;}
     static get properties() { return {
-        selected: {type:Number, value:0},
+        selected: {type:Number, value:0, observer:'_tabchanged'},
         filter: { type:String, value:"", notify:true, observer:'_setBarDisplay'},
         agenda: { type:Array },
         schedule:{ type:Array }
     } };
 
+    _tabchanged(){
+        var schedule = this.schedule;
+        this.schedule = [];
+        this.schedule = schedule;
+        this.notifyPath('schedule');
+        
+    }
 
+    // filtetren van lege items werkt niet :-()
+    _hasHourItems(index){
+        return this.selected == 0 || this.schedule[index].items.find(i => i.marked == true);
+    }
     _setBarDisplay(){
        if (this.filter != ""){ 
          var filterbar = this.shadowRoot.querySelector("#filterbar")
@@ -171,6 +184,10 @@ export class BadgeSchedule extends PolymerElement {
     _getItems(hour){
         var items = this.schedule.filter ((i) =>  i.hour == hour);
         return items;
+    }
+
+    _schedulerendered(){
+        console.log("schedule rendered");
     }
 
 
