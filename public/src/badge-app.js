@@ -57,7 +57,7 @@ var template = `
        <badge-moreinfo id="moredialog" on-claim-user="_claimUser"></badge-moreinfo>
        <badge-basicinfo id="basicdialog" on-close="_closebasicinfo"></badge-basicinfo>
        <badge-prompt on-close="_setFilter" id="seachprompt" header="Zoeken naar" content="Geef hieronder uw zoekargument op" label="zoeken naar"></badge-prompt>
-       <badge-eventdetails id="eventdetails"></badge-eventdetails>
+       <badge-eventdetails id="eventdetails" on-session-review="_storerating"></badge-eventdetails>
        <badge-confirm id="confirm" header="Bent u deze persoon?" on-close="_saveClaimUser"></badge-confirm>
       <!-- <badge-review id="review" on-close="_sendMailRequest" on-cancel="_sendMailRequest"></badge-review>
        <badge-registeremail id="personalise" emailaddress="{{emailaddress}}" on-close="_showReview"></badge-registeremail>
@@ -116,10 +116,20 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _shouldShow(selpage, selectedgrid) {
         return selpage == 1 && selectedgrid == 0;
     }
+
+    _storerating(e) {
+        let username = localStorage["username"];
+        this.$.statistics.storeStatistic({
+            type:'Rating',
+            from: username,
+            session: e.detail.event,
+            rating: e.detail.rating
+        });
+    }
    _claimUser(e){
        if (this.emailaddress != "") return;
        this.moreinfoItem = e.detail.item;
-       this.$.confirm.open("Personaliseer de SmartBadge app", "Bevestig alstublieft uw email adres. Is dit uw email adres: " + e.detail.item.Email);
+       this.$.confirm.open("Personaliseer de SmartBadge app", "Bevestig alstublieft uw mailadres. Is dit uw email adres: " + e.detail.item.Email);
    }
    _saveClaimUser(){
        localStorage["user"]= this.moreinfoItem.Email;
@@ -166,7 +176,13 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
             if (!item){
                 let username = localStorage["username"];
-                this.$.statistics.storeStatistic(`connection from ${username} to ${e.detail.item.Username}`);
+                this.$.statistics.storeStatistic(
+                    { 
+                        type:'Connection',
+                        from:username,
+                        to:e.detail.item.Username
+                    }
+                );
                 this.lastvisited = [e.detail.item, ...this.lastvisited];
             }
             this.$.moredialog.open(e.detail.item, this.emailaddress);

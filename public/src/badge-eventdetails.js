@@ -93,6 +93,7 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
     _saveReview(){
         this.set('event.isReviewed', this.rating);
         window.localStorage[this.event.item.replace(" ", "-") + "-review"] = this.rating;
+        this.dispatchEvent(new CustomEvent("session-review", {detail:{ event:this.event.item, rating:this.rating}, composed:true, bubbles:true}));
     }
 
     _isReviewed(reviewed){

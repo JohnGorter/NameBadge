@@ -64,7 +64,7 @@ const htmlTemplate = `
                   <badge-scanner id="scanner_tutorial" on-badge-scanned="_badgescanned"></badge-scanner>
                 </template>
                 <template is="dom-if" if="[[importing]]">
-                  <span style="margin-top:100px;user-select: none; color: var(--tint-color);">Een ogenlik geduld, uw agenda wordt geimporteerd...</span>
+                  <span style="margin-top:100px;user-select: none; color: var(--tint-color);">Een ogenlik geduld, uw agenda wordt geladen...</span>
                </template>
             </div>
         </div>

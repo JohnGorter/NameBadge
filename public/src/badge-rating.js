@@ -73,7 +73,7 @@ export class BadgeRating extends PolymerElement {
     _updateRating(e) {
         if (this.disabled) return;
         this.rating = Number(e.target.dataset['index']) + 1;
-        console.log(this.rating);
+       // console.log(this.rating);
     }
 }
 
