@@ -60,8 +60,12 @@ const htmlTemplate = `
                 <p on-tap="_finish" class="skip" style="right:15%;position: absolute; "></p>
                 <h1 style="margin-top:50px">Personaliseer je app!</h1>
                 <p>Door je eigen badge te scannen, kunnen wij je persoonlijke agenda inladen.</p>
-                <badge-scanner id="scanner_tutorial" on-badge-scanned="_badgescanned"></badge-scanner>
-           
+                <template is="dom-if" if="[[!importing]]">
+                  <badge-scanner id="scanner_tutorial" on-badge-scanned="_badgescanned"></badge-scanner>
+                </template>
+                <template is="dom-if" if="[[importing]]">
+                  <span style="margin-top:100px;user-select: none; color: var(--tint-color);">Een ogenlik geduld, uw agenda wordt geimporteerd...</span>
+               </template>
             </div>
         </div>
     </ico-wizard>
@@ -73,7 +77,7 @@ const htmlTemplate = `
 export class BadgeTutorial extends GestureEventListeners(PolymerElement) {
     static get template() { return htmlTemplate;}
     static get properties() {
-        return {items: { type:Array}} ;
+        return {items: { type:Array}, importing: { type:Boolean, value:false}} ;
     }
     _nextpage(){
         this.$.wizard.nextPage();
@@ -82,6 +86,9 @@ export class BadgeTutorial extends GestureEventListeners(PolymerElement) {
     complete(){
          this.completed = "finished on " + Date.now();
         this.classList.add("hide");
+    }
+    _badgescanned(e){
+        this.dispatchEvent(new CustomEvent("badge-scanned", {detail:e.detail, composed:true, bubbles:true}))
     }
 }
 

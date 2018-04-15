@@ -19,7 +19,7 @@ var template = `
             <style is="custom-style" include="paper-material-styles"></style>
        </custom-style>
 
-       <badge-tutorial id="tutorial" class="hide" ></badge-tutorial>
+       <badge-tutorial id="tutorial" on-badge-scanned="badgescanned" class="hide" ></badge-tutorial>
 
        <app-header-layout>
             <app-header id="header" slot="header" condenses fixed effects="waterfall">
@@ -52,39 +52,7 @@ var template = `
             </div>
        </paper-dialog>
 
-       <paper-dialog style="background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="moredialog" style="margin:10px" on-iron-overlay-closed="moreclose">
-            <div style="background-color:white;position:relative;margin:0px;padding:0px;width:90%;height:95%;margin:5%">
-            <div style="display:flex;position:relative;width:100%;height:130px;background-color:white;">
-                <div style="margin:25px;border-radius:50%;width:100px;height:100px; background:url('[[_getImage(moreinfoItem.Photo,moreinfoItem.CompanyLogo)]]');background-size:100% 100%"></div>
-                <div>
-                    <h1 style="color:var(--tint-color);font-size:20px;margin-top: 25px;margin-bottom: -8px;">[[moreinfoItem.Username]]</h1>
-                    <h2 style="color:var(--tint-color);font-size:16px;;margin-bottom: 5px;">[[moreinfoItem.Company]]</h2>
-                    <p style="margin:0px;"><iron-icon style="margin-right:10px;" icon="communication:email"></iron-icon><a href="mailto:[[moreinfoItem.Email]]">[[moreinfoItem.Email]]</a></p>
-                    <p style="margin:0px;"><iron-icon style="margin-right:10px;" icon="communication:phone"></iron-icon><a href="tel:[[moreinfoItem.Telefoonnummer]]">[[moreinfoItem.Telefoonnummer]]</a></p>
-                </div>
-            </div>
-            <div>
-                <div style="padding:15px">
-                <span style="color:var(--tint-color);">[[moreinfoItem.company]] Omschrijving</span><br/>
-                <p style="margin:0px">[[moreinfoItem.OmschrijvingBedrijf]]</p><br/>
-                <span style="color:var(--tint-color);">Sector</span><br/>
-                <p style="margin:0px">[[moreinfoItem.Sectors]]</p><br/>
-                <span style="color:var(--tint-color);">Business model</span><br/>
-                <p style="margin:0px">[[moreinfoItem.BusinessModel]]</p><br/>
-                <span style="color:var(--tint-color);">Ik zou graag mensen willen ontmoeten die mij toegang bieden tot</span><br/>
-                <p style="margin:0px">[[moreinfoItem.Meet]]</p><br/>
-                <span style="color:var(--tint-color);">Waaraan ga ik deelnemen</span><br/>
-                <p style="margin:0px">[[moreinfoItem.Interests]]</p>
-               
-                </div>
-            </div>
-            <div style="display:flex;position:absolute;bottom:0px;height:54px;padding-top:10px;width:100%;border-top:1px solid #d8d5d5;background-color: white;">
-                
-                <span on-tap="_claimUser" class$="{{_canClaim(emailaddress)}}" style="left:10px;position:absolute;user-select: none;margin:10px;color:var(--tint-color)" dialog-dismiss>Dit ben ik..</span>
-                <span style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
-            </div>
-            </div>
-       </paper-dialog>
+       <badge-moreinfo id="moredialog" on-claim-user="_claimUser"></badge-moreinfo>
        <badge-basicinfo id="basicdialog" on-close="_closebasicinfo"></badge-basicinfo>
        <badge-prompt on-close="_setFilter" id="seachprompt" header="Zoeken naar" content="Geef hieronder uw zoekargument op" label="zoeken naar"></badge-prompt>
        <badge-eventdetails id="eventdetails"></badge-eventdetails>
@@ -97,7 +65,7 @@ var template = `
             <paper-tab><iron-icon icon="image:center-focus-weak" ></iron-icon></paper-tab>
             <paper-tab><iron-icon icon="image:grid-on" ></iron-icon></paper-tab>
             <paper-tab><iron-icon icon="schedule" ></iron-icon></paper-tab>
-            <paper-tab><iron-icon icon="announcement" ></iron-icon></paper-tab>
+            <paper-tab><img src="./images/twitter.svg" style="fill:white" height="24" width="24"></paper-tab>
        </paper-tabs>
 
        <ico-app api-key="AIzaSyD22SNSB6S5EVQqbT1XYQ2Xn0iMQGOk-iA"  auth-domain="woe-dag.firebaseapp.com" database-U-R-L="https://woe-dag.firebaseio.com" project-id="woe-dag" storage-bucket="woe-dag.appspot.com" messaging-sender-id="576477840466"></ico-app>
@@ -129,7 +97,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         onlyMe: { type:Boolean, value:false}
     }}
 
-
     _search() {
         var title = this.selpage == 1 ? "Zoeken naar deelnemers" : "Zoeken naar sessies";
         this.$.seachprompt.open(title, "Geef hieronder de term of een deel van de term waar u naar op zoek bent, in het onderstaande invulveld op.", "zoeken naar", "");
@@ -143,23 +110,25 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _shouldShow(selpage, selectedgrid) {
         return selpage == 1 && selectedgrid == 0;
     }
-    _canClaim(){
-        return this.emailaddress != "" ? "hidden" : ""
-    }
-   _claimUser(){
+   _claimUser(e){
        if (this.emailaddress != "") return;
-       //console.log('claimed', this.moreinfoItem.email);
-       this.$.confirm.open("Personaliseer de NameBadge app", "Bevestig alstublieft uw email adres. Is dit uw email adres: " + this.moreinfoItem.Email);
+       this.moreinfoItem = e.detail.item;
+       this.$.confirm.open("Personaliseer de NameBadge app", "Bevestig alstublieft uw email adres. Is dit uw email adres: " + e.detail.item.Email);
    }
    _saveClaimUser(){
        localStorage["user"]= this.moreinfoItem.Email;
-       this.emailaddress = this.moreinfoItem.Email;
-       this.$.tutorial.complete();
+       this.$.tutorial.importing = true;
+       setTimeout(() => {
+         this.emailaddress = this.moreinfoItem.Email;
+         this.$.tutorial.complete();
+       }, 500); 
+       
    }
 
    _filter(){
        this.onlyMe = !this.onlyMe;
    }
+
    _findItemById(id){
         var item = undefined;
         for (var hour of this.schedule){
@@ -173,15 +142,13 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         if (item)
            this.$.eventdetails.open(item, e.detail.hour);
     }
-   
 
     badgescanned(e){
-        //console.log('badge scanned:', e.detail );
         let found = this.items.find((item) => item.Username == e.detail);
         if (!found)
             this.$.nomatchDialog.open();
         else
-            this.moreinfo({detail:{item:found}});
+            this.$.moredialog.open(found, this.emailaddress);
     }
 
     basicinfo(e){
@@ -189,27 +156,14 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
     _closebasicinfo(e){
         if (e.detail.confirmed){
-            //this.$.moredialog.open();
-            this.moreinfo(e);
+            let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
+            if (!item)
+                this.lastvisited = [e.detail.item, ...this.lastvisited];
+            this.$.moredialog.open(e.detail.item, this.emailaddress);
         } 
     }
 
-    moreinfo(e) {
-        this.moreinfoItem = e.detail.item;
-        this.$.moredialog.open();
-        let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
-        if (!item)
-            this.lastvisited = [e.detail.item, ...this.lastvisited];
-    }
-
-    _getImage(Photo, CompanyLogo){
-        if (CompanyLogo != "n/a" && CompanyLogo.length > 0) return CompanyLogo;
-        if (Photo != "n/a" && Photo.length > 0) return Photo;
-        return "/images/nophoto.jpg";
-    }
-
     getInitialLastVisited() {
-    //    console.log('no data available, so returning new data..');
         return [];
     }
 
@@ -217,7 +171,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         super.connectedCallback();
         window.performance.mark('mark_fully_loaded');
         this.emailaddress = window.localStorage["user"] || "";
-       // import('./badge-presentation.js');
         setTimeout(() => {
             if (this.$.tutorial.completed == "")
                 this.$.tutorial.classList.remove("hide");
@@ -254,7 +207,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             });
         }
 
-
         if (!("onsite_registrations" in localStorage)){
             firebase.database().ref("onsite_registrations").once("value", (s) => {
                 let val = s.val(); 
@@ -282,7 +234,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                 ...(localStorage["schedule"] ? JSON.parse(localStorage["schedule"]) : [])];
         }
 
-
         setInterval(() => {
             // check to see if there are changes...
             this._syncData(); 
@@ -298,7 +249,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                 let agenda = this.agenda.find(a => a.user == profile.UserID);
                 if (agenda) {
                     for (let item of agenda.agenda){
-                            localStorage["event_" + item + "_mark"] = "1";
+                        localStorage["event_" + item + "_mark"] = "1";
                     }
                     localStorage["agenda_filled"] = "true";
                     console.log("setting schedule...");
@@ -307,14 +258,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             }
         }
     }
-
-    // _findSessionById(id){
-    //     for (var s of this.schedule){
-    //         for (var i of s.items)
-    //             if (i.id == id) return i;
-    //     }
-    //     return undefined;
-    // }
 
     _syncData(){
         firebase.database().ref("registrationcount").once('value', (snapshot)=>{
@@ -338,22 +281,11 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             }
         });
     }
-        hideTabs(){
-            if (this.tabshidden) {
-              //  this.$.tabs.classList.remove("hidden");
-                this.$.toolbar.classList.remove("hidden");
-                this.tabshidden = false;
-            }
-            else {
-              //  this.$.tabs.classList.add("hidden");
-                this.$.toolbar.classList.add("hidden");
-                this.tabshidden = true;
-            }
-        }
 
-    nextPage(){
-        this.$.auth.signInAnonymously();
-    }
+
+    // nextPage(){
+    //     this.$.auth.signInAnonymously();
+    // }
 
     _hasToolbar(){
         return window.outerHeight < (screen.height-24);

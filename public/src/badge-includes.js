@@ -41,6 +41,7 @@ import './badge-mailrequest.js';
 import './badge-registeremail.js';
 import './badge-confirm.js';
 import './badge-basicinfo.js';
+import './badge-moreinfo.js';
 import './badge-prompt.js';
 import './badge-news.js';
 import './badge-eventdetails.js';

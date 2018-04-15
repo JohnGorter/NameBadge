@@ -62,7 +62,7 @@ const htmlTemplate = `
 
       .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 75%; font-family: roboto; color: #444; text-shadow: 3px 6px 5px #666;}
       .hidden { display:none;}
-      .card { border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6}
+      .card { border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6;display: flex; justify-content: flex-start;}
       .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:5vw;text-shadow:3px 3px 3px #000}
       .toolbartabs { top:20px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
       .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:20px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
@@ -89,6 +89,9 @@ const htmlTemplate = `
             </template>
             <template is="dom-repeat" id="grid" items="{{items}}" initial-count="20" filter="{{_filter(filter)}}" sort="_sort" observe="filter">
             <div on-tap="_showInfo" class="paper-material card" elevation="1" style$="{{_getBackgroundStyle(item.Photo, item.CompanyLogo)}}">
+            <template is="dom-if" if="[[_currentUser(item)]]">
+            <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end" icon="verified-user"></iron-icon>
+            </template>
             <span class="overlay">[[_formatFirstName(item.FirstName)]]<br/>[[_formatLastName(item.LastName)]]</span>
             </div>
             </template>
@@ -101,7 +104,10 @@ const htmlTemplate = `
             </div>
             </template>
             <template is="dom-repeat" id="grid" items="{{itemslastvisited}}" initial-count="20">
-            <div on-tap="_showInfo" class="paper-material card" elevation="1" style$="{{_getBackgroundStyle(item.Photo, item.CompanyLogo)}}">
+            <div on-tap="_showInfo" class="paper-material card" elevation="1" style$="{{_getBackgroundStyle(item.Photo, item.CompanyLogo)}}"> 
+            <template is="dom-if" if="[[_currentUser(item)]]">
+            <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end" icon="verified-user"></iron-icon>
+            </template>
                 <paper-icon-button icon="delete" on-tap="delete" style="position: absolute;top: 0px;right: 0px;"></paper-icon-button>
                 <span class="overlay">[[_formatFirstName(item.FirstName)]]<br/>[[_formatLastName(item.LastName)]]</span>
             </div>
@@ -128,6 +134,11 @@ export class BadgePresentation extends GestureEventListeners(Element) {
        // if (img && img != "n/a") return `background:url(${img}) no-repeat;background-size:100% 100%;`;
        // if (logo && logo != "n/a") return `background:url(${logo}) no-repeat;background-size:100% 100%;`;
         return "background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]; 
+    }
+
+    _currentUser(item){
+        let user = localStorage["user"];
+        return  user == item.Email;
     }
  
     _clearFilter(){

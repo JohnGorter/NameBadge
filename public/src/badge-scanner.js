@@ -10,7 +10,7 @@ export class BadgeScanner extends PolymerElement {
             }
         </style>
         <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
-        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="80" style="opacity:0.4;margin-bottom:25px;"></img><p>Klik hier om een badge te scannen</p></div>
+        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="80" style="opacity:0.4;margin-bottom:25px;"></img><p style="text-align: center;">Klik hier om een badge te scannen</p></div>
     `; }
 
     connectedCallback(){
