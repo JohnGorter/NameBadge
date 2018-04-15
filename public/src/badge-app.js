@@ -113,7 +113,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
    _claimUser(e){
        if (this.emailaddress != "") return;
        this.moreinfoItem = e.detail.item;
-       this.$.confirm.open("Personaliseer de NameBadge app", "Bevestig alstublieft uw email adres. Is dit uw email adres: " + e.detail.item.Email);
+       this.$.confirm.open("Personaliseer de SmartBadge app", "Bevestig alstublieft uw email adres. Is dit uw email adres: " + e.detail.item.Email);
    }
    _saveClaimUser(){
        localStorage["user"]= this.moreinfoItem.Email;
