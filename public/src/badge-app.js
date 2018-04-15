@@ -257,10 +257,10 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                     for (let item of agenda.agenda){
                         localStorage["event_" + item + "_mark"] = "1";
                     }
-                    localStorage["agenda_filled"] = "true";
-                    console.log("setting schedule...");
-                    this.schedule = this.cachedschedule
                 }
+                localStorage["agenda_filled"] = "true";
+                console.log("setting schedule...");
+                this.schedule = this.cachedschedule;
             }
         }
     }
