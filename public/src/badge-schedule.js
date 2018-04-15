@@ -92,6 +92,8 @@ const htmlTemplate = html`
             </div>
         </div>
     </iron-pages>
+    <div style="height:100px">
+    </div>
 `
 
 export class BadgeSchedule extends PolymerElement {

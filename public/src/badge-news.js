@@ -6,8 +6,9 @@ const htmlTemplate = html`
 <style>
 .container { overflow:scroll; top:64px;height:100vh;width:100vw;margin-top:0px;position:absolute;background-color:var(--tint-color);}
 .newsitem  {     display: flex;
-    flex-flow: column;
-    font-size:40px
+    position:relative;
+    flex-flow: row;
+    font-size:3vw;
     font-family: sans-serif;
     margin: 10px;
     justify-content:center;
@@ -16,16 +17,23 @@ const htmlTemplate = html`
     border: 1px solid black;
     background-color: white;
     height: 100px;}
-.quote {font-style: italic;} 
-.source { color:#9a9a9a;align-self: flex-end;margin-right: 20px;margin-top:15px;font-size:12px;}
+.quote {margin-left:10px;margin-bottom:15px;font-style: italic;} 
+.photo {
+    margin:5px;
+}
+.source { color:#9a9a9a;align-self: flex-end;margin-right: 20px;margin-top:5px;font-size:12px;}
 </style>
     <div class="container">
         <template is="dom-repeat" items="{{items}}" sort="[[sort]]">
-             <div class="newsitem"><span class="quote">"[[item.title]]"</span>
-             <div style="display:flex;width:100%">
-                             <div class="source"  style="margin-left:20px;color:white;">[[item.created]]</div>
+             <div class="newsitem">
+                <template is="dom-if" if="[[item.photo]]">
+                <div class="photo"><img src="[[item.photo]]" height="80"></img></div>
+                </template>
+                <div style="display:flex;flex-flow:column;width:100%">
+                    <span class="quote">"[[item.title]]"</span>
+                             <div class="source"  style="margin-left:20px;">[[_formatTime(item.created)]]</div>
                              <div class="source" style="flex:1;text-align: right;">@[[item.user]]</div>
-            </div>
+                </div>
             </div>
         </template>
     </div>
@@ -42,8 +50,11 @@ export class BadgeNews extends PolymerElement {
     static get template() {
         return htmlTemplate;
     }
+    _formatTime(time){
+        return new Date(time).toLocaleString(); 
+    }
     sort(a, b){
-        return parseInt(a.created) < parseInt(b.created);
+        return parseInt(b.created) - parseInt(a.created);
     }
 }
 
