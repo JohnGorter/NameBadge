@@ -6,7 +6,7 @@ const htmlTemplate = html`
     <style>
         .heading { font-size:6vw;}
     </style>
-    <paper-dialog style="background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
+    <paper-dialog style="background-color:#232323;top:0px;padding-top:40px;position:absolute;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
         <div style="display:flex;flex-flow:column;">
         <div style$="[[_getPhoto(item.Photo)]]" 
         background:url([[_getPhoto(item.Photo)]]);background-size:100% 100%;">
@@ -17,12 +17,12 @@ const htmlTemplate = html`
         </template>
         <template is="dom-if" if="[[_currentUser(item)]]">
             <div style="position:absolute;top:0px;line-height:30px;">
-                <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;;">Verified user</span>
+                <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;">Verified user</span>
             </div>
         </template>
         <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:10px;bottom:10px;color:white;font-size:10vw;">[[item.Username]]
         </div>
-        <div style="position:relative;padding:15px;background-color: white;  height:150px;">
+        <div style="position:relative;padding:15px;background-color: white; height:140px;">
             <div>
                
                 <template is="dom-if" if="[[!_hasDetails(item)]]">
@@ -30,8 +30,10 @@ const htmlTemplate = html`
                     <p>Jammer genoeg heeft [[item.Username]] niet meer informatie vrijgegeven voor dit evenement.</p>
                 </template>
                 <template is="dom-if" if="[[_hasDetails(item)]]">
-                <h1 class="heading" style="color:var(--tint-color)">[[item.CompanyName]]</h1>
-                <p class="title" style="color:var(--tint-color);margin:0px">[[item.PersonaName]]</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h1 class="heading" style="display:inline;color:var(--tint-color)">[[item.CompanyName]]</h1>
+                <span class="title" style="color:var(--tint-color);margin:0px">[[item.PersonaName]]</span>
+                </div>
                 <template is="dom-if" if="[[item.Sector]]">
                 <p class="title" style="color:var(--tint-color);margin:0px">Sector</p>
                 <div style="margin:0px;margin-top:10px;display:flex;flex-wrap:wrap;">
@@ -82,9 +84,9 @@ export class BadgeBasicInfo extends PolymerElement {
 
      _getPhoto(img) {
         if (img && img != "n/a") 
-            return `position:relative;top:10px;margin:0px;padding:0px;height:45vh;background:url(${img}) no-repeat;background-size:100% 100%;`;
+            return `position:relative;top:10px;margin:0px;padding:0px;height:40vh;background:url(${img}) no-repeat;background-size:100% 100%;`;
         else {
-            let retval =  `position:relative;margin:0px;padding:0px;height:45vh;`;
+            let retval =  `position:relative;margin:0px;padding:0px;height:40vh;`;
             retval += ("background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]);
             return retval;
         }

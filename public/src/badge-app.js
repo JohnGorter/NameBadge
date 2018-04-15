@@ -75,6 +75,7 @@ var template = `
        <!-- <ico-query path="registrations" get-initial-data="[[getInitialRegistrations]]" source="localstorage" data="{{items}}"></ico-query> -->
        <ico-query id="lastvisited" path="lastvisited" source="localstorage" get-initial-data="[[getInitialLastVisited]]" data="{{lastvisited}}"></ico-query>
 
+       <badge-statistics id="statistics"></badge-statistics>
         <ico-query id="newsitems" path="newsitems/items" data="{{newsitems}}"></ico-query>
        <ico-document id="doc" path="registrations"></ico-document>
        <ico-storage-item id="item" ref="videos/{{filename}}" data="{{video}}" on-fileuploaded="_videouploaded" url="{{videourl}}"></ico-storage-item>
@@ -122,6 +123,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
    }
    _saveClaimUser(){
        localStorage["user"]= this.moreinfoItem.Email;
+       localStorage["username"]= this.moreinfoItem.Username;
        this.$.tutorial.importing = true;
        setTimeout(() => {
          this.emailaddress = this.moreinfoItem.Email;
@@ -163,6 +165,8 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         if (e.detail.confirmed){
             let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
             if (!item){
+                let username = localStorage["username"];
+                this.$.statistics.storeStatistic(`connection from ${username} to ${e.detail.item.Username}`);
                 this.lastvisited = [e.detail.item, ...this.lastvisited];
             }
             this.$.moredialog.open(e.detail.item, this.emailaddress);
