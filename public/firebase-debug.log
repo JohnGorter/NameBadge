@@ -1,0 +1,13 @@
+[debug] [2018-04-15T22:09:52.589Z] ----------------------------------------------------------------------
+[debug] [2018-04-15T22:09:52.591Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-04-15T22:09:52.591Z] CLI Version:   3.17.7
+[debug] [2018-04-15T22:09:52.591Z] Platform:      darwin
+[debug] [2018-04-15T22:09:52.591Z] Node Version:  v8.10.0
+[debug] [2018-04-15T22:09:52.592Z] Time:          Mon Apr 16 2018 00:09:52 GMT+0200 (CEST)
+[debug] [2018-04-15T22:09:52.592Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-15T22:09:52.610Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-15T22:09:52.610Z] > authorizing via signed-in user
+[debug] [2018-04-15T22:09:52.612Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/woe-dag  
+  
+ Mon Apr 16 2018 00:09:52 GMT+0200 (CEST)
