@@ -171,7 +171,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                     type:'Connection',
                     source:'Scan',
                     from:username,
-                    to:e.detail.item.Username
+                    to:found
                 }
             );
             this.$.moredialog.open(found, this.emailaddress);
