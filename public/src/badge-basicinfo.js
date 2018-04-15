@@ -7,12 +7,17 @@ const htmlTemplate = html`
         .heading { font-size:6vw;}
     </style>
     <paper-dialog style="background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
-        <div style="display:flex;flex-flow:column;margin-left:50px;margin-right:50px;">
+        <div style="display:flex;flex-flow:column;">
         <div style$="[[_getPhoto(item.Photo)]]" 
         background:url([[_getPhoto(item.Photo)]]);background-size:100% 100%;">
         <template is="dom-if" if="[[!item.Photo]]">
             <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%">
                 <span style="text-align:center;color:white;text-shadow:5px 5px 5px #000;">No Photo Available</span>
+            </div>
+        </template>
+        <template is="dom-if" if="[[_currentUser(item)]]">
+            <div style="position:absolute;top:0px;line-height:30px;">
+                <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;;">Verified user</span>
             </div>
         </template>
         <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:10px;bottom:10px;color:white;font-size:10vw;">[[item.Username]]
@@ -68,6 +73,11 @@ export class BadgeBasicInfo extends PolymerElement {
         this.item = item;
         this.unlock = unlock;
         this.$.dialog.open();
+    }
+
+     _currentUser(item){
+        let user = localStorage["user"];
+        return  user == item.Email;
     }
 
      _getPhoto(img) {

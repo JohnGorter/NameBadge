@@ -47,3 +47,4 @@ import './badge-news.js';
 import './badge-eventdetails.js';
 import './badge-filter.js';
 import './badge-buttongroup.js';
+import './bagde-statistics.js';

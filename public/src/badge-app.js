@@ -24,7 +24,9 @@ var template = `
        <app-header-layout>
             <app-header id="header" slot="header" condenses fixed effects="waterfall">
                <app-toolbar id="toolbar" style="padding:0px;"><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
+               <template is="dom-if" if="[[_showSearch(selpage)]]">
                <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
+                </template>
                </app-toolbar>
            </app-header>
           <!-- <div class="main" on-tap="nextPage">   
@@ -107,6 +109,9 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         else
             this.sessiefilter = e.detail.value;
     }
+    _showSearch(page){
+        return page == 1 || page == 2;
+    }
     _shouldShow(selpage, selectedgrid) {
         return selpage == 1 && selectedgrid == 0;
     }
@@ -157,8 +162,9 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _closebasicinfo(e){
         if (e.detail.confirmed){
             let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
-            if (!item)
+            if (!item){
                 this.lastvisited = [e.detail.item, ...this.lastvisited];
+            }
             this.$.moredialog.open(e.detail.item, this.emailaddress);
         } 
     }
