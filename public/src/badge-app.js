@@ -164,8 +164,18 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         let found = this.items.find((item) => item.Username == e.detail);
         if (!found)
             this.$.nomatchDialog.open();
-        else
+        else {
+            let username = localStorage["username"];
+            this.$.statistics.storeStatistic(
+                { 
+                    type:'Connection',
+                    source:'Scan',
+                    from:username,
+                    to:e.detail.item.Username
+                }
+            );
             this.$.moredialog.open(found, this.emailaddress);
+        }
     }
 
     basicinfo(e){
@@ -179,6 +189,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                 this.$.statistics.storeStatistic(
                     { 
                         type:'Connection',
+                        source:'Grid',
                         from:username,
                         to:e.detail.item.Username
                     }
