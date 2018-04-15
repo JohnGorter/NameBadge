@@ -16,7 +16,7 @@ const htmlTemplate = html`
                     <div style="padding:15px">
                         <div style="display:flex;align-items:center">
                             <img style="height:80px;margin-right:20px;" src="[[event.img]]"> 
-                            <h1 style="color:var(--tint-color);line-height:30px;overflow:hidden;">[[_trim(event.item, 60)]]</h1>
+                            <h1 style="color:var(--tint-color);line-height:30px;overflow:hidden;font-size:3vw;">[[event.item]]</h1>
                         </div>
                     <p style="margin:0px;margin-top:5px;height:20vh;overflow:hidden;">[[_trim(event.description, 530)]]</p><br/>
 
@@ -28,7 +28,7 @@ const htmlTemplate = html`
 
                      <div style="display:flex;flex-wrap:wrap;font-size:10px;margin-top:10px;">
                        <div style="flex:1;">
-                            <p><iron-icon style="color:var(--tint-color);margin-right:5px;" icon="device:access-time"></iron-icon>[[hour]]</p>
+                            <p><iron-icon style="color:var(--tint-color);margin-right:5px;" icon="device:access-time"></iron-icon>[[_getEventTime(event.StartDateTime, event.EndDateTime)]]</p>
                        </div>
                        <div style="flex:1">
                              <p><iron-icon style="color:var(--tint-color);margin-right:5px;" icon="maps:place"></iron-icon>[[event.location]]</p>
@@ -104,6 +104,15 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
             // this.dispatchEvent(new CustomEvent('review-event', { detail:this.event, bubbles:true, composed:true}));
             this.$.confirm.open("Weet u het zeker?", "Weet u zeker dat u deze beoordeling wil versturen?");
         }
+    }
+
+    _getEventTime(start, end){
+        let starthour = parseInt(start.split(' ')[1].split(':')[0]);
+        if (starthour < 11) starthour += 12;
+        let endhour = parseInt(end.split(' ')[1].split(':')[0]);
+        if (endhour < 11) endhour += 12;
+
+        return starthour + ":" + start.split(' ')[1].split(':')[1] + " - " + endhour +  ":" + end.split(' ')[1].split(':')[1];
     }
 }
 

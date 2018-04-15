@@ -26,7 +26,7 @@ const htmlTemplate = html`
         iron-icon.disabled { opacity:0.5}
         </style>
         <badge-confirm id="confirm" on-close="_saveReview"></badge-confirm>
-        <div class$="{{_getCardClass(filter, onlyMe, item.marked)}}" elevation="1">
+        <div  class$="{{_getCardClass(filter, onlyMe, item.marked)}}" elevation="1">
             <template is="dom-if" if="{{!nocircle}}">
                 <div on-tap="_markEvent" class$="{{_getCircleClass(item.reserved, item.marked)}}"></div>
             </template>
@@ -37,7 +37,7 @@ const htmlTemplate = html`
                         <!-- <iron-icon icon="perm-identity" style="top:-3px;"></iron-icon>Jeroen Salemink</span> -->
                             <iron-icon icon="maps:place"></iron-icon><span class="subtle">[[item.location]]
                         </div>
-                        <h1>[[_trim(item.item, 50)]]</h1>
+                        <h1 style="font-size:3vw;">[[item.item]]</h1>
                     </div>
                     <div class="toolbar">
                     <!-- <span on-tap="_selectEvent" style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);">Bekijk</span> 
@@ -52,18 +52,18 @@ const htmlTemplate = html`
 
 export class BadgeScheduleItem extends GestureEventListeners(PolymerElement) {
     static get template() { return htmlTemplate; }
-
+    static get observers() { return ['_markItem(item.*)'];}
     static get properties() {
         return {
             nocircle: { type:Boolean, value:false},
-            item:{ type:Object, notyfy:true, observer:'_markItem'},
+            item:{ type:Object, notify:true, observer:'_markItem'},
             hour: { type:String },
             onlyMe: { type:Boolean},
         }
     }
   
     _markItem(){
-        this.set('item.marked', ("event_" + this.item.item + "_mark" in localStorage));
+        this.set('item.marked', ("event_" + this.item.id + "_mark" in localStorage));
     }
 
     _getAddSessionText(){
@@ -76,7 +76,7 @@ export class BadgeScheduleItem extends GestureEventListeners(PolymerElement) {
       // else
       // {
         var newval = !this.item.marked;
-          this.dispatchEvent(new CustomEvent('mark-event', { detail: { event:this.item.item, mark:newval }, bubbles:true, composed:true}));
+          this.dispatchEvent(new CustomEvent('mark-event', { detail: { id:this.item.id, mark:newval }, bubbles:true, composed:true}));
       // }
     }
     _selectEvent(e){
@@ -100,7 +100,7 @@ export class BadgeScheduleItem extends GestureEventListeners(PolymerElement) {
     _getCardClass(f, o, m){
         var filter = f.toLowerCase();
         var cssclass =  "card paper-material " +  ((filter == "" || this.item.item.toLowerCase().indexOf(filter) >= 0 || this.item.location.toLowerCase().indexOf(filter) >= 0) ? "" : "hidden ");
-        cssclass += (o && !("event_" + this.item.item + "_mark" in localStorage)) ? "hidden " : "";
+        cssclass += (o && !("event_" + this.item.id + "_mark" in localStorage)) ? "hidden " : "";
         cssclass += (!o || (o && m)) ? "" : "hidden ";
         cssclass += !o && m ? "marked " : "";
         return cssclass; 

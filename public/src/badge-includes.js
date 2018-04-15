@@ -12,6 +12,7 @@ import '/node_modules/@polymer/paper-tabs/paper-tabs.js'
 import '/node_modules/@polymer/paper-dialog/paper-dialog.js'
 import '/node_modules/@polymer/paper-card/paper-card.js'
 import '/node_modules/@polymer/iron-pages/iron-pages.js'
+import '/node_modules/@polymer/iron-selector/iron-selector.js'
 import '/node_modules/@polymer/iron-icon/iron-icon.js'
 import '/node_modules/@polymer/iron-icons/iron-icons.js'
 import '/node_modules/@polymer/iron-icons/communication-icons.js'
@@ -39,6 +40,9 @@ import './badge-review.js';
 import './badge-mailrequest.js';
 import './badge-registeremail.js';
 import './badge-confirm.js';
+import './badge-basicinfo.js';
 import './badge-prompt.js';
 import './badge-news.js';
 import './badge-eventdetails.js';
+import './badge-filter.js';
+import './badge-buttongroup.js';

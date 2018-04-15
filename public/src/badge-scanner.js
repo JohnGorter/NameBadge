@@ -16,6 +16,7 @@ export class BadgeScanner extends PolymerElement {
     connectedCallback(){
         super.connectedCallback(); 
         qrcode.callback = (decodedDATA) => {
+            // the other scanner (app) takes over and registeres another callback changing the handler to the app, changing the this..
             this.dispatchEvent(new CustomEvent('badge-scanned', { detail:decodedDATA, composed:true, bubbles:true }));
         };
     }

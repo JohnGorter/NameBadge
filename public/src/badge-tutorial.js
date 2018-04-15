@@ -19,10 +19,10 @@ const htmlTemplate = `
    div[step3] .pagecontainer { background-color:white;}
    div[step3] h1,div[step3] p { color:#343434;}
    .skip { align-self:flex-end}
-   ico-wizard.page0 { width:80vw;background-color:white;}
-   ico-wizard.page1 { width:80vw;background-color:#2196F3;}
-   ico-wizard.page2 { width:80vw;background-color:#1de9b6;}
-   ico-wizard.page3 { width:80vw;background-color:white;}
+   ico-wizard.page0 { width:100vw;background-color:white;}
+   ico-wizard.page1 { width:100vw;background-color:#2196F3;}
+   ico-wizard.page2 { width:100vw;background-color:#1de9b6;}
+   ico-wizard.page3 { width:100vw;background-color:white;}
    paper-fab { position:fixed;right:37px;bottom:20px;background-color:#454545;opacity:0.7;}
    
    </style>
@@ -30,54 +30,57 @@ const htmlTemplate = `
     <ico-wizard id="wizard" progressballs class="page0">
         <div step0 on-close="animateToLeft">
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
                 <h1>Digitaal het evenement beleven</h1>
-                <p>Met de Smartbadge app wordt het netwerken net even wat effectiever en leuker.</p>
+                <p>Met de Smartbadge app wordt netwerken even wat effectiever en leuker.</p>
                 <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step1>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
                 <h1>On- en offline beschikbaarheid</h1>
-                <p>Slechte internet verbinding op het evenement?</p>
+                <p>Slechte internet verbinding op het evenement? Altijd uw agenda bij de hand.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step2>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; ">overslaan</p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
                 <h1>Sla connecties op!</h1>
-                <p>Heb je iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens opslaan door de badge te scannen.</p>
+                <p>Iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens opslaan door de badge te scannen.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step3>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right:15%;position: absolute; ">overslaan</p>
+                <p on-tap="_finish" class="skip" style="right:15%;position: absolute; "></p>
                 <h1 style="margin-top:50px">Personaliseer je app!</h1>
                 <p>Door je eigen badge te scannen, kunnen wij je persoonlijke agenda inladen.</p>
-                <badge-scanner id="scanner" on-badge-scanned="badgescanned"></badge-scanner>
-            <paper-fab label="Start" style="padding:0px;" on-tap="_finish"></paper-fab>
+                <badge-scanner id="scanner_tutorial" on-badge-scanned="_badgescanned"></badge-scanner>
+           
             </div>
         </div>
     </ico-wizard>
-    {{install}}
+    
     <badge-tutorialdata appinstall="{{completed}}"></badge-tutorialdata>
    </div>
 `; 
 
 export class BadgeTutorial extends GestureEventListeners(PolymerElement) {
     static get template() { return htmlTemplate;}
+    static get properties() {
+        return {items: { type:Array}} ;
+    }
     _nextpage(){
         this.$.wizard.nextPage();
         this.$.wizard.classList.add('page' + this.$.wizard.step);
     }
-    _finish(){
-        this.completed = "finished on " + Date.now();
+    complete(){
+         this.completed = "finished on " + Date.now();
         this.classList.add("hide");
     }
 }

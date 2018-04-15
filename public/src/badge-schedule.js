@@ -16,6 +16,7 @@ const htmlTemplate = html`
         .time .collapsed { background-color:#6363a9;}
         .time .onlyMe { background-color:var(--tint-color);}
         .time .timedetail { color:#040356;display:flex;line-height:50px; margin-left:50px;width:87vw;position:relative;left:-20px;}
+        .time.hidden { display:none ;}
         .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:-10px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
         .toolbartabs { top:-10px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
        
@@ -33,8 +34,8 @@ const htmlTemplate = html`
         <div>
             <div class="container">
                 <div class="noline"></div>
-                <template id="list" is="dom-repeat" items="{{schedule}}" as="hour" initial-count="5">
-                    <template is="dom-if" if="{{_hasHourItems(index)}}">
+                <template id="list" is="dom-repeat" items="{{schedule}}" as="hour" mutable-data>
+                  <!--  <template is="dom-if" if="{{_hasHourItems(index)}}"> -->
                         <div class="time"><div class="line"></div>
                         <!-- <div class$="{{_getCircleClass(hour.collapsed, onlyMe)}}"> </div> -->
                         <div on-tap="_expand" class="timedetail">
@@ -44,7 +45,7 @@ const htmlTemplate = html`
                                 </template>
                         </div></div>
                         <template is="dom-if" if="{{!hour.collapsed}}">
-                            <template is="dom-repeat" items="{{hour.items}}" initial-count="5" >
+                            <template is="dom-repeat" items="{{hour.items}}" mutable-data >
                                 <badge-scheduleitem 
                                     on-show-details="_showDetails" 
                                     on-mark-event="_markEvent"
@@ -58,14 +59,14 @@ const htmlTemplate = html`
                             </template>
                         </template>
                     </template>
-                 </template> 
+                <!-- </template> -->
             </div>
         </div>
         <div>
             <div class="container">
                 <div class="noline"></div>
-                <template id="mylist" is="dom-repeat" mutable-data items="{{schedule}}" as="hour" initial-count="5" >
-                    <div class="time"><div class="line"></div>
+                <template id="mylist" is="dom-repeat" mutable-data items="{{schedule}}" as="hour"  >
+                    <div class$="[[_getHourClass(hour, schedule.*)]]"><div class="line"></div>
                     <!-- <div class$="{{_getCircleClass(hour.collapsed, onlyMe)}}"> </div> -->
                     <div on-tap="_expand" class="timedetail">
                             <div>{{hour.hour}}</div>
@@ -74,7 +75,7 @@ const htmlTemplate = html`
                             </template>
                     </div></div>
                     <template is="dom-if" if="{{!hour.collapsed}}">
-                        <template is="dom-repeat" items="{{hour.items}}" initial-count="5" on-dom-change="_schedulerendered" >
+                        <template is="dom-repeat" items="{{hour.items}}"  on-dom-change="_schedulerendered" mutable-data>
                             <badge-scheduleitem 
                                 on-mark-event="_markEvent"
                                 item="{{item}}" 
@@ -103,16 +104,27 @@ export class BadgeSchedule extends PolymerElement {
     } };
 
     _tabchanged(){
-        var schedule = this.schedule;
-        this.schedule = [];
-        this.schedule = schedule;
-        this.notifyPath('schedule');
-        
+        // var schedule = this.schedule;
+        // this.schedule = [];
+        // this.schedule = schedule;    
+        // this.notifyPath('schedule'); 
+    }
+    _getHourClass(item){
+        return "time " + (this._hasHourItems(this.schedule.indexOf(item)) ? "" : "hidden");
+    }
+    _myfilter(i){
+        let retval = this._hasHourItems(this.schedule.indexOf(i));
+        return retval;
+    }
+    _myschedule(i){
+       // if (i.id == 105) debugger;
+       // return i.marked;
+        return true;
     }
 
     // filtetren van lege items werkt niet :-()
     _hasHourItems(index){
-        return this.selected == 0 || this.schedule[index].items.find(i => i.marked == true);
+        return this.schedule[index].items.find(i => this._isMarked(i));
     }
     _setBarDisplay(){
        if (this.filter != ""){ 
@@ -146,7 +158,7 @@ export class BadgeSchedule extends PolymerElement {
     }
 
     _isMarked(item){
-        return ("event_" + item.item + "_mark" in localStorage);
+        return ("event_" + item.id + "_mark" in localStorage);
     }
 
     _expand(e){
@@ -161,20 +173,20 @@ export class BadgeSchedule extends PolymerElement {
     }
     _markEvent(e){
         if (e.detail.mark) {
-            console.log("Adding mark", "event_" + e.detail.event + "_mark");
-            localStorage["event_" + e.detail.event + "_mark"] = "1";
+            console.log("Adding mark", "event_" + e.detail.id + "_mark");
+            localStorage["event_" + e.detail.id + "_mark"] = "1";
          //   e.target.marked = true;
         }
         else {
-            console.log("Removing mark", "event_" + e.detail.event + "_mark");
-            delete localStorage["event_" + e.detail.event + "_mark"];
+            console.log("Removing mark", "event_" + e.detail.id + "_mark");
+            delete localStorage["event_" + e.detail.id + "_mark"];
          //   e.target.marked = false;
         }
 
         
         for (var i in this.schedule)
             for (var j in this.schedule[i].items)
-                if (this.schedule[i].items[j].item ==  e.detail.event) {
+                if (this.schedule[i].items[j].id ==  e.detail.id) {
                     this.schedule[i].items[j].marked = e.detail.mark;
                     this.notifyPath('schedule.' + i + '.items.' + j + '.marked');
                 }
@@ -188,7 +200,7 @@ export class BadgeSchedule extends PolymerElement {
     }
 
     _schedulerendered(){
-        console.log("schedule rendered");
+       
     }
 
 
