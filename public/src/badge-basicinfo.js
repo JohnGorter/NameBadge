@@ -6,7 +6,7 @@ const htmlTemplate = html`
     <style>
         .heading { font-size:6vw;}
     </style>
-    <paper-dialog style="background-color:#232323;top:0px;padding-top:40px;position:absolute;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
+    <paper-dialog style="background-color:#232323;top:0px;padding-top:40px;position:fixed;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
         <div style="display:flex;flex-flow:column;">
         <div style$="[[_getPhoto(item.Photo)]]" 
         background:url([[_getPhoto(item.Photo)]]);background-size:100% 100%;">

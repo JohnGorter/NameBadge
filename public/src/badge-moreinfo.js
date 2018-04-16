@@ -3,7 +3,7 @@ import { Element as PolymerElement } from '/node_modules/@polymer/polymer/polyme
 
 const html = String.raw;
 const htmlTemplate = html`
-     <paper-dialog style="background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
+     <paper-dialog style="z-index:60;background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
             <div style="background-color:white;position:relative;margin:0px;padding:0px;width:90%;height:95%;margin:5%">
             <div style="display:flex;position:relative;width:100%;height:130px;background-color:white;">
                 <div style="margin:25px;border-radius:50%;width:100px;height:100px; background:url('[[_getImage(item.Photo,item.CompanyLogo)]]');background-size:100% 100%"></div>

@@ -1,4 +1,13 @@
 // @ts-check
+
+
+// todo:
+// optie om de data te pushen
+// optie om de cache te clearen en nieuwe versie te pushen
+// detailscherm voor de profielen maken
+// knop voor verzoek om materiaal mailen..
+// site voorzien van service worker en manifest.json
+
 import { Element as PolymerElement } from '../node_modules/@polymer/polymer/polymer-element.js'
 import { GestureEventListeners } from '../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js'
 import './badge-includes.js';
@@ -23,7 +32,8 @@ var template = `
 
        <app-header-layout>
             <app-header id="header" slot="header" condenses fixed effects="waterfall">
-               <app-toolbar id="toolbar" style="padding:0px;"><div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
+               <app-toolbar id="toolbar" style="padding:0px;">
+               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"><span on-tap="_clearCache" Version 1 </span></div>
                <template is="dom-if" if="[[_showSearch(selpage)]]">
                <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
                 </template>
@@ -99,6 +109,11 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         sessiefilter: { type:String, value:''},
         onlyMe: { type:Boolean, value:false}
     }}
+
+    _clearCache(){
+        console.log('clearing cache');
+        console.log('cache', window.caches['sbadge-precache']);
+    }
 
     _search() {
         var title = this.selpage == 1 ? "Zoeken naar deelnemers" : "Zoeken naar sessies";

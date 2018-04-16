@@ -1,23 +1,17 @@
+
 {
-  "short_name": "AirHorner",
-  "name": "Kinlan's AirHorner of Infamy",
-  "display":"standalone",
+  "name": "Iconica SmartBadge",
+  "short_name": "SmartBadge",
+  "description": "SmartBadge Scan Event Application",
+  "theme_color": "#08A195",
+  "background_color": "#43BC84",
+  "start_url": "/",
+  "display": "standalone",
   "icons": [
-    {
-      "src": "/images/smartbadgeicon.png",
-      "type": "image/png",
-      "sizes": "48x48"
-    },
-    {
-      "src": "/images/smartbadgeicon.png",
-      "type": "image/png",
-      "sizes": "96x96"
-    },
-    {
-      "src": "/images/smartbadgeicon.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    }
-  ],
-  "start_url": "index.html?launcher=true"
+      {
+          "src": "/assets/images/favicon.png",
+          "type": "image/png",
+          "sizes": "512x512"
+      }
+  ]
 }
