@@ -10,7 +10,7 @@ const htmlTemplate = html`
         .reviewed { font-size:10px;font-style:italic;margin-top:20px;}
         </style>
         <badge-confirm id="confirm" on-close="_saveReview"></badge-confirm>
-        <paper-dialog style="background-color:#232323;top:0px;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;position:absolute;" id="dialog" style="margin:10px" on-iron-overlay-closed="close">
+        <paper-dialog style="background-color:#232323;top:0px;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;position:fixed;" id="dialog" style="margin:10px" on-iron-overlay-closed="close">
             <div style="background-color:white;margin:0px;padding:0px;width:90%;margin:5%;position:absolute">
             <div>
                     <div style="padding:15px">

@@ -33,7 +33,7 @@ var template = `
        <app-header-layout>
             <app-header id="header" slot="header" condenses fixed effects="waterfall">
                <app-toolbar id="toolbar" style="padding:0px;">
-               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"><span on-tap="_clearCache" Version 1 </span></div>
+               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"><span on-tap="_clearCache"> Version 7 </span></div>
                <template is="dom-if" if="[[_showSearch(selpage)]]">
                <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
                 </template>
@@ -323,6 +323,15 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
 
     _syncData(){
+        firebase.database().ref("appversion").once('value', snapshot => {
+            let version = snapshot.val(); 
+            if (version && localStorage["version"] != version)
+            {
+                localStorage["version"] = version;
+                window.caches.delete("iconica-sbadge");
+                location.reload(); 
+            }
+        }); 
         firebase.database().ref("registrationcount").once('value', (snapshot)=>{
             let val = snapshot.val();
             if (val){

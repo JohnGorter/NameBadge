@@ -13,8 +13,9 @@
     "@polymer/paper-progress": "next",
     "@polymer/paper-tabs": "next",
     "@polymer/paper-toolbar": "next",
-    "@polymer/polymer": "next",
+    "@polymer/polymer": "^3.0.0-pre.11",
     "lit-html": "^0.7.1",
+    "sw-toolbox": "^3.6.0",
     "webcomponents.js": "^0.7.24"
   }
 }

@@ -106,10 +106,6 @@ gulp.task('debugify-sd-ce', () => {
   return debugify('webcomponents-sd-ce')
 });
 
-gulp.task('debugify-hi-sd', () => {
-  return debugify('webcomponents-hi-sd')
-});
-
 gulp.task('closurify-hi', () => {
   return closurify('webcomponents-hi')
 });
@@ -129,10 +125,6 @@ gulp.task('closurify-hi-sd-ce-pf', () => {
 gulp.task('closurify-sd-ce', () => {
   return closurify('webcomponents-sd-ce')
 });
-
-gulp.task('closurify-hi-sd', () => {
-  return closurify('webcomponents-hi-sd')
-})
 
 function singleLicenseComment() {
   let hasLicense = false;
@@ -163,7 +155,6 @@ gulp.task('debug', (cb) => {
   const tasks = [
     'debugify-hi',
     'debugify-hi-ce',
-    'debugify-hi-sd',
     'debugify-hi-sd-ce',
     'debugify-hi-sd-ce-pf',
     'debugify-sd-ce',
@@ -176,7 +167,6 @@ gulp.task('closure', (cb) => {
   const tasks = [
     'closurify-hi',
     'closurify-hi-ce',
-    'closurify-hi-sd',
     'closurify-hi-sd-ce',
     'closurify-hi-sd-ce-pf',
     'closurify-sd-ce',
