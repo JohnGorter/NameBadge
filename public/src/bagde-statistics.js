@@ -17,6 +17,9 @@ export class BadgeStatistics extends PolymerElement {
    storeStatistic(item){
        firebase.database().ref("statistics").push(item);
    }
+   storeLog(item, type){
+    firebase.database().ref("logging").push({item, type});
+}
 }
 
 customElements.define('badge-statistics', BadgeStatistics);

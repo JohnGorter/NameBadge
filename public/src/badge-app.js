@@ -161,19 +161,30 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
 
     badgescanned(e){
+       
         let found = this.items.find((item) => item.Username == e.detail);
-        if (!found)
+        if (!found) {
             this.$.nomatchDialog.open();
+            this.$.statistics.storeLog(`Scan of badge failed, could not scan badge ${e.detail}`, `error`);
+        }
         else {
             let username = localStorage["username"];
-            this.$.statistics.storeStatistic(
+            if (!username) {
+                this.$.statistics.storeStatistic(
+                { 
+                    type:'Registration',
+                    from:found.Username,
+                });
+            }
+            else {
+                this.$.statistics.storeStatistic(
                 { 
                     type:'Connection',
                     source:'Scan',
                     from:username,
                     to:found.Username
-                }
-            );
+                });
+            }
             this.$.moredialog.open(found, this.emailaddress);
         }
     }

@@ -9,20 +9,20 @@ const htmlTemplate = `
    .pagecontainer { font-family:roboto;font-style:bold;display:flex;flex-flow:column;align-items:center;text-align:center;color:#343434;height:90vh;background-color:white;padding-left:50px;padding-right:50px;}
    .pagecontainer h1 { font-size:24px;}
    .pagecontainer p { font-size:10px;line-height:1.5;}
-   .pagecontainer img { padding-top:50px;}
-   div[step0] .pagecontainer { background-color:white;}
+   .pagecontainer img { padding-top:50px;padding-bottom:50px;}
+   div[step0] .pagecontainer { background-color:white;} 
    div[step0] h1,div[step0] p { color:#343434;}
-   div[step1] .pagecontainer { background-color:#2196F3;}
+   div[step1] .pagecontainer { background-color:#43BC84;}
    div[step1] h1,div[step1] p { color:white;}
-   div[step2] .pagecontainer { background-color:#1de9b6;}
+   div[step2] .pagecontainer { background-color:#08A195;}
    div[step2] h1,div[step2] p { color:white;}
-   div[step3] .pagecontainer { background-color:white;}
+   div[step3] .pagecontainer { background-color:#0DC4D7}
    div[step3] h1,div[step3] p { color:#343434;}
    .skip { align-self:flex-end}
    ico-wizard.page0 { width:100vw;background-color:white;}
-   ico-wizard.page1 { width:100vw;background-color:#2196F3;}
-   ico-wizard.page2 { width:100vw;background-color:#1de9b6;}
-   ico-wizard.page3 { width:100vw;background-color:white;}
+   ico-wizard.page1 { width:100vw;background-color:#43BC84;}
+   ico-wizard.page2 { width:100vw;background-color:#08A195;}
+   ico-wizard.page3 { width:100vw;background-color:#0DC4D7;}
    paper-fab { position:fixed;right:37px;bottom:20px;background-color:#454545;opacity:0.7;}
    
    </style>
@@ -31,7 +31,7 @@ const htmlTemplate = `
         <div step0 on-close="animateToLeft">
             <div class="pagecontainer">
                 <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
-                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/digitaal-evenement.svg"></img>
                 <h1>Digitaal het evenement beleven</h1>
                 <p>Met de Smartbadge app wordt netwerken even wat effectiever en leuker.</p>
                 <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
@@ -40,7 +40,7 @@ const htmlTemplate = `
         <div step1>
             <div class="pagecontainer">
                 <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
-                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/on-enoffline.svg"></img>
                 <h1>On- en offline beschikbaarheid</h1>
                 <p>Slechte internet verbinding op het evenement? Altijd uw agenda bij de hand.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
@@ -49,7 +49,7 @@ const htmlTemplate = `
         <div step2>
             <div class="pagecontainer">
                 <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
-                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/zeshoek.svg"></img>
+                <img style="padding-left: 0px;padding-right: 0px;width: 120px;" src="/images/optimaliseer-je-netwerk.svg"></img>
                 <h1>Sla connecties op!</h1>
                 <p>Iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens opslaan door de badge te scannen.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
