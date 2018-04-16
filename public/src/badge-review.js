@@ -7,7 +7,7 @@ const htmlTemplate = html`
         h1 { color:var(--tint-color);line-height:30px;}
         h2 { color:var(--tint-color);margin-bottom:100px;font-size:14px;}
         </style>
-        <paper-dialog style="background-color:#232323;top:0px;position:absolute;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
+        <paper-dialog style="background-color:#232323;top:0px;position:fixed;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
             <div style="background-color:white;position:relative;margin:0px;padding:0px;width:90%;height:90%;margin:5%">
             
             <div>
