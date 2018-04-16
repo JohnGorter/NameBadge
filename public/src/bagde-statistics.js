@@ -15,11 +15,11 @@ export class BadgeStatistics extends PolymerElement {
    }
 
    storeStatistic(item){
-       let statistic = { created:new Date().toISOString(), ...item };
+       let statistic = { created:new Date().toString(), ...item };
        firebase.database().ref("statistics").push(statistic);
    }
    storeLog(item, type){
-    let logitem = { created:new Date().toISOString(), item, time};
+    let logitem = { created:new Date().toString(), item, time};
     firebase.database().ref("logging").push(logitem);
 }
 }
