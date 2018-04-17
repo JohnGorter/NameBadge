@@ -189,6 +189,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                 { 
                     type:'Registration',
                     from:found.Username,
+                    fromProfileType:found.PersonaName
                 });
             }
             else {
@@ -197,7 +198,8 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                     type:'Connection',
                     source:'Scan',
                     from:username,
-                    to:found.Username
+                    to:found.Username,
+                    toProfileType:found.PersonaName
                 });
             }
             this.$.moredialog.open(found, this.emailaddress);
@@ -217,7 +219,8 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                         type:'Connection',
                         source:'Grid',
                         from:username,
-                        to:e.detail.item.Username
+                        to:e.detail.item.Username,
+                        toProfileType:e.detail.item.PersonaName
                     }
                 );
                 this.lastvisited = [e.detail.item, ...this.lastvisited];

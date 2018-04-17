@@ -7,7 +7,7 @@ const htmlTemplate = html`
         <style is="custom-style" include="paper-material-styles"></style>
     </custom-style>
     <style>
-        :host { width:100vw;background-color:#efefef;top:70px;position:absolute;}
+        :host { width:100vw;background-color:#efefef;top:70px;position:fixed;}
         .container { overflow:scroll;height:80vh;top: -10px;position: relative;}
         .time { height:50px;position:relative;}
         .line { background-color:#040356;width:2px;position:absolute;left:20px; }

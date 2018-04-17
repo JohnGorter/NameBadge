@@ -130,7 +130,7 @@ const htmlTemplate = `
         width:100vw;
         height:94vh;
         top:6vh;
-        position:absolute;
+        position:fixed;
         background-color:var(--text-primary-color);
         overflow:scroll;
         }

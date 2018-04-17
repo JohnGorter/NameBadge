@@ -72,6 +72,7 @@ export class BadgeBasicInfo extends PolymerElement {
 
 
     open(item, unlock) {
+        this.nodetails = undefined;
         this.item = item;
         this.unlock = unlock;
         this.$.dialog.open();
@@ -94,9 +95,18 @@ export class BadgeBasicInfo extends PolymerElement {
     }
 
     _hasDetails(item){
-        return item.Sector || item.Motivation || item.Omschrijving || item.Sectors || item.BusinessModel || item.Description || item.Markets || item.Motivatie || item.Onderwijsinstelling;
-        item.Activiteiten || item.CompanyName || item.Functie || item.Linkedin || item.Omschrijving || item.Pijler || item.Samenwerking;
+        if (this.nodetails) return undefined;
+        let retval = this._toNullWhenEmpty(item.Sector) || this._toNullWhenEmpty(item.Motivatie) || this._toNullWhenEmpty(item.Omschrijving) || this._toNullWhenEmpty(item.Sectors) || this._toNullWhenEmpty(item.BusinessModel) || this._toNullWhenEmpty(item.Description) ||this._toNullWhenEmpty(item.Onderwijsinstelling) ||
+        this._toNullWhenEmpty(item.Activiteiten) || this._toNullWhenEmpty(item.CompanyName) || this._toNullWhenEmpty(item.Functie) || this._toNullWhenEmpty(item.Samenwerking);
+        this.nodetails = retval == undefined;
+        return retval;
     }
+    _toNullWhenEmpty(item){
+        if (!item) return undefined;
+        if (item.trim() == "") return undefined;
+        return item;
+    }
+
     _getSectors(sectors){
         return sectors ? sectors.split(",") : [];
     }
