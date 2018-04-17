@@ -88,7 +88,7 @@ export class BadgeTutorial extends GestureEventListeners(PolymerElement) {
         this.classList.add("hide");
     }
     _badgescanned(e){
-        this.dispatchEvent(new CustomEvent("badge-scanned", {detail:e.detail, composed:true, bubbles:true}))
+        this.dispatchEvent(new CustomEvent("badge-scanned", {detail: e.detail, composed:true, bubbles:true}))
     }
 }
 

@@ -43,12 +43,23 @@ const htmlTemplate = html`
                     </template>
                 </div>
             </div>
-            <div style="width: 100%;bottom:0px;height:64px;line-height:60px;">
+            <div style="width: 100%;height:74px;line-height:74px;">
                 <hr style="margin:0px;0.5px solid silver;width:89.5vw" />
                 <template is="dom-if" if="[[!_isReviewed(event.isReviewed)]]">
-                <badge-rating style="padding-left:10px;" disabled="[[_isReviewed(event.isReviewed)]]" rating="{{rating}}"></badge-rating>
-                <span on-tap="_persistRating" style="user-select: none;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Beoordeel</span>
+                <badge-rating style="padding-left:12px;" disabled="[[_isReviewed(event.isReviewed)]]" rating="{{rating}}"></badge-rating>
+                <span on-tap="_persistRating" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Beoordeel</span>
                 </template>
+            </div>
+            <div style="width: 100%;height:54px;line-height:50px;border-top:1px solid black;border-bottom:1px solid black;">
+                <template is="dom-if" if="[[!registeredforslides]]">
+                <span on-tap="_registerForSlides" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);">Ik wil het materiaal van deze sessie ontvangen</span>
+                </template>
+                <template is="dom-if" if="[[registeredforslides]]">
+                <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-weight:bold;">
+                <iron-icon icon="done"></iron-icon> De bestanden worden naar je mail verstuurd</span>
+                </template>
+             </div>
+             <div style="width: 100%;height:54px;line-height:50px;">
                 <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
             </div>
         </div>
@@ -83,10 +94,16 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
 
     open(event, hour) {
         this.event = event;
+        this.registeredforslides = localStorage["slidesrequest_" + event.id] || false;
         this.hour = hour;
         this.$.dialog.open();
     }
 
+    _registerForSlides(){
+        this.dispatchEvent(new CustomEvent("register-slides", { detail:this.event, bubbles:true, composed:true}));
+        localStorage["slidesrequest_" + this.event.id] = true;
+        this.registeredforslides = true;
+    }
     _close(){
         this.dispatchEvent(new CustomEvent('close', { detail: { value: this.value }, bubbles:true, composed:true}));
     }

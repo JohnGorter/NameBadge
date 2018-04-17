@@ -19,7 +19,7 @@ export class BadgeStatistics extends PolymerElement {
        firebase.database().ref("statistics").push(statistic);
    }
    storeLog(item, type){
-    let logitem = { created:new Date().toString(), item, type};
+    let logitem = { , item, type};
     firebase.database().ref("logging").push(logitem);
 }
 }

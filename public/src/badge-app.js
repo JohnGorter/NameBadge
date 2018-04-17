@@ -67,7 +67,7 @@ var template = `
        <badge-moreinfo id="moredialog" on-claim-user="_claimUser"></badge-moreinfo>
        <badge-basicinfo id="basicdialog" on-close="_closebasicinfo"></badge-basicinfo>
        <badge-prompt on-close="_setFilter" id="seachprompt" header="Zoeken naar" content="Geef hieronder uw zoekargument op" label="zoeken naar"></badge-prompt>
-       <badge-eventdetails id="eventdetails" on-session-review="_storerating"></badge-eventdetails>
+       <badge-eventdetails id="eventdetails" on-session-review="_storerating" on-register-slides="_registerForSlides"></badge-eventdetails>
        <badge-confirm id="confirm" header="Bent u deze persoon?" on-close="_saveClaimUser"></badge-confirm>
       <!-- <badge-review id="review" on-close="_sendMailRequest" on-cancel="_sendMailRequest"></badge-review>
        <badge-registeremail id="personalise" emailaddress="{{emailaddress}}" on-close="_showReview"></badge-registeremail>
@@ -135,11 +135,12 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _storerating(e) {
         let username = localStorage["username"];
         this.$.statistics.storeStatistic({
-            type:'Rating',
-            from: username,
-            session: e.detail.event,
-            rating: e.detail.rating
-        });
+            { "Rating:": {
+                type:'Rating',
+                from: username,
+                session: e.detail.event,
+                rating: e.detail.rating
+            }});
     }
    _claimUser(e){
        if (this.emailaddress != "") return;
@@ -186,24 +187,52 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             let username = localStorage["username"];
             if (!username) {
                 this.$.statistics.storeStatistic(
-                { 
-                    type:'Registration',
-                    from:found.Username,
-                    fromProfileType:found.PersonaName
-                });
+                    { "Registration" : 
+                        { 
+                            created:new Date().toString(),
+                            type:'Registration',
+                            from:found.Username,
+                            fromProfileType:found.PersonaName
+                        }
+                    });
+                this.$.moredialog.open(found, this.emailaddress, true);
             }
             else {
                 this.$.statistics.storeStatistic(
-                { 
-                    type:'Connection',
-                    source:'Scan',
-                    from:username,
-                    to:found.Username,
-                    toProfileType:found.PersonaName
-                });
+                    { "ScanConnection" :
+                        { 
+                            created:new Date().toString(),
+                            type:'Connection',
+                            source:'Scan',
+                            from:username,
+                            to:found.Username,
+                            toProfileType:found.PersonaName
+                        }
+                    });
+                this.$.moredialog.open(found, this.emailaddress, false);
             }
-            this.$.moredialog.open(found, this.emailaddress);
         }
+    }
+    _registerForSlides(e){
+        let username = localStorage["username"];
+        if (username) {
+            this.$.statistics.storeStatistic(
+                {
+                    "RequestForSlides":
+                    { 
+                        created:new Date().toString(),
+                        from:username,
+                        mail:this._getMailForUser(username) || "-unknown-",
+                        session:e.detail.item,
+                        sessionid:e.detail.EventId
+                    }
+                });
+        }
+    }
+
+    _getMailForUser(Username){
+        let user = this.items.find(i => i.Username = Username);
+        return user && user.Email;
     }
 
     basicinfo(e){
@@ -215,12 +244,14 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             if (!item){
                 let username = localStorage["username"];
                 this.$.statistics.storeStatistic(
-                    { 
-                        type:'Connection',
-                        source:'Grid',
-                        from:username,
-                        to:e.detail.item.Username,
-                        toProfileType:e.detail.item.PersonaName
+                    { "GridConnection" : 
+                        { 
+                            type:'Connection',
+                            source:'Grid',
+                            from:username,
+                            to:e.detail.item.Username,
+                            toProfileType:e.detail.item.PersonaName
+                        }
                     }
                 );
                 this.lastvisited = [e.detail.item, ...this.lastvisited];

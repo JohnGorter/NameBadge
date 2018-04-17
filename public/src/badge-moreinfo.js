@@ -31,7 +31,7 @@ const htmlTemplate = html`
                             <span style="font-weight:bold;color:var(--tint-color);">Omschrijving [[item.CompanyName]]</span><br/>
                             <p style="margin:0px">[[item.Omschrijving]]</p><br/>
                             <span style="font-weight:bold;color:var(--tint-color);">Sectors</span><br/>
-                            <div style="margin:0px;margin-top:10px;display:flex;flex-wrap:wrap;">
+                            <div style="margin:0px;margin-top:10px;margin-bottom:10px;display:flex;flex-wrap:wrap;">
                             <template is="dom-repeat" items="[[_getSectors(item.Sectors)]]">
                                         <div style="font-size:10px;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;">{{item}}</div>
                             </template>
@@ -43,7 +43,7 @@ const htmlTemplate = html`
                             <span style="font-weight:bold;color:var(--tint-color);">Werknemers</span><br/>
                             <p style="margin:0px">[[item.WerknemersAantal]]</p><br/>
                             <span style="font-weight:bold;color:var(--tint-color);">Ik zou graag mensen willen ontmoeten die mij toegang bieden tot</span><br/>
-                            <div style="margin:0px;margin-top:10px;display:flex;flex-wrap:wrap;">
+                            <div style="margin:0px;margin-top:10px;margin-bottom:10px;display:flex;flex-wrap:wrap;">
                             <template is="dom-repeat" items="[[_getSectors(item.Connect)]]">
                                         <div style="font-size:10px;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;">{{item}}</div>
                             </template>
@@ -137,8 +137,9 @@ export class BadgeMoreInfo extends PolymerElement {
         return sectors ? sectors.split(",") : [];
     }
 
-    open(item, emailaddress) {
+    open(item, emailaddress, register) {
         this.item = item;
+        this.register = register;
         this.nodetails = undefined;
         this.emailaddress = emailaddress;
         this.$.dialog.open();
