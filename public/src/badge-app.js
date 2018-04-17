@@ -134,7 +134,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
 
     _storerating(e) {
         let username = localStorage["username"];
-        this.$.statistics.storeStatistic({
+        this.$.statistics.storeStatistic(
             { "Rating:": {
                 type:'Rating',
                 from: username,
