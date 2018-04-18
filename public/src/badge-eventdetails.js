@@ -16,9 +16,9 @@ const htmlTemplate = html`
                     <div style="padding:15px">
                         <div style="display:flex;align-items:center">
                             <img style="height:80px;margin-right:20px;" src="[[event.img]]"> 
-                            <h1 style="color:var(--tint-color);line-height:30px;overflow:hidden;font-size:3vw;">[[event.item]]</h1>
+                            <h1 style="color:var(--tint-color);line-height:30px;overflow:hidden;overflow-y:scroll;font-size:3vw;">[[event.item]]</h1>
                         </div>
-                    <p style="margin:0px;margin-top:5px;height:20vh;overflow:hidden;">[[_trim(event.description, 530)]]</p><br/>
+                    <p style="margin:0px;margin-top:5px;height:20vh;overflow:hidden;overflow-y:scroll">[[event.description]]</p><br/>
 
                     <div style="display:flex;flex-wrap:wrap;">
                         <template is="dom-repeat" items="[[selectedEvent.tags]]">
@@ -43,22 +43,23 @@ const htmlTemplate = html`
                     </template>
                 </div>
             </div>
+            <template is="dom-if" if="[[!_isReviewed(event.isReviewed)]]">
             <div style="width: 100%;height:74px;line-height:74px;">
                 <hr style="margin:0px;0.5px solid silver;width:89.5vw" />
-                <template is="dom-if" if="[[!_isReviewed(event.isReviewed)]]">
                 <badge-rating style="padding-left:12px;" disabled="[[_isReviewed(event.isReviewed)]]" rating="{{rating}}"></badge-rating>
                 <span on-tap="_persistRating" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Beoordeel</span>
-                </template>
-            </div>
+                </div>
+            </template>
             <div style="width: 100%;height:54px;line-height:50px;border-top:1px solid black;border-bottom:1px solid black;">
                 <template is="dom-if" if="[[!registeredforslides]]">
-                <span on-tap="_registerForSlides" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);">Ik wil het materiaal van deze sessie ontvangen</span>
+                <span on-tap="_registerForSlides" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-size:3vw;">Ik wil het materiaal van deze sessie ontvangen</span>
                 </template>
                 <template is="dom-if" if="[[registeredforslides]]">
-                <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-weight:bold;">
+                <span style="font-size:3vw;user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-weight:bold;">
                 <iron-icon icon="done"></iron-icon> De bestanden worden naar je mail verstuurd</span>
                 </template>
              </div>
+             </template>
              <div style="width: 100%;height:54px;line-height:50px;">
                 <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
             </div>
@@ -77,6 +78,8 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
         }
     }
 
+ 
+
     connectedCallback(){
         super.connectedCallback(); 
     }
@@ -92,13 +95,18 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
         else return item;
     }
 
-    open(event, hour) {
+    open(event, hour, marked) {
+        this.marked = marked;
         this.event = event;
         this.registeredforslides = localStorage["slidesrequest_" + event.id] || false;
         this.hour = hour;
         this.$.dialog.open();
     }
 
+
+_shouldShowReview(){
+    return true;// !this.rating && this.marked;
+}
     _registerForSlides(){
         this.dispatchEvent(new CustomEvent("register-slides", { detail:this.event, bubbles:true, composed:true}));
         localStorage["slidesrequest_" + this.event.id] = true;

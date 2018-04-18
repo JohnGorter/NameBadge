@@ -26,7 +26,7 @@ const htmlTemplate = html`
         iron-icon.disabled { opacity:0.5}
         </style>
         <badge-confirm id="confirm" on-close="_saveReview"></badge-confirm>
-        <div  class$="{{_getCardClass(filter, onlyMe, item.marked)}}" elevation="1">
+        <div class$="{{_getCardClass(filter, onlyMe, item.marked)}}" elevation="1">
             <template is="dom-if" if="{{!nocircle}}">
                 <div on-tap="_markEvent" class$="{{_getCircleClass(item.reserved, item.marked)}}"></div>
             </template>
@@ -80,7 +80,7 @@ export class BadgeScheduleItem extends GestureEventListeners(PolymerElement) {
       // }
     }
     _selectEvent(e){
-        this.dispatchEvent(new CustomEvent('show-details', { detail: { event:this.item.id, hour:this.hour }, bubbles:true, composed:true}));
+        this.dispatchEvent(new CustomEvent('show-details', { detail: { event:this.item.id, hour:this.hour, marked:this.item.marked }, bubbles:true, composed:true}));
     }
     _getCircleClass(){
         return "circle " + (this.item.reserved ? "reserved ":"") + (this.item.marked ? "marked " : "");

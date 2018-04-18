@@ -18,7 +18,7 @@ const htmlTemplate = html`
             </div>
             <div style=" position:absolute;bottom:0px;height: 64px; width: 100%;">
                 <hr style="0.5px solid silver" />
-                <span on-tap="_close" style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Ja</span>
+                <span on-tap="_close" style="width: 50px;text-align: center;user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Ja</span>
                 <span on-tap="_cancel" style="user-select: none; margin: 10px;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Nee</span>
             </div>
             </div>

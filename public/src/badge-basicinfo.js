@@ -4,12 +4,11 @@ import { Element as PolymerElement } from '/node_modules/@polymer/polymer/polyme
 const html = String.raw;
 const htmlTemplate = html`
     <style>
-        .heading { font-size:6vw;}
+        .heading { font-size:4vw;}
     </style>
-    <paper-dialog style="background-color:#232323;top:0px;padding-top:40px;position:fixed;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
+    <paper-dialog style="background-color:#232323;top:0px;position:fixed;z-index:999;overflow:hidden;height:100%;width:100%;margin:0px;" id="dialog" style="margin:10px">
         <div style="display:flex;flex-flow:column;">
-        <div style$="[[_getPhoto(item.Photo)]]" 
-        background:url([[_getPhoto(item.Photo)]]);background-size:100% 100%;">
+        <div style$="[[_getPhoto(item.Photo)]]">
         <template is="dom-if" if="[[!item.Photo]]">
             <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%">
                 <span style="text-align:center;color:white;text-shadow:5px 5px 5px #000;">No Photo Available</span>
@@ -17,28 +16,27 @@ const htmlTemplate = html`
         </template>
         <template is="dom-if" if="[[_currentUser(item)]]">
             <div style="position:absolute;top:0px;line-height:30px;">
-                <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;">Verified user</span>
+                <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;">Dit ben ik</span>
             </div>
         </template>
-        <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:10px;bottom:10px;color:white;font-size:10vw;">[[item.Username]]
+        <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:6px;bottom:20px;color:white;font-size:10vw;">[[item.Username]]
         </div>
-        <div style="position:relative;padding:15px;background-color: white; height:140px;">
+        <div style="position:relative;padding:15px;background-color: white; height:100px;">
             <div>
-               
                 <template is="dom-if" if="[[!_hasDetails(item)]]">
                     <h1 class="heading" style="color:var(--tint-color)">Helaas!</h1>
-                    <p>Jammer genoeg heeft [[item.Username]] niet meer informatie vrijgegeven voor dit evenement.</p>
+                    <p style="font-size:3vw;font-family:sans-serif;">Jammer genoeg heeft [[item.Username]] niet meer informatie vrijgegeven voor dit evenement.</p>
                 </template>
                 <template is="dom-if" if="[[_hasDetails(item)]]">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <h1 class="heading" style="display:inline;color:var(--tint-color)">[[item.CompanyName]]</h1>
-                <span class="title" style="color:var(--tint-color);margin:0px">[[item.PersonaName]]</span>
+                <div style="display:flex;flex-flow:column;justify-content:space-between;align-items:center;">
+                    <h1 class="heading" style="display:inline;color:var(--tint-color);margin-top: 0px;margin-bottom: 0px;">[[_getCompany(item.PersonaName)]]</h1>
+                <span class="title" style="font-size:4vw;color:var(--tint-color);margin:0px">[[item.PersonaName]]</span>
                 </div>
                 <template is="dom-if" if="[[item.Sector]]">
-                <p class="title" style="color:var(--tint-color);margin:0px">Sector</p>
-                <div style="margin:0px;margin-top:10px;display:flex;flex-wrap:wrap;">
+                <!-- <p class="title" style="color:var(--tint-color);margin:0px;font-size:4vw;">Sector</p> -->
+                <div style="margin:-2px;margin-top:10px;display:flex;flex-wrap:wrap;height:50px;overflow:scroll;">
                         <template is="dom-repeat" items="[[_getSectors(item.Sector)]]">
-                            <div style="font-size:10px;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;">{{item}}</div>
+                            <div style="font-size:2vw;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;max-height:20px;">{{item}}</div>
                         </template>
                 </div>
                 </template>
@@ -85,13 +83,19 @@ export class BadgeBasicInfo extends PolymerElement {
 
      _getPhoto(img) {
         if (img && img != "n/a") 
-            return `position:relative;top:10px;margin:0px;padding:0px;height:40vh;background:url(${img}) no-repeat;background-size:100% 100%;`;
+            return `position:relative;top:10px;margin:0px;padding:0px;height:50vh;background:url(${img}) no-repeat;background-size:cover;overflow:hidden;`;
         else {
             let retval =  `position:relative;margin:0px;padding:0px;height:40vh;`;
             retval += ("background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]);
             return retval;
         }
         
+    }
+
+   _getCompany(role){
+        if (role == "Student") return this.item.Onderwijsinstelling;
+        if (role == "Ondernemer") return this.item.CompanyName;
+        if (role == "Bezoeker") return this.item.CompanyName;
     }
 
     _hasDetails(item){

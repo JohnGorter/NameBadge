@@ -21,13 +21,13 @@ const htmlTemplate = html`
                 <div>
                     <template is="dom-if" if="[[_hasDetails(item)]]">
                         <template is="dom-if" if="[[_isStudent(item.PersonaName)]]">
-                            <div style="padding:15px">
+                            <div style="padding: 15px; width: 82vw; height: 55vh; overflow: scroll;  position: relative; left: 0px; margin: 10px;">
                             <span style="font-weight:bold;color:var(--tint-color);">Waarom ben ik op dit evenement?</span><br/>
                             <p style="margin:0px">[[item.Motivatie]]</p><br/>
                             </div>
                         </template>
                         <template is="dom-if" if="[[_isOndernemer(item.PersonaName)]]">
-                            <div style="padding:15px">
+                            <div style="padding: 15px; width: 82vw; height: 55vh; overflow: scroll;  position: relative; left: 0px; margin: 10px;">
                             <span style="font-weight:bold;color:var(--tint-color);">Omschrijving [[item.CompanyName]]</span><br/>
                             <p style="margin:0px">[[item.Omschrijving]]</p><br/>
                             <span style="font-weight:bold;color:var(--tint-color);">Sectors</span><br/>
@@ -53,7 +53,7 @@ const htmlTemplate = html`
                             </div>
                         </template>
                         <template is="dom-if" if="[[_isBezoeker(item.PersonaName)]]">
-                            <div style="padding:15px">
+                             <div style="padding: 15px; width: 82vw; height: 55vh; overflow: scroll;  position: relative; left: 0px; margin: 10px;">
                             <span style="font-weight:bold;color:var(--tint-color);">Omschrijving [[item.CompanyName]]</span><br/>
                             <p style="margin:0px">[[item.Omschrijving]]</p><br/>
                             <span style="font-weight:bold;color:var(--tint-color);">Functie</span><br/>

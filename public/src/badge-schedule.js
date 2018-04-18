@@ -60,6 +60,8 @@ const htmlTemplate = html`
                         </template>
                     </template>
                 <!-- </template> -->
+                 <div style="height:100px;">  
+                 </div>
             </div>
         </div>
         <div>
@@ -89,18 +91,19 @@ const htmlTemplate = html`
                         </template>
                     </template>
                 </template> 
+                <div style="height:100px;">  
+                 </div>
             </div>
         </div>
     </iron-pages>
-    <div style="height:100px">
-    </div>
+   
 `
 
 export class BadgeSchedule extends PolymerElement {
     static get template() {return htmlTemplate;}
     static get properties() { return {
         selected: {type:Number, value:0, observer:'_tabchanged'},
-        filter: { type:String, value:"", notify:true, observer:'_setBarDisplay'},
+        filter: { type:String, value:"", notify:true},
         agenda: { type:Array },
         schedule:{ type:Array }
     } };
@@ -128,18 +131,9 @@ export class BadgeSchedule extends PolymerElement {
     _hasHourItems(index){
         return this.schedule[index].items.find(i => this._isMarked(i));
     }
-    _setBarDisplay(){
-       if (this.filter != ""){ 
-         var filterbar = this.shadowRoot.querySelector("#filterbar")
-         if (filterbar) 
-            filterbar.style.display="block";
-       }
-    }
+   
     _clearFilter(){
-        this.shadowRoot.querySelector("#filterbar").style.display="none";
-        setTimeout( () => {
-             this.filter = "";
-        }, 0);
+        this.filter = "";
     }
     
     _filter(f){

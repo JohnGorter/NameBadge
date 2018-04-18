@@ -9,9 +9,9 @@ const htmlTemplate = `
         <style is="custom-style" include="paper-material-styles"></style>
     </custom-style>
     <style is="custom-style" include="app-styles"> 
-        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:35px;height: 75vh;align-items: flex-start;
+        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;height:74vh;align-items: flex-start;
             align-content: flex-start;}
-        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:35px;height: 75vh;align-items: flex-start;
+        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;height:74vh;align-items: flex-start;
             align-content: flex-start;}
 
     #details { 
@@ -60,7 +60,7 @@ const htmlTemplate = `
       } 
      
 
-      .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 75%; font-family: roboto; color: #444; text-shadow: 3px 6px 5px #666;}
+      .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 200px; font-family: roboto; color: #343434; }
       .hidden { display:none;}
       .card { border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6;display: flex; justify-content: flex-start;}
       .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:5vw;text-shadow:3px 3px 3px #000}
@@ -95,7 +95,8 @@ const htmlTemplate = `
             <span class="overlay">[[_formatFirstName(item.FirstName)]]<br/>[[_formatLastName(item.LastName)]]</span>
             </div>
             </template>
-           
+             <div style="height:100px;width:80vw;">  
+            </div>
         </div>
         <div id="grid_lastvisited">
             <template is="dom-if" if="{{!_length(itemslastvisited.*)}}">
@@ -112,6 +113,8 @@ const htmlTemplate = `
                 <span class="overlay">[[_formatFirstName(item.FirstName)]]<br/>[[_formatLastName(item.LastName)]]</span>
             </div>
             </template>
+            <div style="height:100px;width:80vw;">  
+            </div>
         </div>
     </iron-pages>
    
@@ -131,13 +134,15 @@ export class BadgePresentation extends GestureEventListeners(Element) {
 
    
     _getBackgroundStyle(img, logo){
-       // if (img && img != "n/a") return `background:url(${img}) no-repeat;background-size:100% 100%;`;
-       // if (logo && logo != "n/a") return `background:url(${logo}) no-repeat;background-size:100% 100%;`;
+        if (img && img != "n/a") return `background:url(${img}) no-repeat;background-size:cover;overflow:hidden;`;
+        if (logo && logo != "n/a") return `background:url(${logo}) no-repeat;background-size:cover;overflow:hidden;`;
         return "background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]; 
     }
 
     _currentUser(item){
         let user = localStorage["user"];
+        if (item == null) debugger;
+        if (item.Email == undefined) { console.log("Error: no email for user " + item.FirstName  + " " + item.LastName); return false ;}
         return  user == item.Email;
     }
  
@@ -161,7 +166,8 @@ export class BadgePresentation extends GestureEventListeners(Element) {
             if (activefilter){
                 return activefilter.indexOf(i.LastName[0].toLowerCase()) != -1;
             } else {
-                return i.FirstName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.LastName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1;
+                // filter on name
+                return i.Username.toLowerCase().indexOf(this.filter.toLowerCase()) != -1;
             }
         }
     }
@@ -172,7 +178,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
 
 
      _isCustomFilter(filter){
-        return !this._isJSON(filter);
+        return !this._isJSON(filter) && filter != "";
      }
 
      _formatLastName(lastname){
@@ -197,7 +203,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
             if (Array.isArray(activefilter)){
                 if (activefilter.indexOf(i.LastName[0].toLowerCase()) != -1)
                     result.push(i); 
-            } else if (i.FirstName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 || i.LastName.toLowerCase().indexOf(this.filter.toLowerCase()) != -1) {
+            } else if (i.Username.toLowerCase().indexOf(this.filter.toLowerCase()) != -1 ) {
                 result.push(i); 
             }
         }

@@ -6,11 +6,11 @@ const html = String.raw;
 export class BadgeScanner extends PolymerElement {
     static get template() { return html`
         <style>
-            .scanner { width:70vw;height:50vh;padding: 20px; border: 1px dashed black; font-size:12px; top:0px;display:flex;flex-flow:column;align-items:center; justify-content:center;font-size:20px;text-shadow:5px 5px 5px #000;color:white;
+            .scanner { width:70vw;height:50vh;padding: 20px; border: 1px dashed black; font-size:12px; font-family:sans-serif;top:0px;display:flex;flex-flow:column;align-items:center; justify-content:center;font-size:5vw;
             }
         </style>
         <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
-        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="80" style="opacity:0.4;margin-bottom:25px;"></img><p style="text-align: center;">Klik hier om een badge te scannen</p></div>
+        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="120" style="opacity:0.4;margin-bottom:25px;"></img><p style="margin-left:15px;text-align: center;color:#343434;">Klik hier om de QR-code van je badge te scannen</p></div>
     `; }
 
     connectedCallback(){

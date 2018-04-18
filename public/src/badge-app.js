@@ -21,7 +21,7 @@ var template = `
         #tabs.hidden { position:fixed;bottom:-40px;width:100vw;height:40px;}
         iron-icon { --iron-icon-fill-color:white}
         paper-dialog iron-icon { --iron-icon-fill-color:black}
-        .scannercontainer { height:100vh;position:absolute;top:0px;width:100vw;display:flex;align-items:center;justify-content:center;background-color:var(--tint-color);}
+        .scannercontainer { height:100vh;position:absolute;top:0px;width:100vw;display:flex;align-items:center;justify-content:center;background-color:#f5f5f5;}
         a { text-decoration:none;color:black;}
        </style>
        <custom-style>
@@ -33,7 +33,7 @@ var template = `
        <app-header-layout>
             <app-header id="header" slot="header" condenses fixed effects="waterfall">
                <app-toolbar id="toolbar" style="padding:0px;">
-               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"><span on-tap="_clearCache"> Version 7 </span></div>
+               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
                <template is="dom-if" if="[[_showSearch(selpage)]]">
                <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
                 </template>
@@ -47,10 +47,10 @@ var template = `
             </div> -->
             <button style="position:absolute;top:300px;"  on-tap="hideTabs">hide tabs</button>
             <iron-pages selected="{{selpage}}">
-                <div class="scannercontainer"><badge-scanner id="scanner" on-badge-scanned="badgescanned" ></badge-scanner></div>
+                <div class="scannercontainer"><div style="border: 1px solid white; border-right: 1px solid gray; border-bottom: 1px solid gray;background-color:white;"><badge-scanner id="scanner" on-badge-scanned="badgescanned" ></badge-scanner></div></div>
                 <badge-presentation id="presentation" emailaddress="{{emailaddress}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" selected="{{selectedgrid}}" on-basic-info="basicinfo" on-more-info="moreinfo"></badge-presentation>
                 <badge-schedule on-show-details="_showDetails" id="schedule" schedule="[[schedule]]" only-me="[[onlyMe]]"filter="{{sessiefilter}}"></badge-schedule>
-                <badge-news items="[[newsitems]]"></badge-news>
+                <badge-news id="news" icon="{{icon}}" page="[[selpage]]" on-state-change="_newtweet" items="[[newsitems]]"></badge-news>
             </iron-pages>
        </app-header-layout>
 
@@ -77,7 +77,7 @@ var template = `
             <paper-tab><iron-icon icon="image:center-focus-weak" ></iron-icon></paper-tab>
             <paper-tab><iron-icon icon="image:grid-on" ></iron-icon></paper-tab>
             <paper-tab><iron-icon icon="schedule" ></iron-icon></paper-tab>
-            <paper-tab><img src="./images/twitter.svg" style="fill:white" height="24" width="24"></paper-tab>
+            <paper-tab><img src="./images/[[icon]]" style="fill:white" height="24" width="24"> </paper-tab>
        </paper-tabs>
 
        <ico-app api-key="AIzaSyC-0AJ2JrHirZ7cKPojEUks26Fftcb12JA"  auth-domain="iconica-sbadge.firebaseapp.com" database-U-R-L="https://iconica-sbadge.firebaseio.com" project-id="iconica-sbadge" storage-bucket="iconica-sbadge.appspot.com" messaging-sender-id="319820458930"></ico-app>
@@ -113,6 +113,10 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _clearCache(){
         console.log('clearing cache');
         console.log('cache', window.caches['sbadge-precache']);
+    }
+
+    _newtweet(){
+        this.$.news.getIcon();
     }
 
     _search() {
@@ -173,7 +177,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
    _showDetails(e){
         var item = this._findItemById(e.detail.event);
         if (item)
-           this.$.eventdetails.open(item, e.detail.hour);
+           this.$.eventdetails.open(item, e.detail.hour, e.detail.marked);
     }
 
     badgescanned(e){
@@ -187,32 +191,44 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             let username = localStorage["username"];
             if (!username) {
                 this.$.statistics.storeStatistic(
-                    { "Registration" : 
-                        { 
-                            created:new Date().toString(),
-                            type:'Registration',
-                            from:found.Username,
-                            fromProfileType:found.PersonaName
-                        }
-                    });
+                { "Registration" : 
+                    { 
+                        created:new Date().toString(),
+                        type:'Registration',
+                        from:found.Username,
+                        fromProfileType:found.PersonaName
+                    }
+                });
                 this.$.moredialog.open(found, this.emailaddress, true);
             }
             else {
-                this.$.statistics.storeStatistic(
-                    { "ScanConnection" :
-                        { 
-                            created:new Date().toString(),
-                            type:'Connection',
-                            source:'Scan',
-                            from:username,
-                            to:found.Username,
-                            toProfileType:found.PersonaName
-                        }
-                    });
+                if (this._storeNewConnection(found)) {
+                    this.$.statistics.storeStatistic(
+                        { "ScanConnection" :
+                            { 
+                                created:new Date().toString(),
+                                type:'Connection',
+                                source:'Scan',
+                                from:username,
+                                to:found.Username,
+                                toProfileType:found.PersonaName
+                            }
+                        });
+                }
                 this.$.moredialog.open(found, this.emailaddress, false);
             }
         }
     }
+
+    _storeNewConnection(connection){
+        let newitem = this.lastvisited.find((item) => item && item.Username == connection.Username);
+        if (!newitem) {
+            this.lastvisited = [connection, ...this.lastvisited];
+            return true;
+        }
+        return false;
+    }
+
     _registerForSlides(e){
         let username = localStorage["username"];
         if (username) {
@@ -240,8 +256,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
     _closebasicinfo(e){
         if (e.detail.confirmed){
-            let item = this.lastvisited.find((item) => item.Username == e.detail.item.Username);
-            if (!item){
+            if (this._storeNewConnection(e.detail.item)) {
                 let username = localStorage["username"];
                 this.$.statistics.storeStatistic(
                     { "GridConnection" : 
@@ -254,7 +269,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                         }
                     }
                 );
-                this.lastvisited = [e.detail.item, ...this.lastvisited];
             }
             this.$.moredialog.open(e.detail.item, this.emailaddress);
         } 
