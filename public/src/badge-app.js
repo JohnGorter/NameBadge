@@ -243,11 +243,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         }
     }
 
-    // _getMailForUser(Username){
-    //     let user = this.items.find(i => i.Username == Username);
-    //     return user && user.Email;
-    // }
-
     basicinfo(e){
         this.$.basicdialog.open(e.detail.item, e.detail.unlock);
     }
@@ -345,8 +340,9 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
 
         setInterval(() => {
             // check to see if there are changes...
+            console.log("sync data");
             this._syncData(); 
-        }, 5000);
+        }, 60000);
     }
 
     _fillAgenda(){
