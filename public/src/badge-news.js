@@ -4,11 +4,11 @@ import { Element as PolymerElement} from '/node_modules/@polymer/polymer/polymer
 const html = String.raw;
 const htmlTemplate = html`
 <style>
-.container { overflow:scroll; top:64px;height:85vh;width:100vw;margin-top:0px;position:absolute;background-color:#f5f5f5;}
+.container { overflow:scroll; top:64px;height:85vh;width:100vw;margin-top:0px;position:fixed;background-color:#f5f5f5;}
 .newsitem  {     display: flex;
     position:relative;
     flex-flow: row;
-    font-size:4vw;
+    font-size:3.2vw;
     font-family: sans-serif;
     margin: 10px;
     justify-content:center;

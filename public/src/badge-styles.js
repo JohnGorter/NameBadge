@@ -125,15 +125,6 @@ const htmlTemplate = `
         display:none;
         }
 
-      badge-presentation { 
-        z-index:10;
-        width:100vw;
-        height:94vh;
-        top:6vh;
-        position:fixed;
-        background-color:var(--text-primary-color);
-        overflow:scroll;
-        }
 
         ico-scanner { 
           z-index:10;
@@ -229,7 +220,7 @@ const htmlTemplate = `
         }
 
       #wizard { 
-          position:absolute;
+          position:fixed;
           display:flex;
           bottom:-50vh;
           height:50vh;

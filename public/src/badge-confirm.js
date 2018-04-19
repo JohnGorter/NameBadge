@@ -4,8 +4,8 @@ import { Element as PolymerElement } from '/node_modules/@polymer/polymer/polyme
 const html = String.raw;
 const htmlTemplate = html`
         <style is="custom-style" include="app-styles">
-        h1 { color:var(--tint-color);line-height:30px;}
-        h2 { color:var(--tint-color);margin-bottom:100px;font-size:14px;}
+        h1 { color:var(--tint-color);line-height:30px;font-size:4vw;}
+        h2 { color:var(--tint-color);margin-bottom:100px;font-size:3vw;}
         #dialog { display:flex;}
         </style>
         <paper-dialog style="background-color:#232323;top:0px;position:fixed;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">

@@ -17,7 +17,6 @@ const htmlTemplate = html`
                 <p>Om een verzoek tot materiaal te doen, hebben wij uw email adres nodig. Geef hieronder uw email adres op indien u wenst 
                     het verzoek te voltooien.
                 </p>
-                <p>U kunt ook uw eigen badge scannen en de gevonden deelnemer claimen met de knop "dit ben ik.."</p>
                 <paper-input label="email" value="{{emailaddress}}">
                     <iron-icon icon="mail" slot="prefix" style="margin-right:20px;"></iron-icon>
                 </paper-input>
@@ -46,7 +45,7 @@ export class BadgeRegisterEmail extends PolymerElement {
     }
 
     _close(){
-        localStorage["user"] = this.emailaddress;
+        localStorage["emailaddress"] = this.emailaddress;
         this.dispatchEvent(new CustomEvent('close', { bubbles:true, composed:true}));
     }
     _cancel(){

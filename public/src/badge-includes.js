@@ -20,13 +20,9 @@ import '/node_modules/@polymer/iron-icons/image-icons.js'
 import '/node_modules/@polymer/iron-icons/maps-icons.js'
 import '/node_modules/@polymer/iron-icons/device-icons.js'
 
-import '/node_modules/@iconica/iconicaelements/ico-authentication.js'
 import '/node_modules/@iconica/iconicaelements/ico-app.js'
-import '/node_modules/@iconica/iconicaelements/ico-grid.js'
 import '/node_modules/@iconica/iconicaelements/ico-query.js'
 import '/node_modules/@iconica/iconicaelements/ico-wizard.js'
-import '/node_modules/@iconica/iconicaelements/ico-document.js'
-import '/node_modules/@iconica/iconicaelements/ico-storage-item.js'
 
 import './badge-styles.js';
 import './badge-presentation.js'

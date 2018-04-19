@@ -16,7 +16,7 @@ const htmlTemplate = `
         color:white;
         box-shadow:5px 5px 5px #555;
         }
-        paper-fab {width:50px;height:50px;position:absolute;right:10px;bottom:50px;}
+        paper-fab {width:50px;height:50px;position:fixed;right:10px;bottom:50px;}
         .flyout { border:0px solid red; will-change: transform, opacity;transform:all;overflow:hidden;transition:all 0.2s ease-in-out;display:flex;align-content:center;justify-content:center;flex-flow:column;background-color:transparent;border-radius:5px;position:absolute;    right: 10px;  bottom: 75px; height: 400px; width: 130px;opacity:1}
         .flyout.collapsed { display:flex;align-content:center;justify-content:center;flex-flow:column;background-color:transparent;border-radius:5px;position:absolute;right:10px;height:0px;width:130px;opacity:0;}
     </style>

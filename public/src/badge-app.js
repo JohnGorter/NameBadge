@@ -21,7 +21,7 @@ var template = `
         #tabs.hidden { position:fixed;bottom:-40px;width:100vw;height:40px;}
         iron-icon { --iron-icon-fill-color:white}
         paper-dialog iron-icon { --iron-icon-fill-color:black}
-        .scannercontainer { height:100vh;position:absolute;top:0px;width:100vw;display:flex;align-items:center;justify-content:center;background-color:#f5f5f5;}
+        .scannercontainer { height:100vh;position:fixed;top:0px;width:100vw;display:flex;align-items:center;justify-content:center;background-color:#f5f5f5;}
         a { text-decoration:none;color:black;}
        </style>
        <custom-style>
@@ -45,10 +45,9 @@ var template = `
                     <div id="details">{{_getStepDetails(step)}}</div>
                 </div>
             </div> -->
-            <button style="position:absolute;top:300px;"  on-tap="hideTabs">hide tabs</button>
             <iron-pages selected="{{selpage}}">
-                <div class="scannercontainer"><div style="border: 1px solid white; border-right: 1px solid gray; border-bottom: 1px solid gray;background-color:white;"><badge-scanner id="scanner" on-badge-scanned="badgescanned" ></badge-scanner></div></div>
-                <badge-presentation id="presentation" emailaddress="{{emailaddress}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" selected="{{selectedgrid}}" on-basic-info="basicinfo" on-more-info="moreinfo"></badge-presentation>
+                <div class="scannercontainer"><div style="border: 1px solid white; border-right: 1px solid gray; border-bottom: 1px solid gray;background-color:white;"><badge-scanner id="scanner" on-badge-scanned="badgescanned" message="Klik hier om de QR-code van een willekeurige badge te scannen" ></badge-scanner></div></div>
+                <badge-presentation id="presentation" user="{{user}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" selected="{{selectedgrid}}" on-basic-info="basicinfo" on-error="_logError" on-more-info="moreinfo"></badge-presentation>
                 <badge-schedule on-show-details="_showDetails" id="schedule" schedule="[[schedule]]" only-me="[[onlyMe]]"filter="{{sessiefilter}}"></badge-schedule>
                 <badge-news id="news" icon="{{icon}}" page="[[selpage]]" on-state-change="_newtweet" items="[[newsitems]]"></badge-news>
             </iron-pages>
@@ -70,7 +69,7 @@ var template = `
        <badge-eventdetails id="eventdetails" on-session-review="_storerating" on-register-slides="_registerForSlides"></badge-eventdetails>
        <badge-confirm id="confirm" header="Bent u deze persoon?" on-close="_saveClaimUser"></badge-confirm>
       <!-- <badge-review id="review" on-close="_sendMailRequest" on-cancel="_sendMailRequest"></badge-review>
-       <badge-registeremail id="personalise" emailaddress="{{emailaddress}}" on-close="_showReview"></badge-registeremail>
+       <badge-registeremail id="personalise" user="{{user}}" on-close="_showReview"></badge-registeremail>
        <badge-mailrequest id="mailrequest"></badge-mailrequest> -->
 
        <paper-tabs id="tabs" selected="{{selpage}}">
@@ -82,23 +81,15 @@ var template = `
 
        <ico-app api-key="AIzaSyC-0AJ2JrHirZ7cKPojEUks26Fftcb12JA"  auth-domain="iconica-sbadge.firebaseapp.com" database-U-R-L="https://iconica-sbadge.firebaseio.com" project-id="iconica-sbadge" storage-bucket="iconica-sbadge.appspot.com" messaging-sender-id="319820458930"></ico-app>
 
-       <!-- <ico-query path="registrations" get-initial-data="[[getInitialRegistrations]]" source="localstorage" data="{{items}}"></ico-query> -->
-       <ico-query id="lastvisited" path="lastvisited" source="localstorage" get-initial-data="[[getInitialLastVisited]]" data="{{lastvisited}}"></ico-query>
-
        <badge-statistics id="statistics"></badge-statistics>
         <ico-query id="newsitems" path="newsitems/items" data="{{newsitems}}"></ico-query>
-       <ico-document id="doc" path="registrations"></ico-document>
-       <ico-storage-item id="item" ref="videos/{{filename}}" data="{{video}}" on-fileuploaded="_videouploaded" url="{{videourl}}"></ico-storage-item>
-       <ico-storage-item id="item" ref="thumbs/{{filename}}" data="{{thumb}}" on-fileuploaded="_thumbuploaded" url="{{thumburl}}"></ico-storage-item>
-       <ico-auth id="auth" user="{{user}}"></ico-auth>
-
 `;
 
 export class BadgeApp extends GestureEventListeners(PolymerElement) {
     static get template(){ return template; }
-    static get observers() { return ['_fillAgenda(agenda.*, items.*, emailaddress, cachedschedule.*)']}
+    static get observers() { return ['_fillAgenda(agenda.*, items.*, user, cachedschedule.*)']}
     static get properties(){ return {
-        emailaddress: { type:String },
+        user: { type:String },
         step: { type:Number, value:-1, notify:true},
         registration: { type:Object, value:{}},
         items: { type:Array},
@@ -138,25 +129,28 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
 
     _storerating(e) {
         let username = localStorage["username"];
+        let user = this.items.find(u => u.Username == username);
+
         this.$.statistics.storeStatistic(
             { "Rating:": {
+                created:new Date().toString(),
                 type:'Rating',
-                from: username,
+                from: user.PersonaName,
                 session: e.detail.event,
                 rating: e.detail.rating
             }});
     }
    _claimUser(e){
-       if (this.emailaddress != "") return;
+       if (this.user != "") return;
        this.moreinfoItem = e.detail.item;
-       this.$.confirm.open("Personaliseer de SmartBadge app", "Bevestig alstublieft uw mailadres. Is dit uw email adres: " + e.detail.item.Email);
+       this.$.confirm.open("Personaliseer de SmartBadge app", "Bevestig alstublieft uw profiel. Is dit uw naam: " + e.detail.item.Username);
    }
    _saveClaimUser(){
-       localStorage["user"]= this.moreinfoItem.Email;
+      // localStorage["user"]= this.moreinfoItem.Email;
        localStorage["username"]= this.moreinfoItem.Username;
        this.$.tutorial.importing = true;
        setTimeout(() => {
-         this.emailaddress = this.moreinfoItem.Email;
+         this.user = this.moreinfoItem.Username;
          this.$.tutorial.complete();
        }, 500); 
        
@@ -179,16 +173,20 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         if (item)
            this.$.eventdetails.open(item, e.detail.hour, e.detail.marked);
     }
+    _logError(e) {
+        this.$.statistics.storeLog(e.detail, `error`);
+    }
 
     badgescanned(e){
-       
+        let username = localStorage["username"];
         let found = this.items.find((item) => item.Username == e.detail);
+        let user = this.items.find(u => u.Username == username);
+
         if (!found) {
             this.$.nomatchDialog.open();
             this.$.statistics.storeLog(`Scan of badge failed, could not scan badge ${e.detail}`, `error`);
         }
         else {
-            let username = localStorage["username"];
             if (!username) {
                 this.$.statistics.storeStatistic(
                 { "Registration" : 
@@ -199,23 +197,23 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                         fromProfileType:found.PersonaName
                     }
                 });
-                this.$.moredialog.open(found, this.emailaddress, true);
+                this.$.moredialog.open(found, this.user, true);
             }
             else {
                 if (this._storeNewConnection(found)) {
+            
                     this.$.statistics.storeStatistic(
                         { "ScanConnection" :
                             { 
                                 created:new Date().toString(),
                                 type:'Connection',
                                 source:'Scan',
-                                from:username,
-                                to:found.Username,
-                                toProfileType:found.PersonaName
+                                from:user.PersonaName,
+                                to:found.PersonaName
                             }
                         });
                 }
-                this.$.moredialog.open(found, this.emailaddress, false);
+                this.$.moredialog.open(found, this.user, false, user.PersonaName);
             }
         }
     }
@@ -238,7 +236,6 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                     { 
                         created:new Date().toString(),
                         from:username,
-                        mail:this._getMailForUser(username) || "-unknown-",
                         session:e.detail.item,
                         sessionid:e.detail.EventId
                     }
@@ -246,31 +243,32 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         }
     }
 
-    _getMailForUser(Username){
-        let user = this.items.find(i => i.Username = Username);
-        return user && user.Email;
-    }
+    // _getMailForUser(Username){
+    //     let user = this.items.find(i => i.Username == Username);
+    //     return user && user.Email;
+    // }
 
     basicinfo(e){
         this.$.basicdialog.open(e.detail.item, e.detail.unlock);
     }
     _closebasicinfo(e){
         if (e.detail.confirmed){
+            let username = localStorage["username"];
+            let user = this.items.find(u => u.Username == username);
             if (this._storeNewConnection(e.detail.item)) {
-                let username = localStorage["username"];
                 this.$.statistics.storeStatistic(
                     { "GridConnection" : 
                         { 
+                            created:new Date().toString(),
                             type:'Connection',
                             source:'Grid',
-                            from:username,
-                            to:e.detail.item.Username,
-                            toProfileType:e.detail.item.PersonaName
+                            from:user.PersonaName,
+                            to:e.detail.item.PersonaName
                         }
                     }
                 );
             }
-            this.$.moredialog.open(e.detail.item, this.emailaddress);
+            this.$.moredialog.open(e.detail.item, this.user, user.PersonaName);
         } 
     }
 
@@ -281,7 +279,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     connectedCallback(){
         super.connectedCallback();
         window.performance.mark('mark_fully_loaded');
-        this.emailaddress = window.localStorage["user"] || "";
+        this.user = window.localStorage["username"] || "";
         setTimeout(() => {
             if (this.$.tutorial.completed == "")
                 this.$.tutorial.classList.remove("hide");
@@ -353,8 +351,8 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
 
     _fillAgenda(){
         if ("agenda_filled" in localStorage) { this.schedule = this.cachedschedule ;return;}
-        if (this.emailaddress && this.items && this.agenda){
-            let profile = this.items.find(i => i.Email == this.emailaddress);
+        if (this.user && this.items && this.agenda){
+            let profile = this.items.find(i => i.Username == this.user);
             console.log("user", profile.UserID);
             if (profile) {
                 let agenda = this.agenda.find(a => a.user == profile.UserID);

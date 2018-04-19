@@ -58,6 +58,7 @@ const htmlTemplate = `
         position:absolute;
         left:20px;
       } 
+      
      
 
       .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 200px; font-family: roboto; color: #343434; }
@@ -66,6 +67,7 @@ const htmlTemplate = `
       .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:5vw;text-shadow:3px 3px 3px #000}
       .toolbartabs { top:20px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
       .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:20px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
+      :host { width:100vw;background-color:#efefef;top:44px;position:fixed;}
       </style>
     
 
@@ -127,7 +129,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
             items: { type:Array, notify:true, value:[]},
             itemslastvisited: { type:Array, notify:true, value:[]},
             selected: { type:Number, value:0, notify:true},
-            emailaddress: { type:String, notify:true },
+            user: { type:String, notify:true },
             filter: { type:String, value:"", notify:true}
         }
     }
@@ -140,10 +142,13 @@ export class BadgePresentation extends GestureEventListeners(Element) {
     }
 
     _currentUser(item){
-        let user = localStorage["user"];
-        if (item == null) debugger;
-        if (item.Email == undefined) { console.log("Error: no email for user " + item.FirstName  + " " + item.LastName); return false ;}
-        return  user == item.Email;
+        let user = localStorage["username"];
+        if (item.Username == undefined) { 
+            let message = "Error: no username for user " + item.FirstName  + " " + item.LastName;
+            this.dispatchEvent(new CustomEvent("error", { detail:message, composed:true, bubbles:true}));
+            // console.log("Error: no email for user " + item.FirstName  + " " + item.LastName); return false ;
+        }
+        return  user == item.Username;
     }
  
     _clearFilter(){

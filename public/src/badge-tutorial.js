@@ -4,7 +4,7 @@ import { GestureEventListeners } from '/node_modules/@polymer/polymer/lib/mixins
 
 const htmlTemplate = `
    <style>
-   :host { position:absolute;background-color:#454545;z-index:50;top:0px;width:100vw;height:100vh;display:flex;justify-content:center;}
+   :host { position:fixed;background-color:#454545;z-index:50;top:0px;width:100vw;height:100vh;display:flex;justify-content:center;}
    .container { width:80vw;background-color:white;height:100vh;display:flex;flex-flow:row;justify-content:center;}
    .pagecontainer { font-family:roboto;font-style:bold;display:flex;flex-flow:column;align-items:center;text-align:center;color:#343434;height:90vh;background-color:white;padding-left:50px;padding-right:50px;}
    .pagecontainer h1 { font-size:7vw;}
@@ -30,25 +30,25 @@ const htmlTemplate = `
     <ico-wizard id="wizard" progressballs class="page0">
         <div step0 on-close="animateToLeft">
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: fixed; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 230px;" src="/images/digitaal-evenement.svg"></img>
                 <h1>Digitaal het evenement beleven</h1>
-                <p>Met de Smartbadge app wordt netwerken even wat effectiever en leuker.</p>
+                <p>Met de Smartbadge app wordt netwerken effectiever en leuker.</p>
                 <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step1>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: fixed; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 230px;" src="/images/on-enoffline.svg"></img>
                 <h1>On- en offline beschikbaarheid</h1>
-                <p>Slechte internet verbinding op het evenement? Altijd uw agenda bij de hand.</p>
+                <p>Slechte internet verbinding op het evenement? Geen probleem.</p>
             <paper-fab icon="arrow-forward" on-tap="_nextpage"></paper-fab>
             </div>
         </div>
         <div step2>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right: 40px;position: absolute; "></p>
+                <p on-tap="_finish" class="skip" style="right: 40px;position: fixed; "></p>
                 <img style="padding-left: 0px;padding-right: 0px;width: 230px;" src="/images/optimaliseer-je-netwerk.svg"></img>
                 <h1>Sla connecties op!</h1>
                 <p>Iemand leren kennen op het evenement? Dan kan je zijn of haar gegevens opslaan door de badge te scannen.</p>
@@ -57,12 +57,12 @@ const htmlTemplate = `
         </div>
         <div step3>
             <div class="pagecontainer">
-                <p on-tap="_finish" class="skip" style="right:15%;position: absolute; "></p>
+                <p on-tap="_finish" class="skip" style="right:15%;position: fixed; "></p>
                 <h1 style="margin-top:50px">Personaliseer je app!</h1>
                 <p>Door je eigen badge te scannen, kunnen wij je persoonlijke agenda inladen.</p>
                 <template is="dom-if" if="[[!importing]]">
                   <div class="scanner_container">
-                  <badge-scanner id="scanner_tutorial" on-badge-scanned="_badgescanned"></badge-scanner>
+                  <badge-scanner id="scanner_tutorial" message="Klik hier om de QR-code van je badge te scannen" on-badge-scanned="_badgescanned"></badge-scanner>
                   </div>
                 </template>
                 <template is="dom-if" if="[[importing]]">

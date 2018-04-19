@@ -11,20 +11,22 @@ const htmlTemplate = html`
         </style>
         <badge-confirm id="confirm" on-close="_saveReview"></badge-confirm>
         <paper-dialog style="background-color:#232323;top:0px;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;position:fixed;" id="dialog" style="margin:10px" on-iron-overlay-closed="close">
-            <div style="background-color:white;margin:0px;padding:0px;width:90%;margin:5%;position:absolute">
+            <div style="background-color:white;margin:0px;padding:0px;width:90%;margin:5%;">
             <div>
                     <div style="padding:15px">
                         <div style="display:flex;align-items:center">
                             <img style="height:80px;margin-right:20px;" src="[[event.img]]"> 
-                            <h1 style="color:var(--tint-color);line-height:30px;overflow:hidden;overflow-y:scroll;font-size:3vw;">[[event.item]]</h1>
+                            <h1 style="color:var(--tint-color);line-height:1.5;overflow:hidden;overflow-y:scroll;font-size:3vw;">[[event.item]]</h1>
                         </div>
                     <p style="margin:0px;margin-top:5px;height:20vh;overflow:hidden;overflow-y:scroll">[[event.description]]</p><br/>
 
+                    <template is="dom-if" if="[[largerscreen]]">
                     <div style="display:flex;flex-wrap:wrap;">
-                        <template is="dom-repeat" items="[[selectedEvent.tags]]">
-                            <div style="font-size:8px;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;">{{event.item}}</div>
+                        <template is="dom-repeat" items="[[_getTags(event.tags)]]">
+                            <div style="font-size:8px;color:var(--text-primary-color);background-color:var(--tint-color);border-radius:5px;margin:2px;padding-left:5px;padding-right:5px;">{{item}}</div>
                         </template>
                     </div>
+                    </template>
 
                      <div style="display:flex;flex-wrap:wrap;font-size:10px;margin-top:10px;">
                        <div style="flex:1;">
@@ -44,24 +46,24 @@ const htmlTemplate = html`
                 </div>
             </div>
             <template is="dom-if" if="[[!_isReviewed(event.isReviewed)]]">
-            <div style="width: 100%;height:74px;line-height:74px;">
+            <div style="width: 100%;height:54px;line-height:54px;">
                 <hr style="margin:0px;0.5px solid silver;width:89.5vw" />
                 <badge-rating style="padding-left:12px;" disabled="[[_isReviewed(event.isReviewed)]]" rating="{{rating}}"></badge-rating>
                 <span on-tap="_persistRating" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Beoordeel</span>
                 </div>
             </template>
-            <div style="width: 100%;height:54px;line-height:50px;border-top:1px solid black;border-bottom:1px solid black;">
+            <div style="width:100%;height:45px;line-height:40px;border-top:1px solid black;border-bottom:1px solid black;">
                 <template is="dom-if" if="[[!registeredforslides]]">
                 <span on-tap="_registerForSlides" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-size:3vw;">Ik wil het materiaal van deze sessie ontvangen</span>
                 </template>
                 <template is="dom-if" if="[[registeredforslides]]">
                 <span style="font-size:3vw;user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-weight:bold;">
-                <iron-icon icon="done"></iron-icon> De bestanden worden naar je mail verstuurd</span>
+                <iron-icon icon="done"></iron-icon> De bestanden worden naar je verstuurd</span>
                 </template>
              </div>
              </template>
-             <div style="width: 100%;height:54px;line-height:50px;">
-                <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
+             <div style="width: 100%;height:45px;line-height:40px;">
+                <span style="padding:10px;user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
             </div>
         </div>
        </paper-dialog>`;
@@ -74,14 +76,16 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
         return {
             event: { type:Object, notify:true, observer:'_setEventDetails'},
             hour: { type:String, notify:true},
-            rating: { type:Number }
+            rating: { type:Number },
+            largerscreen: { type:Number }
         }
     }
 
  
 
     connectedCallback(){
-        super.connectedCallback(); 
+        super.connectedCallback();
+        this.largerscreen = window.screen.height > 600 ? true: false; 
     }
 
     _setEventDetails(){
@@ -101,6 +105,10 @@ export class BadgeEventDetails extends GestureEventListeners(PolymerElement) {
         this.registeredforslides = localStorage["slidesrequest_" + event.id] || false;
         this.hour = hour;
         this.$.dialog.open();
+    }
+
+    _getTags(tags){
+        return tags.split(",");
     }
 
 

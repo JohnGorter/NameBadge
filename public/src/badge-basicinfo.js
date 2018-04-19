@@ -15,11 +15,11 @@ const htmlTemplate = html`
             </div>
         </template>
         <template is="dom-if" if="[[_currentUser(item)]]">
-            <div style="position:absolute;top:0px;line-height:30px;">
+            <div style="position:fixed;top:0px;line-height:30px;">
                 <iron-icon style="margin:5px;color:yellow;width:30px;height:30px;justify-self:flex-end;" icon="verified-user"></iron-icon><span style="color:yellow;font-size:12px;">Dit ben ik</span>
             </div>
         </template>
-        <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:absolute;padding-left:6px;bottom:20px;color:white;font-size:10vw;">[[item.Username]]
+        <span style="text-shadow: 5px 5px 5px #222;line-height:1;position:fixed;padding-left:6px;bottom:20px;color:white;font-size:10vw;">[[item.Username]]
         </div>
         <div style="position:relative;padding:15px;background-color: white; height:100px;">
             <div>
@@ -45,13 +45,13 @@ const htmlTemplate = html`
         </div>
         <div class="buttons" style="display:flex;height:54px;align-items:center;justify-content:flex-end;position:relative;border-top:1px solid #d8d5d5;background-color: white;">
             <template is="dom-if" if="[[_hasDetails(item)]]">
-                <span style="user-select: none;margin:10px;margin-right:20px;color:var(--tint-color)" on-tap="_close" dialog-confirm>
+                <span style="padding:10px;user-select: none;margin:10px;margin-right:20px;color:var(--tint-color)" on-tap="_close" dialog-confirm>
                 <template is="dom-if" if="{{unlock}}">
                     <iron-icon style="height:12px;width:12px;" icon="lock"></iron-icon>
                 </template>
                 Meer informatie</span>
             </template>
-            <span style="user-select: none;margin:10px;margin-right:20px;color:var(--tint-color)" on-tap="_cancel" dialog-dismiss>Sluiten</span>
+            <span style="padding:10px;user-select: none;margin:10px;margin-right:20px;color:var(--tint-color)" on-tap="_cancel" dialog-dismiss>Sluiten</span>
         </div>
         </div>
     </paper-dialog>
@@ -77,13 +77,13 @@ export class BadgeBasicInfo extends PolymerElement {
     }
 
      _currentUser(item){
-        let user = localStorage["user"];
-        return  user == item.Email;
+        let user = localStorage["username"];
+        return  user == item.Username;
     }
 
      _getPhoto(img) {
         if (img && img != "n/a") 
-            return `position:relative;top:10px;margin:0px;padding:0px;height:50vh;background:url(${img}) no-repeat;background-size:cover;overflow:hidden;`;
+            return `position:relative;top:10px;margin:0px;padding:0px;height:40vh;background:url(${img}) no-repeat;background-size:cover;overflow:hidden;`;
         else {
             let retval =  `position:relative;margin:0px;padding:0px;height:40vh;`;
             retval += ("background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]);

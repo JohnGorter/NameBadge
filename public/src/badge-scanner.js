@@ -10,9 +10,13 @@ export class BadgeScanner extends PolymerElement {
             }
         </style>
         <input type="file" hidden accept="image/*" id="scaninput" on-change="_scanImage">
-        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="120" style="opacity:0.4;margin-bottom:25px;"></img><p style="margin-left:15px;text-align: center;color:#343434;">Klik hier om de QR-code van je badge te scannen</p></div>
+        <div class="scanner" on-tap="_scan"><img src="/images/scan.svg" height="120" style="opacity:0.4;margin-bottom:25px;"></img><p style="margin-left:15px;text-align: center;color:#343434;">[[message]]</p></div>
     `; }
 
+    static get properties(){
+        return { message: { type:String }}
+    }
+    
     connectedCallback(){
         super.connectedCallback(); 
         qrcode.callback = (decodedDATA) => {
