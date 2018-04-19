@@ -46,24 +46,24 @@ const htmlTemplate = html`
                 </div>
             </div>
             <template is="dom-if" if="[[!_isReviewed(event.isReviewed)]]">
-            <div style="width: 100%;height:54px;line-height:54px;">
+            <div style="width: 100%;height:54px;line-height:54px;position:relative">
                 <hr style="margin:0px;0.5px solid silver;width:89.5vw" />
                 <badge-rating style="padding-left:12px;" disabled="[[_isReviewed(event.isReviewed)]]" rating="{{rating}}"></badge-rating>
                 <span on-tap="_persistRating" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Beoordeel</span>
                 </div>
             </template>
-            <div style="width:100%;height:45px;line-height:40px;border-top:1px solid black;border-bottom:1px solid black;">
+            <div style="width:100%;height:45px;line-height:40px;border-top:1px solid black;border-bottom:1px solid black;position:relative">
                 <template is="dom-if" if="[[!registeredforslides]]">
                 <span on-tap="_registerForSlides" style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-size:3vw;">Ik wil het materiaal van deze sessie ontvangen</span>
                 </template>
                 <template is="dom-if" if="[[registeredforslides]]">
-                <span style="font-size:3vw;user-select: none;right: 20px;position: absolute; color: var(--tint-color);font-weight:bold;">
+                <span style="font-size:3vw;user-select: none;right: 20px;position:relative;position: absolute; color: var(--tint-color);font-weight:bold;">
                 <iron-icon icon="done"></iron-icon> De bestanden worden naar je verstuurd</span>
                 </template>
              </div>
              </template>
-             <div style="width: 100%;height:45px;line-height:40px;">
-                <span style="padding:10px;user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
+             <div style="width: 100%;height:45px;line-height:40px;position:relative;">
+                <span style="user-select: none;right: 20px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
             </div>
         </div>
        </paper-dialog>`;

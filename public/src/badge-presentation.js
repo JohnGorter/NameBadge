@@ -9,9 +9,9 @@ const htmlTemplate = `
         <style is="custom-style" include="paper-material-styles"></style>
     </custom-style>
     <style is="custom-style" include="app-styles"> 
-        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;height:74vh;align-items: flex-start;
+        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:76vh;
             align-content: flex-start;}
-        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;height:74vh;align-items: flex-start;
+        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:76vh;
             align-content: flex-start;}
 
     #details { 

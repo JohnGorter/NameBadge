@@ -37,10 +37,10 @@ const htmlTemplate = html`
                 <span on-tap="_close" style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Zoeken</span>
                 </template>
                  <template is="dom-if" if="[[!value]]">
-                <span style="padding:10px;user-select: none; margin: 10px;right: 10px;position: absolute; color: #c3c3c3;">Zoeken</span>
+                <span style="user-select: none; margin: 10px;right: 10px;position: absolute; color: #c3c3c3;">Zoeken</span>
                 </template>
 
-                <span on-tap="_cancel" style="padding:10px;user-select: none; margin: 10px;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Annuleren</span>
+                <span on-tap="_cancel" style="user-select: none; margin: 10px;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Annuleren</span>
             </div>
             </div>
        </paper-dialog>`;

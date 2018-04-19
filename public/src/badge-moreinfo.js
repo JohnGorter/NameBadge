@@ -96,9 +96,9 @@ const htmlTemplate = html`
                 </template>
                 <div style="display:flex;position:absolute;bottom:0px;height:54px;padding-top:10px;width:100%;border-top:1px solid #d8d5d5;background-color: white;">
                     <template is="dom-if" if="[[!user]]">
-                        <span on-tap="_claimUser" class$="{{_canClaim(user)}}" style="padding:10px;left:10px;position:absolute;user-select: none;margin:10px;color:var(--tint-color)" dialog-dismiss>Dit ben ik..</span>
+                        <span on-tap="_claimUser" class$="{{_canClaim(user)}}" style="left:10px;position:absolute;user-select: none;margin:10px;color:var(--tint-color)" dialog-dismiss>Dit ben ik..</span>
                     </template>
-                    <span style="padding:10px;user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
+                    <span style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
                 </div>
             </div>
        </paper-dialog>

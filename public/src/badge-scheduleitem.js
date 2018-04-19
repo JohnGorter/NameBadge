@@ -21,7 +21,7 @@ const htmlTemplate = html`
         .details .info { height:150px;padding-left:20px;padding-right:20px;padding-top:10px;display:flex;justify-content:flex-end;line-height:25px;flex-wrap:wrap;}
         .details .info iron-icon { --iron-icon-fill-color:var(--tint-color);margin-right:5px;height:20px;width:20px;}
         .details .info h1 { position:relative;top:0px;width:100%;font-size:12px;justify-self:flex-start;padding-top:0px;margin:0px;color:var(--tint-color);line-height:16px;}
-        .subtle { font-size:10px;font-weight:lighter;font-family:sans-serif;display:flex;flex-flow:row;justify-content:flex-end;}
+        .subtle { font-size:10px;font-weight:lighter;font-family:sans-serif;display:flex;flex-flow:row;justify-content:flex-end;line-height:1.2}
         .details span.reviewed { opacity:0.2}
         iron-icon.disabled { opacity:0.5}
         </style>
