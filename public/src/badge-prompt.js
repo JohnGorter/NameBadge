@@ -22,7 +22,7 @@ const htmlTemplate = html`
         p { font-size:4vw;}
         #dialog { display:flex;}
         </style>
-        <paper-dialog style="background-color:#232323;top:0px;position:fixed;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
+        <paper-dialog style="background-color:#232323;top:0px;position:fixed;z-index:1;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
             <div style="background-color:white;position:relative;margin:0px;padding:0px;width:90%;height:300px;margin:5%;align-self:center;">
             
             <div>

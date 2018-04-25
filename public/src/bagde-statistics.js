@@ -14,6 +14,24 @@ export class BadgeStatistics extends PolymerElement {
      super.connectedCallback(); 
    }
 
+   storePulse(){
+       if ("deviceid" in localStorage) {
+           firebase.database().ref("logins/" + localStorage["deviceid"]).set({
+               LastSeen:new Date().toString(),
+               Username:localStorage["username"] || "onbekend",
+               UserAgent: navigator.userAgent
+           });
+       } else {
+           firebase.database().ref("logins").push({
+               LastSeen:new Date().toString(),
+               Username:localStorage["username"] || "onbekend",
+               UserAgent: navigator.userAgent
+           }).then(snapshot => {
+               localStorage["deviceid"] = snapshot.key;
+           });
+       }
+
+   }
    storeStatistic(item){
        firebase.database().ref("statistics").push(item);
    }

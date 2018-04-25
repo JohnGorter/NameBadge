@@ -13,17 +13,17 @@ const htmlTemplate = html`
             
             <div>
                 <div style="padding:15px">
-                <h1>Registeer uw emailadres</h1>
+                <h1>Wat is uw emailadres</h1>
                 <p>Om een verzoek tot materiaal te doen, hebben wij uw email adres nodig. Geef hieronder uw email adres op indien u wenst 
                     het verzoek te voltooien.
                 </p>
-                <paper-input label="email" value="{{emailaddress}}">
+                <paper-input label="email" value="{{email}}">
                     <iron-icon icon="mail" slot="prefix" style="margin-right:20px;"></iron-icon>
                 </paper-input>
             </div>
             <div style=" position:absolute;bottom:0px;height: 64px; width: 100%;">
                 <hr style="0.5px solid silver" />
-                <span on-tap="_close" style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Opslaan</span>
+                <span on-tap="_close" style="user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Versturen</span>
                 <span on-tap="_cancel" style="user-select: none; margin: 10px;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Annuleren</span>
             </div>
             </div>
@@ -36,7 +36,7 @@ export class BadgeRegisterEmail extends PolymerElement {
 
     static get properties() {
         return {
-            emailaddress: { type:String, notify:true }
+            email: { type:String, notify:true }
         }
     }
     open(header) {

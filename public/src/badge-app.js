@@ -29,31 +29,31 @@ var template = `
        </custom-style>
 
        <badge-tutorial id="tutorial" on-badge-scanned="badgescanned" class="hide" ></badge-tutorial>
-
-       <app-header-layout>
-            <app-header id="header" slot="header" condenses fixed effects="waterfall">
-               <app-toolbar id="toolbar" style="padding:0px;">
-               <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
-               <template is="dom-if" if="[[_showSearch(selpage)]]">
-               <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
-                </template>
-               </app-toolbar>
-           </app-header>
-          <!-- <div class="main" on-tap="nextPage">   
-                <div class="textplace" id="textplace">
-                    <div id="title" class$="{{_getStepClass(step)}}">{{_getStepTitle(registration.*, step)}}</div>
-                    <div id="details">{{_getStepDetails(step)}}</div>
-                </div>
-            </div> -->
-            <iron-pages selected="{{selpage}}">
-                <div class="scannercontainer"><div style="border: 1px solid white; border-right: 1px solid gray; border-bottom: 1px solid gray;background-color:white;"><badge-scanner id="scanner" on-badge-scanned="badgescanned" message="Klik hier om de QR-code van een willekeurige badge te scannen" ></badge-scanner></div></div>
-                <badge-presentation id="presentation" user="{{user}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" selected="{{selectedgrid}}" on-basic-info="basicinfo" on-error="_logError" on-more-info="moreinfo"></badge-presentation>
-                <badge-schedule on-show-details="_showDetails" id="schedule" schedule="[[schedule]]" only-me="[[onlyMe]]"filter="{{sessiefilter}}"></badge-schedule>
-                <badge-news id="news" icon="{{icon}}" page="[[selpage]]" on-state-change="_newtweet" items="[[newsitems]]"></badge-news>
-            </iron-pages>
-       </app-header-layout>
+       <badge-flipper id="flipcontainer">
+       <div slot="front">
+        <app-header-layout>
+                <app-header id="header" slot="header" condenses fixed effects="waterfall">
+                <app-toolbar id="toolbar" style="padding:0px;">
+                <div class="logo" style="flex:1"><img src="/images/smartbadgeicon.png"></div>
+                <paper-icon-button icon="settings" on-tap="_settings"></paper-icon-button>
+                <template is="dom-if" if="[[_showSearch(selpage)]]">
+                <paper-icon-button icon="search" on-tap="_search"></paper-icon-button>
+                    </template>
+                </app-toolbar>
+            </app-header>
+                <iron-pages selected="{{selpage}}">
+                    <div class="scannercontainer"><div style="border: 1px solid white; border-right: 1px solid gray; border-bottom: 1px solid gray;background-color:white;"><badge-scanner id="scanner" on-badge-scanned="badgescanned" message="Klik hier om de QR-code van een willekeurige badge te scannen" ></badge-scanner></div></div>
+                    <badge-presentation activeusers="[[activeusers]]" id="presentation" user="{{user}}" items="{{items}}" filter="{{filter}}" itemslastvisited="{{lastvisited}}" selected="{{selectedgrid}}" on-basic-info="basicinfo" on-error="_logError" on-more-info="moreinfo"></badge-presentation>
+                    <badge-schedule on-show-details="_showDetails" id="schedule" schedule="[[schedule]]" only-me="[[onlyMe]]"filter="{{sessiefilter}}"></badge-schedule>
+                    <badge-news id="news" icon="{{icon}}" page="[[selpage]]" on-state-change="_newtweet" items="[[newsitems]]"></badge-news>
+                </iron-pages>
+        </app-header-layout> 
+       
 
        <badge-filter filter="{{filter}}" show="{{_shouldShow(selpage, selectedgrid)}}"></badge-filter>
+    <!--    <template is="dom-if" if="[[_shouldShow(selpage, selectedgrid)]]">
+    //     <paper-fab label="[[activeusers]] deelnemers actief nu"></paper-fab>
+    //    </template> -->
 
        <paper-dialog id="nomatchDialog" style="background-color: white;" modal>
             <h2>Sorry</h2>
@@ -68,8 +68,8 @@ var template = `
        <badge-prompt on-close="_setFilter" id="seachprompt" header="Zoeken naar" content="Geef hieronder uw zoekargument op" label="zoeken naar"></badge-prompt>
        <badge-eventdetails id="eventdetails" on-session-review="_storerating" on-register-slides="_registerForSlides"></badge-eventdetails>
        <badge-confirm id="confirm" header="Bent u deze persoon?" on-close="_saveClaimUser"></badge-confirm>
-      <!-- <badge-review id="review" on-close="_sendMailRequest" on-cancel="_sendMailRequest"></badge-review>
-       <badge-registeremail id="personalise" user="{{user}}" on-close="_showReview"></badge-registeremail>
+      <!-- <badge-review id="review" on-close="_sendMailRequest" on-cancel="_sendMailRequest"></badge-review> -->
+       <badge-registeremail id="personalise" user="{{user}}" email="{{email}}" on-close="_sendRequest"></badge-registeremail><!--
        <badge-mailrequest id="mailrequest"></badge-mailrequest> -->
 
        <paper-tabs id="tabs" selected="{{selpage}}">
@@ -78,11 +78,33 @@ var template = `
             <paper-tab><iron-icon icon="schedule" ></iron-icon></paper-tab>
             <paper-tab><img src="./images/[[icon]]" style="fill:white" height="24" width="24"> </paper-tab>
        </paper-tabs>
+        </div>
+        <div slot="back">
+          <div style="background-color:#232323;top:0px;position:fixed;z-index:999;overflow:hidden;height:100vh;width:100vw;margin:0px;" id="dialog" style="margin:10px">
+            <div style="background-color:white;position:relative;margin:0px;padding:0px;width:90%;height:250px;margin:5%;align-self:center;">
+            
+            <div>
+                <div style="padding:15px">
+                <h1>[[header]]</h1>
+                <p>[[content]]</p>
+            </div>
+            <div style=" position:absolute;bottom:0px;height: 64px; width: 100%;">
+                <hr style="0.5px solid silver" />
+                <span on-tap="_close" style="width: 50px;text-align: center;user-select: none; margin: 10px;right: 10px;position: absolute; color: var(--tint-color);" dialog-dismiss>Opslaan</span>
+                <span on-tap="_cancel" style="user-select: none; margin: 10px;right: 80px;position: absolute; color: var(--tint-color);" dialog-dismiss>Sluiten</span>
+            </div>
+            </div>
+       </div>
+        
+        
+        </div>
+       </badge-flipper>
+ 
 
        <ico-app api-key="AIzaSyC-0AJ2JrHirZ7cKPojEUks26Fftcb12JA"  auth-domain="iconica-sbadge.firebaseapp.com" database-U-R-L="https://iconica-sbadge.firebaseio.com" project-id="iconica-sbadge" storage-bucket="iconica-sbadge.appspot.com" messaging-sender-id="319820458930"></ico-app>
 
      <!-- <ico-query path="registrations" get-initial-data="[[getInitialRegistrations]]" source="localstorage" data="{{items}}"></ico-query> -->
-     
+
        <ico-query id="lastvisited" path="lastvisited" source="localstorage" get-initial-data="[[getInitialLastVisited]]" data="{{lastvisited}}"></ico-query>
 
 
@@ -99,6 +121,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         registration: { type:Object, value:{}},
         items: { type:Array},
         schedule: { type:Array},
+        activeusers: { type:Number, value:0 },
         lastvisited: { type:Array },
         selpage: { type:Number, value:1},
         filter: { type:String, value:'["a","b","c","d"]'},
@@ -113,6 +136,12 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
 
     _newtweet(){
         this.$.news.getIcon();
+    }
+    _settings(){
+        this.$.flipcontainer.flip();
+    }
+    _cancel(){
+         this.$.flipcontainer.flip();
     }
 
     _search() {
@@ -135,6 +164,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     _storerating(e) {
         let username = localStorage["username"];
         let user = this.items.find(u => u.Username == username);
+        if (!user) { user = { Username: "", PersonaName:"Onbekend"}};
 
         this.$.statistics.storeStatistic(
             { "Rating:": {
@@ -183,9 +213,10 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
 
     badgescanned(e){
-        let username = localStorage["username"];
+        let username = localStorage["username"] || "Onbekend";
         let found = this.items.find((item) => item.Username == e.detail);
         let user = this.items.find(u => u.Username == username);
+         if (!user) { user = { Username: "", PersonaName:"Onbekend"}};
 
         if (!found) {
             this.$.nomatchDialog.open();
@@ -233,16 +264,21 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
     }
 
     _registerForSlides(e){
+        this.slideregisterdetails = e.detail;
+        this.$.personalise.open(); 
+    }
+
+    _sendRequest() {
         let username = localStorage["username"];
-        if (username) {
+        if (this.email) {
             this.$.statistics.storeStatistic(
                 {
                     "RequestForSlides":
                     { 
                         created:new Date().toString(),
-                        from:username,
-                        session:e.detail.item,
-                        sessionid:e.detail.EventId
+                        from:this.email,
+                        session:this.slideregisterdetails.item,
+                        sessionid:this.slideregisterdetails.EventId
                     }
                 });
         }
@@ -255,6 +291,7 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         if (e.detail.confirmed){
             let username = localStorage["username"];
             let user = this.items.find(u => u.Username == username);
+            if (!user) { user = { Username: "", PersonaName:"Onbekend"}};
             if (this._storeNewConnection(e.detail.item)) {
                 this.$.statistics.storeStatistic(
                     { "GridConnection" : 
@@ -281,8 +318,8 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
         window.performance.mark('mark_fully_loaded');
         this.user = window.localStorage["username"] || "";
         setTimeout(() => {
-            if (this.$.tutorial.completed == "")
-                this.$.tutorial.classList.remove("hide");
+            // if (this.$.tutorial.completed == "")
+            //     this.$.tutorial.classList.remove("hide");
         }, 0); 
         if ("registrationcount" in localStorage)    
             this.registrationcount =  parseInt(localStorage["registrationcount"]);
@@ -343,15 +380,33 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
                 ...(localStorage["schedule"] ? JSON.parse(localStorage["schedule"]) : [])];
         }
 
+        this.user = localStorage["username"] || "onbekend";
+       
+        this.$.statistics.storePulse();
+        firebase.database().ref("logins").once('value', (snapshot) => {
+            var logins = snapshot.val(); 
+            if (logins) {
+                let counter = 0; 
+                for (let login in logins){
+                    if (new Date() - Date.parse(logins[login].LastSeen) < 300000) 
+                    {
+                        counter++;
+                    }
+                }
+                this.activeusers = counter;
+            }
+        });
+
         setInterval(() => {
             // check to see if there are changes...
             console.log("sync data");
+            this.$.statistics.storePulse();
             this._syncData(); 
         }, 60000);
     }
 
     _fillAgenda(){
-        if ("agenda_filled" in localStorage) { this.schedule = this.cachedschedule ;return;}
+        if ("agenda_filled" in localStorage || this.user || "onbekend") { this.schedule = this.cachedschedule ;return;}
         if (this.user && this.items && this.agenda){
             let profile = this.items.find(i => i.Username == this.user);
             console.log("user", profile.UserID);
@@ -375,10 +430,25 @@ export class BadgeApp extends GestureEventListeners(PolymerElement) {
             if (version && localStorage["version"] != version)
             {
                 localStorage["version"] = version;
-                window.caches.delete("iconica-sbadge");
-                location.reload(); 
+                navigator.serviceWorker.controller.postMessage("clearcache");
+                setTimeout(() =>{
+                    location.reload(true); 
+                }, 1000);
             }
         }); 
+        firebase.database().ref("logins").once('value', (snapshot) => {
+            var logins = snapshot.val(); 
+            if (logins) {
+                let counter = 0; 
+                for (let login in logins){
+                    if (new Date() - Date.parse(logins[login].LastSeen) < 300000) 
+                    {
+                        counter++;
+                    }
+                }
+                this.activeusers = counter;
+            }
+        });
         firebase.database().ref("registrationcount").once('value', (snapshot)=>{
             let val = snapshot.val();
             if (val){

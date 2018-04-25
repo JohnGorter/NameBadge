@@ -9,10 +9,10 @@ const htmlTemplate = `
         <style is="custom-style" include="paper-material-styles"></style>
     </custom-style>
     <style is="custom-style" include="app-styles"> 
-        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:76vh;
+        #grid { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:78vh;
             align-content: flex-start;}
-        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:76vh;
-            align-content: flex-start;}
+        #grid_lastvisited { display:flex;flex-flow:wrap;margin-left:2px; margin-top:25px;align-items: flex-start;height:78vh;
+            align-content: flex-start;overflow:scroll}
 
     #details { 
         transition:bottom 0.45s ease-in-out;
@@ -59,11 +59,15 @@ const htmlTemplate = `
         left:20px;
       } 
       
+      .card.selected {
+          z-index:600;position:absolute;
+    transform:translate(300px, -100px) scale(0.5, 0.5);
+      }
      
 
       .empty-recent {display: flex; align-items: center; justify-content: center; width: 100%; height: 200px; font-family: roboto; color: #343434; }
       .hidden { display:none;}
-      .card { border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6;display: flex; justify-content: flex-start;}
+      .card { z-index:600;left:0px;top:0px;position:relative;transition:all 0.2s;border-radius:3px;height:45vw; width:45vw;margin-bottom:20px;margin-left:10px;background-color:#096BA6;display: flex; justify-content: flex-start;}
       .overlay { margin-left:0px;margin-bottom: 10px;position:absolute;color:white;left:10px;bottom:0px;font-size:5vw;text-shadow:3px 3px 3px #000}
       .toolbartabs { top:20px;--paper-tabs-selection-bar-color: #040356;color:var(--text-primary-color);background-color:var(--second-tint-color)}
       .filterbar { text-align:center;font-size:12px;font-family:sans-serif;font-weight:lighter;top:20px;height:40px;background-color:var(--second-tint-color);color:var(--text-primary-color);line-height:40px;padding-left:20px;}
@@ -76,6 +80,11 @@ const htmlTemplate = `
         <paper-tab>Deelnemers</paper-tab>
         <paper-tab>Connecties</paper-tab>
     </paper-tabs>
+     <template is="dom-if" if="[[_areActiveUsers(activeusers)]]">
+     <div class="paper-material filterbar" elevation="1">
+            Aantal deelnemers actief '[[activeusers]]'
+    </div>
+    </template>
     <template is="dom-if" if="[[_isCustomFilter(filter)]]">
         <div class="paper-material filterbar" elevation="1">
             Huidige zoekcriteria '[[filter]]' <span on-tap="_clearFilter" style="margin-left:20px;"><iron-icon style="height:16px;width:16px;" icon="clear"></iron-icon></span>
@@ -129,6 +138,7 @@ export class BadgePresentation extends GestureEventListeners(Element) {
             items: { type:Array, notify:true, value:[]},
             itemslastvisited: { type:Array, notify:true, value:[]},
             selected: { type:Number, value:0, notify:true},
+            activeusers: { type:Number },
             user: { type:String, notify:true },
             filter: { type:String, value:"", notify:true}
         }
@@ -141,10 +151,13 @@ export class BadgePresentation extends GestureEventListeners(Element) {
         return "background-color:" + ["#43BC84", "#08A195","#0DC4D7"][(Math.floor(Math.random() * 10) % 3)]; 
     }
 
+    _areActiveUsers(a){
+        return a != undefined && a > 0;
+    }
     _currentUser(item){
         let user = localStorage["username"];
         if (item.Username == undefined) { 
-            let message = "Error: no username for user " + item.FirstName  + " " + item.LastName;
+            let message = " " + item.FirstName  + " " + item.LastName;
             this.dispatchEvent(new CustomEvent("error", { detail:message, composed:true, bubbles:true}));
             // console.log("Error: no email for user " + item.FirstName  + " " + item.LastName); return false ;
         }
@@ -239,7 +252,51 @@ export class BadgePresentation extends GestureEventListeners(Element) {
               break;
             }
         }
-        this.dispatchEvent(new CustomEvent('basic-info', { detail: { item: e.model.item, unlock: unlock },  bubbles:true, composed:true}));
+         if (this.previousselected)
+            this._animate(this.previousselected, false);
+        let clone = e.target.cloneNode(true);
+        clone.style.position = 'absolute'; 
+        clone.style.zIndex = 600;
+        e.target.appendChild(clone);
+        this._animate(clone, true);
+        this.previousselected = clone;
+    }
+
+    _animate(elem, forward) {
+        // get the current position
+        var rect = elem.getBoundingClientRect(); 
+         
+         let deltaX = 0;
+         let deltaY = 0;
+         let scale = `scale(1, 1)`
+         
+        // calculate the new position
+        if (forward) {
+             deltaX = 30 - rect.left; 
+            deltaY = 30 - rect.top; 
+            scale = `scale(0.5,0.5)`;
+        }
+
+        let transform = `
+                translate(${deltaX}px, ${deltaY}px)
+                ${scale}
+            `;
+        if (forward) transform = `none`;
+
+        elem.animate([{
+            transformOrigin: 'top left',
+            transform: `none`
+            }, {
+            transformOrigin: 'top left',
+            transform: `
+                translate(${deltaX}px, ${deltaY}px)
+                ${scale}
+            `}], {
+            duration: 300,
+            easing: 'ease-in-out',
+            fill: 'both'
+        });
+      //  this.dispatchEvent(new CustomEvent('basic-info', { detail: { item: e.model.item, unlock: unlock },  bubbles:true, composed:true}));
     }
 
     

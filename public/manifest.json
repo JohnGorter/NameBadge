@@ -10,7 +10,7 @@
   "icons": [
       {
           "src": "/images/sb-launcher-icon.png",
-          "type": "image/png",
+          "type": "image/png",   
           "sizes": "512x512"
       }
   ]

@@ -28,6 +28,11 @@
     <script src="/qrcode.js"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -95,7 +100,7 @@
             .dark p { color:white;font-size:4vw;line-height:1.5;}
             .oldbrowser img { padding-top:50px;padding-bottom:50px;}
         </style>
-         <div class="dark">
+         <div id="loading" class="dark">
                  <img src="/images/smartbadgeicon.png" width="150" style="margin-bottom:150px">
                 <h1>We zijn de app aan het laden!</h1>
                 <p>Een ogenblik geduld aub..</p>
@@ -113,10 +118,10 @@
         </script>
 
         <script nomodule></script>
-         <script type="module" src="/src/badge-app.js">
+         <script type="module" src="/src/badge-app.js" onload="document.querySelector('#loading').style.display='none';">
          </script>
         
-        <script>
+        <!-- <script>
                 // Check that service workers are registered
                 if ('serviceWorker' in navigator) {
                   // Use the window load event to keep the page load performant
@@ -124,7 +129,7 @@
                     navigator.serviceWorker.register('/sw.js');
                   });
                 }
-        </script>
+        </script> -->
          
 </body>
 </html>

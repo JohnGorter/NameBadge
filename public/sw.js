@@ -3,6 +3,26 @@ var urlsToCache = [
   '/'
 ];
 
+self.addEventListener('message', function(event){
+    if (event.data == "clearcache") {
+      event.waitUntil(
+      caches.keys().then(function(cacheNames) {
+        return Promise.all(
+          cacheNames.filter(function(cacheName) {
+            return true;
+          //  return cacheName == CACHE_NAME;
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+          }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    })
+  );
+    }
+});
+
 self.addEventListener('install', function(event) {
   // Perform install steps
   event.waitUntil(

@@ -5,12 +5,12 @@ const html = String.raw;
 const htmlTemplate = html`
 <style>
 .container { overflow:scroll; top:64px;height:85vh;width:100vw;margin-top:0px;position:fixed;background-color:#f5f5f5;}
-.newsitem  {     display: flex;
+.newsitem  {  display: flex;
     position:relative;
     flex-flow: row;
     font-size:3.2vw;
     font-family: sans-serif;
-    margin: 10px;
+    margin: 10px;overflow:hidden;
     justify-content:center;
     align-items:center;
     color:var(--tint-color);
@@ -18,7 +18,7 @@ const htmlTemplate = html`
     border-right: 1px solid silver;
     border-bottom: 1px solid silver;
     background-color: white;
-    height: 100px;}
+    height: 150px;}
 .quote {margin-left:10px;margin-right:10px;margin-bottom:15px;font-style: italic;} 
 .photo {
     margin:5px;
